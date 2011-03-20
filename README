@@ -1,0 +1,51 @@
+This is a plugin for terminator, that saves and restores layouts.
+
+see https://launchpad.net/terminator 
+for information about terminator.
+
+see http://www.tenshu.net/archives/2010/04/18/writing-terminator-plugins/ 
+for a short tutorial, how to write terminator plugins
+
+Installation:
+Plugins are supported since 0.9x, so upgrade terminator if needed.
+Copy LayoutManager.py into terminator's plugin folder.
+
+Usage:
+Layout manager adds a 'Layout Manager' menu item into terminal's context menu.
+Layouts can be saved and loaded here. 
+Note, that only the layout itself is saved (how many terminals are arranged in which form), but no working directories or open ssh connections.
+
+Saved layouts are written to terminatorConfigPath/LayoutManager (~/.config/terminator/LayoutManager in my case) and can be customized with every text editor. See next section for details about the format of .layout files. Following settings can be configured:
+
+The optional command attribute of the root or a terminal element: 
+This command will be executed, when terminal is loaded. terminal's command attribute overrides root's.
+
+The optional exportTerminalNumber attribute of the root element:
+Set an enviroment variable holding terminal's number. This is done, before command's execution, so command can act different for every terminal. I use this for example to open 6 ssh connections to 6 different server, automatically after loading.
+
+Layout Format:
+layouts are saved as xml files and must have the extension .layout. File's name is used as name for the layout. The format is hopefully self explaining and can be seen in this example:
+
+<root command="echo $terminalNumber" exportTerminalNumber="terminalNumber">
+  <child>
+    <split orientation="1" position="213">
+      <child>
+        <split orientation="0" position="328">
+          <child>
+            <terminal command="" />
+          </child>
+          <child>
+            <terminal />
+          </child>
+        </split>
+      </child>
+      <child>
+        <terminal command="ls" />
+      </child>
+    </split>
+  </child>
+</root>
+
+The position of the split elements are only written, but not used by the plugin yet.
+
+Layout Manager's code is public domain.
