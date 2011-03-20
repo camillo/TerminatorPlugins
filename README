@@ -9,6 +9,7 @@ for a short tutorial, how to write terminator plugins
 Installation:
 Plugins are supported since 0.9x, so upgrade terminator if needed.
 Copy LayoutManager.py into terminator's plugin folder.
+Do not forget to activate the plugin in terminator's preferences.
 
 Usage:
 Layout manager adds a 'Layout Manager' menu item into terminal's context menu.
