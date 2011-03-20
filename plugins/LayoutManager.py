@@ -160,7 +160,6 @@ class LayoutManager(plugin.MenuItem):
 
     def saveTerminal(self,container, element):
         childElement = ET.SubElement(element, TERMINAL_ELEMENT)
-        childElement.attrib[COMMAND_ATTRIBUTE] = DEFAULT_COMMAND
 
     def savePanedRecursive(self,container, element):
         splitElement = self.createSplitElement(element, container)
