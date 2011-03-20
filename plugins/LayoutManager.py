@@ -24,7 +24,6 @@ from xml.etree.ElementTree import parse
 import xml.etree.ElementTree as ET
 
 from os.path import splitext
-from os.path import normcase
 from os.path import isfile
 from os.path import exists
 from os.path import join
@@ -38,7 +37,6 @@ LAYOUTMANAGER_CAPABILITIES = ['terminal_menu']
 
 LAYOUT_EXTENSION = ".layout" 
 SAVE_COMMAND = "save"
-PATH_SEPERATOR = normcase('/')
 NEWLINE = "\n"
 INDENT_SPACE = "  "
 
@@ -81,10 +79,10 @@ class LayoutManager(plugin.MenuItem):
 
     def setConfigPath(self):
         if self.configPath is None:
-            basePath = get_config_dir() + PATH_SEPERATOR + LAYOUTMANAGER_NAME
-            if not exists(basePath):
-                makedirs(basePath)            
-            self.configPath = basePath
+            configPath = join(get_config_dir(), LAYOUTMANAGER_NAME) 
+            if not exists(configPath):
+                makedirs(configPath)            
+            self.configPath = configPath
 
     def callback(self, menuitems, menu, terminal):
         mainItem = self.createMainItem(terminal)      
@@ -159,7 +157,7 @@ class LayoutManager(plugin.MenuItem):
             err("ignoring unknown container type")
 
     def saveTerminal(self,container, element):
-        childElement = ET.SubElement(element, TERMINAL_ELEMENT)
+        ET.SubElement(element, TERMINAL_ELEMENT)
 
     def savePanedRecursive(self,container, element):
         splitElement = self.createSplitElement(element, container)
@@ -170,7 +168,7 @@ class LayoutManager(plugin.MenuItem):
     def createSplitElement(self, element, container):
         orientation = self.getOrientation(container)
         splitElement = ET.SubElement(element, SPLIT_ELEMENT)
-        #TODO: the position is not used yet.
+        #the position is not used yet.
         splitElement.attrib[POSITION_ATTRIBUTE] = str(container.get_position())
         splitElement.attrib[ORIENTATION_ATTRIBUTE] = orientation
         return splitElement
