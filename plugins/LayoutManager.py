@@ -36,7 +36,7 @@ LAYOUTMANAGER_DISPLAY_NAME = "Layout Manager"
 LAYOUTMANAGER_CAPABILITIES = ['terminal_menu']
 
 LAYOUT_EXTENSION = ".layout" 
-SAVE_COMMAND = "save"
+SAVE_COMMAND_CAPTION = "save"
 NEWLINE = "\n"
 INDENT_SPACE = "  "
 
@@ -48,7 +48,7 @@ COMMAND_ATTRIBUTE = "command"
 ORIENTATION_ATTRIBUTE = "orientation"
 POSITION_ATTRIBUTE = "position"
 EXPORT_TERMINAL_NUMBER_ATTRIBUTE = "exportTerminalNumber"
-DEFAULT_COMMAND = ""
+ROOT_DEFAULT_COMMAND = ""
 HORIZONTAL_VALUE = "0"
 VERTICAL_VALUE = "1"
 
@@ -64,25 +64,26 @@ EXPORT_TERMINAL_COMMAND = "export %s=%d"
 EVENT_ACTIVATE = "activate"
 
 AVAILABLE = [LAYOUTMANAGER_NAME]
+#available = [LAYOUTMANAGER_NAME]
 
 class LayoutManager(plugin.MenuItem):
     
     capabilities = LAYOUTMANAGER_CAPABILITIES
-    configPath = None
+    configDir = None
     nextTerminalNumber = 0
     rootCommand = None
     exportVariable = None
 
     def __init__(self):
         plugin.MenuItem.__init__(self)
-        self.setConfigPath()
+        self.setConfigDir()
 
-    def setConfigPath(self):
-        if self.configPath is None:
-            configPath = join(get_config_dir(), LAYOUTMANAGER_NAME) 
-            if not exists(configPath):
-                makedirs(configPath)            
-            self.configPath = configPath
+    def setConfigDir(self):
+        if self.configDir is None:
+            configDir = join(get_config_dir(), LAYOUTMANAGER_NAME) 
+            if not exists(configDir):
+                makedirs(configDir)            
+            self.configDir = configDir
 
     def callback(self, menuitems, menu, terminal):
         mainItem = self.createMainItem(terminal)      
@@ -93,7 +94,7 @@ class LayoutManager(plugin.MenuItem):
 
         submenu.append(self.createSaveItem(terminal))
         
-        for currentFile in listdir(self.configPath):
+        for currentFile in listdir(self.configDir):
             self.tryAddLayoutMenuItem(currentFile, terminal, submenu)
 
         return mainItem
@@ -105,27 +106,27 @@ class LayoutManager(plugin.MenuItem):
         return mainItem, submenu
     
     def createSaveItem(self, terminal):
-        menuitem = gtk.ImageMenuItem(SAVE_COMMAND)
+        saveItem = gtk.ImageMenuItem(SAVE_COMMAND_CAPTION)
         image = gtk.Image()
         image.set_from_icon_name(gtk.STOCK_FLOPPY, gtk.ICON_SIZE_MENU)
-        menuitem.set_image(image)       
-        menuitem.connect(EVENT_ACTIVATE, self.saveCallback, terminal)
-        return menuitem
+        saveItem.set_image(image)       
+        saveItem.connect(EVENT_ACTIVATE, self.saveCallback, terminal)
+        return saveItem
 
-    def tryAddLayoutMenuItem(self, path, terminal, submenu):
-        (isLayout, shortname) = self.tryGetLayoutShortName(path)
+    def tryAddLayoutMenuItem(self, name, terminal, menu):
+        (isLayout, shortname) = self.tryGetLayoutShortName(name)
         if isLayout:
             layoutItem = gtk.MenuItem(_(shortname))
             layoutItem.connect(EVENT_ACTIVATE, self.loadCallback, terminal)
-            submenu.append(layoutItem)
+            menu.append(layoutItem)
             return True
         else:
-            dbg("ignoring [%s] : %s" % (path, shortname))
+            dbg("ignoring [%s] : %s" % (name, shortname))
             return False               
 
-    def tryGetLayoutShortName(self,file):
-        if isfile(join(self.configPath, file)):
-            (shortname, extension) = splitext(file)
+    def tryGetLayoutShortName(self,name):
+        if isfile(join(self.configDir, name)):
+            (shortname, extension) = splitext(name)
             if extension == LAYOUT_EXTENSION:
                 return True, shortname
             else:
@@ -133,26 +134,26 @@ class LayoutManager(plugin.MenuItem):
         else:
             return False, FILE_NOT_FOUND_MESSAGE
 
-    def saveCallback(self, _widget, terminal):
+    def saveCallback(self, saveMenuItem, terminal):
         window = get_top_window(terminal)
         rootElement = self.createRootElement()
         self.saveRecursive(window, rootElement)
         self.indentXmlElement(rootElement)
-        self.writeXmlLayoutToFile(rootElement)
+        self.writeXmlToFile(rootElement)
 
     def createRootElement(self, name = ROOT_ELEMENT):
-        root = ET.Element(name)
-        root.attrib[COMMAND_ATTRIBUTE] = DEFAULT_COMMAND
-        root.attrib[EXPORT_TERMINAL_NUMBER_ATTRIBUTE] = TERMINAL_NUMBER_VARIABLE
-        return root
+        rootElement = ET.Element(name)
+        rootElement.attrib[COMMAND_ATTRIBUTE] = ROOT_DEFAULT_COMMAND
+        rootElement.attrib[EXPORT_TERMINAL_NUMBER_ATTRIBUTE] = TERMINAL_NUMBER_VARIABLE
+        return rootElement
                    
     def saveRecursive(self, container, element):       
-        if isinstance(container, Window):
-            self.saveWindowRecursiv(container, element)        
+        if isinstance(container, Terminal):
+            self.saveTerminal(container, element)
         elif isinstance(container, Paned):
             self.savePanedRecursive(container, element)
-        elif isinstance(container, Terminal):
-            self.saveTerminal(container, element)
+        elif isinstance(container, Window):
+            self.saveWindowRecursiv(container, element)
         else:
             err("ignoring unknown container type")
 
@@ -165,106 +166,101 @@ class LayoutManager(plugin.MenuItem):
         self.saveSplitChildRecursive(splitElement, children[0])
         self.saveSplitChildRecursive(splitElement, children[1])
 
-    def createSplitElement(self, element, container):
-        orientation = self.getOrientation(container)
+    def createSplitElement(self, element, paned):
         splitElement = ET.SubElement(element, SPLIT_ELEMENT)
         #the position is not used yet.
-        splitElement.attrib[POSITION_ATTRIBUTE] = str(container.get_position())
-        splitElement.attrib[ORIENTATION_ATTRIBUTE] = orientation
+        splitElement.attrib[POSITION_ATTRIBUTE] = str(paned.get_position())
+        splitElement.attrib[ORIENTATION_ATTRIBUTE] = self.getOrientation(paned)
         return splitElement
+
+    def getOrientation(self, paned):
+        if isinstance(paned, VPaned):
+            orientation = VERTICAL_VALUE
+        else: 
+            if not isinstance(paned, HPaned):
+                err("unknown Paned type; use %s" % HORIZONTAL_VALUE)           
+            orientation = HORIZONTAL_VALUE
+            
+        return orientation
 
     def saveSplitChildRecursive(self, splitElement, child):
         childElement = ET.SubElement(splitElement, CHILD_ELEMENT)           
-        self.saveRecursive(child, childElement)
+        self.saveRecursive(child, childElement)       
         
-    def getOrientation(self, container):
-        if isinstance(container, HPaned):
-            orientation = HORIZONTAL_VALUE
-        elif isinstance(container, VPaned):
-            orientation = VERTICAL_VALUE
-        else:
-            err("unknown Paned type; use %s" % HORIZONTAL_VALUE)
-            orientation = HORIZONTAL_VALUE
-        return orientation
-        
-    def saveWindowRecursiv(self,container, element):
+    def saveWindowRecursiv(self, window, element):
         childElement = ET.SubElement(element, CHILD_ELEMENT)
-        child = container.get_children()[0]
+        child = window.get_children()[0]
         self.saveRecursive(child,childElement)
  
-    def writeXmlLayoutToFile (self,element, filename = None):
+    def writeXmlToFile (self, element, filename = None):
         if filename is None:
             newFilename = inputBox(title=SAVE_BOX_TITLE, message=SAVE_BOX_MESSAGE, default_text="")
             if not (newFilename is None or newFilename == ""):
-                self.writeXmlLayoutToFile(element, newFilename)
+                self.writeXmlToFile(element, newFilename)
             else:
                 dbg("no filename provided; abort saving")
         else:           
-            targetFileName = join(self.configPath,filename)
+            targetFileName = join(self.configDir,filename)
             targetFileName = targetFileName + LAYOUT_EXTENSION
             ET.ElementTree(element).write(targetFileName)
 
-    def loadCallback(self, _widget, terminal):
-        fileName = _widget.props.label + LAYOUT_EXTENSION
-        fileName = join(self.configPath, fileName)
+    def loadCallback(self, layoutMenuItem, terminal):
+        fileName = layoutMenuItem.props.label + LAYOUT_EXTENSION
+        fileName = join(self.configDir, fileName)
         dbg("loading Layout config [%s]" % fileName)
          
         tree = parse(fileName)
         rootElement = tree.getroot()
         self.initRoot(rootElement)
 
-        self.load(terminal, rootElement)
+        self.loadLayout(terminal, rootElement)
 
-    def initRoot(self,root):
-        self.rootCommand = self.tryGetXmlAttribute(root, COMMAND_ATTRIBUTE)
-        self.exportVariable = self.tryGetXmlAttribute(root, EXPORT_TERMINAL_NUMBER_ATTRIBUTE)       
+    def initRoot(self,rootElement):
+        self.rootCommand = self.tryGetXmlAttribute(rootElement, COMMAND_ATTRIBUTE)
+        self.exportVariable = self.tryGetXmlAttribute(rootElement, EXPORT_TERMINAL_NUMBER_ATTRIBUTE)       
         self.nextTerminalNumber = 1
 
-    def load(self, terminal, root):
-        element = root.find(CHILD_ELEMENT)
-        if not element is None:
-            self.loadRecursive(terminal, element)
+    def loadLayout(self, terminal, rootElement):
+        childElement = rootElement.find(CHILD_ELEMENT)
+        if not childElement is None:
+            self.loadChildRecursive(terminal, childElement)
         else:
-            err("root has no child element; abort loading")
+            err("rootElement has no child childElement; abort loading")
         
-    def loadRecursive(self,terminal,element):
-        child = element.find(SPLIT_ELEMENT)
-        handled = self.tryLoadSplitRecursive(terminal, child)
+    def loadChildRecursive(self,terminal,childElement):
+        targetElement = childElement.find(SPLIT_ELEMENT)
+        handled = self.tryLoadSplitRecursive(terminal, targetElement)
         
         if not handled:
-            child = element.find(TERMINAL_ELEMENT)
-            handled = self.tryLoadTerminal(terminal, child)
+            targetElement = childElement.find(TERMINAL_ELEMENT)
+            handled = self.tryLoadTerminal(terminal, targetElement)
         
         if not handled:
             err("neither split, nor terminal found.")
                 
-    def tryLoadSplitRecursive(self, terminal, child):
-        if child == None:
+    def tryLoadSplitRecursive(self, terminal, splitElement):
+        if splitElement == None:
             return False
         #TODO: pass the position to terminator's pane
-        #position = child.attrib['position']
-        splitChildren = list(child.findall(CHILD_ELEMENT))
+        #position = self.tryGetXmlAttribute(splitElement, POSITION_ATTRIBUTE)
+        splitChildren = list(splitElement.findall(CHILD_ELEMENT))
         if len(splitChildren) == 2:
-            orientation = self.tryGetXmlAttribute(child, ORIENTATION_ATTRIBUTE) 
+            orientation = self.tryGetXmlAttribute(splitElement, ORIENTATION_ATTRIBUTE) 
             self.SplitAndLoadAxisRecursive(terminal, orientation, splitChildren[0], splitChildren[1])
             return True
         else:
-            err("split element does not have exactly 2 child elements")
-            return False
+            err("split element does not have exactly 2 child elements as children")
 
         return False
 
     def SplitAndLoadAxisRecursive(self, terminal, orientation, child1, child2):
-        parent = terminal.parent
-        
-        vertical = self.isVerticalOrientation(orientation)
-        parent.split_axis(terminal, vertical)
+        isVertical = self.isVerticalOrientation(orientation)
+        terminal.parent.split_axis(terminal, isVertical)
 
-        newParent = terminal.parent
-        newTerminal = newParent.get_children()[1]
+        newTerminal = terminal.parent.get_children()[1]
         
-        self.loadRecursive(terminal, child1)
-        self.loadRecursive(newTerminal, child2)
+        self.loadChildRecursive(terminal, child1)
+        self.loadChildRecursive(newTerminal, child2)
     
     def isVerticalOrientation(self, orientation):
         if orientation == HORIZONTAL_VALUE:
@@ -274,23 +270,30 @@ class LayoutManager(plugin.MenuItem):
             
         return True
 
-    def tryLoadTerminal(self, terminal, child):
-        if child == None:
+    def tryLoadTerminal(self, terminal, terminalElement):
+        if terminalElement is None:
             return False
         
-        self.exportTerminalNumber(terminal)
-        command = self.tryGetXmlAttribute(child, COMMAND_ATTRIBUTE)
-        if command == None:
-            command = self.rootCommand
-        if not command == None and not command == "":
+        if not self.exportVariable is None:
+            self.exportTerminalNumber(terminal)
+        
+        command = self.getCommandForTerminal(terminalElement)
+        if not command is None:
             terminal.feed(command + NEWLINE)
 
-        return True
+        return True   
 
     def exportTerminalNumber(self, terminal):
-        if not self.exportVariable == None:
-            terminal.feed(EXPORT_TERMINAL_COMMAND % (self.exportVariable, self.nextTerminalNumber) + NEWLINE)
+        terminal.feed(EXPORT_TERMINAL_COMMAND % (self.exportVariable, self.nextTerminalNumber) + NEWLINE)
         self.nextTerminalNumber += 1
+
+    def getCommandForTerminal(self,terminalElement):
+        command = self.tryGetXmlAttribute(terminalElement, COMMAND_ATTRIBUTE)
+        if command is None:
+            command = self.rootCommand
+        if command == "":
+            command = None
+        return command
 
     def tryGetXmlAttribute(self,element, attributeName):
         if attributeName in element.attrib:
