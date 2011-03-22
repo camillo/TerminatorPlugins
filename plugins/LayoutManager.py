@@ -149,22 +149,22 @@ class LayoutManager(plugin.MenuItem):
         rootElement.attrib[EXPORT_TERMINAL_NUMBER_ATTRIBUTE] = TERMINAL_NUMBER_VARIABLE
         return rootElement
                    
-    def saveRecursive(self, container, element):       
-        if isinstance(container, Terminal):
-            self.saveTerminal(container, element)
-        elif isinstance(container, Paned):
-            self.savePanedRecursive(container, element)
-        elif isinstance(container, Window):
-            self.saveWindowRecursiv(container, element)
+    def saveRecursive(self, target, element):       
+        if isinstance(target, Terminal):
+            self.saveTerminal(target, element)
+        elif isinstance(target, Paned):
+            self.savePanedRecursive(target, element)
+        elif isinstance(target, Window):
+            self.saveWindowRecursiv(target, element)
         else:
-            err("ignoring unknown container type")
+            err("ignoring unknown target type")
 
-    def saveTerminal(self,container, element):
+    def saveTerminal(self,terminal, element):
         ET.SubElement(element, TERMINAL_ELEMENT)
 
-    def savePanedRecursive(self,container, element):
-        splitElement = self.createSplitElement(element, container)
-        children = container.get_children()
+    def savePanedRecursive(self,paned, element):
+        splitElement = self.createSplitElement(element, paned)
+        children = paned.get_children()
         self.saveSplitChildRecursive(splitElement, children[0])
         self.saveSplitChildRecursive(splitElement, children[1])
 
@@ -277,7 +277,7 @@ class LayoutManager(plugin.MenuItem):
             return False
         
         if not self.exportVariable is None:
-            self.exportTerminalNumber(terminal)
+            self.exportTerminalNumber(terminal, self.exportVariable)
         
         command = self.getCommandForTerminal(terminalElement)
         if not command is None:
@@ -285,8 +285,8 @@ class LayoutManager(plugin.MenuItem):
 
         return True   
 
-    def exportTerminalNumber(self, terminal):
-        terminal.feed(EXPORT_TERMINAL_COMMAND % (self.exportVariable, self.nextTerminalNumber) + NEWLINE)
+    def exportTerminalNumber(self, terminal, variable):
+        terminal.feed(EXPORT_TERMINAL_COMMAND % (variable, self.nextTerminalNumber) + NEWLINE)
         self.nextTerminalNumber += 1
 
     def getCommandForTerminal(self,terminalElement):
