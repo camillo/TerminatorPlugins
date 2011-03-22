@@ -64,7 +64,8 @@ EXPORT_TERMINAL_COMMAND = "export %s=%d"
 EVENT_ACTIVATE = "activate"
 
 AVAILABLE = [LAYOUTMANAGER_NAME]
-#available = [LAYOUTMANAGER_NAME]
+#older versions of terminator require available instead of AVAILABLE
+available = [LAYOUTMANAGER_NAME]
 
 class LayoutManager(plugin.MenuItem):
     
