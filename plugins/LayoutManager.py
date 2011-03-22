@@ -94,6 +94,7 @@ class LayoutManager(plugin.MenuItem):
         (mainItem, submenu) = self.createMainItems()
 
         submenu.append(self.createSaveItem(terminal))
+        submenu.append(gtk.SeparatorMenuItem())
         
         for currentFile in listdir(self.configDir):
             self.tryAddLayoutMenuItem(currentFile, terminal, submenu)
