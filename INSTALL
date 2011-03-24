@@ -4,5 +4,5 @@ Copy LayoutManager.py into one of terminator's plugin folders. The two possibili
 1. pathToTerminator/plugins (/usr/share/terminator/terminatorlib/plugins on my system)
 2. pathToTerminatorConfig/plugins (~/.config/terminator/plugins on my system)
 
-Do not forget to activate the plugin in terminator's preferences./usr/bin/terminator (older versions of terminator activate plugins automatically).
+Do not forget to activate the plugin in terminator's preferences (older versions of terminator activate plugins automatically).
 
