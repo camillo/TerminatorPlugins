@@ -248,14 +248,14 @@ class LayoutManager(plugin.MenuItem):
         splitChildren = list(splitElement.findall(CHILD_ELEMENT))
         if len(splitChildren) == 2:
             orientation = self.tryGetXmlAttribute(splitElement, ORIENTATION_ATTRIBUTE) 
-            self.SplitAndLoadAxisRecursive(terminal, orientation, splitChildren[0], splitChildren[1])
+            self.splitAndLoadAxisRecursive(terminal, orientation, splitChildren[0], splitChildren[1])
             return True
         else:
             err("split element does not have exactly 2 child elements as children")
 
         return False
 
-    def SplitAndLoadAxisRecursive(self, terminal, orientation, child1, child2):
+    def splitAndLoadAxisRecursive(self, terminal, orientation, child1, child2):
         isVertical = self.isVerticalOrientation(orientation)
         terminal.parent.split_axis(terminal, isVertical)
 
