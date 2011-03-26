@@ -49,6 +49,7 @@ DIRECTORY_ATTRIBUTE = "directory"
 ORIENTATION_ATTRIBUTE = "orientation"
 POSITION_ATTRIBUTE = "position"
 EXPORT_TERMINAL_NUMBER_ATTRIBUTE = "exportTerminalNumber"
+TAB_ATTRIBUTE = "tab"
 ROOT_DEFAULT_COMMAND = ""
 HORIZONTAL_VALUE = "0"
 VERTICAL_VALUE = "1"
@@ -77,6 +78,7 @@ class LayoutManager(plugin.MenuItem):
     rootCommand = None
     rootDirectory = None
     exportVariable = None
+    tab = None
 
     def __init__(self):
         plugin.MenuItem.__init__(self)
@@ -212,21 +214,33 @@ class LayoutManager(plugin.MenuItem):
             ET.ElementTree(element).write(targetFileName)
 
     def loadCallback(self, layoutMenuItem, terminal):
+        tree = self.loadXmlTree(layoutMenuItem)
+        rootElement = tree.getroot()
+
+        self.initRoot(rootElement)
+
+        self.setTargetTab(terminal)
+        
+        self.loadLayout(terminal, rootElement)
+
+    def loadXmlTree(self, layoutMenuItem):
         fileName = layoutMenuItem.props.label + LAYOUT_EXTENSION
         fileName = join(self.configDir, fileName)
         dbg("loading Layout config [%s]" % fileName)
          
-        tree = parse(fileName)
-        rootElement = tree.getroot()
-        self.initRoot(rootElement)
-
-        self.loadLayout(terminal, rootElement)
+        return parse(fileName)
 
     def initRoot(self,rootElement):
         self.rootCommand = self.tryGetXmlAttribute(rootElement, COMMAND_ATTRIBUTE)
         self.rootDirectory = self.tryGetXmlAttribute(rootElement, DIRECTORY_ATTRIBUTE)
-        self.exportVariable = self.tryGetXmlAttribute(rootElement, EXPORT_TERMINAL_NUMBER_ATTRIBUTE)       
+        self.exportVariable = self.tryGetXmlAttribute(rootElement, EXPORT_TERMINAL_NUMBER_ATTRIBUTE)
+        self.tab = self.tryGetXmlAttribute(rootElement, TAB_ATTRIBUTE)
         self.nextTerminalNumber = 1
+
+    def setTargetTab(self, terminal):
+        if self.tab:
+            window = get_top_window(terminal)
+            window.tab_new()
 
     def loadLayout(self, terminal, rootElement):
         childElement = rootElement.find(CHILD_ELEMENT)
