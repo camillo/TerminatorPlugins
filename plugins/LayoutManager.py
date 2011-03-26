@@ -45,6 +45,7 @@ CHILD_ELEMENT = "child"
 SPLIT_ELEMENT = "split"
 TERMINAL_ELEMENT = "terminal"
 COMMAND_ATTRIBUTE = "command"
+DIRECTORY_ATTRIBUTE = "directory"
 ORIENTATION_ATTRIBUTE = "orientation"
 POSITION_ATTRIBUTE = "position"
 EXPORT_TERMINAL_NUMBER_ATTRIBUTE = "exportTerminalNumber"
@@ -59,6 +60,7 @@ SAVE_BOX_TITLE = 'name the config'
 SAVE_BOX_MESSAGE = 'Enter a name:'
 
 TERMINAL_NUMBER_VARIABLE = "terminalNumber"
+CHANGE_DIRECTORY_COMMAND = 'cd "%s"'
 EXPORT_TERMINAL_COMMAND = "export %s=%d"
 
 EVENT_ACTIVATE = "activate"
@@ -73,6 +75,7 @@ class LayoutManager(plugin.MenuItem):
     configDir = None
     nextTerminalNumber = 0
     rootCommand = None
+    rootDirectory = None
     exportVariable = None
 
     def __init__(self):
@@ -160,11 +163,13 @@ class LayoutManager(plugin.MenuItem):
             err("ignoring unknown target type")
 
     def saveTerminal(self,terminal, element):
-        ET.SubElement(element, TERMINAL_ELEMENT)
+        terminalElement = ET.SubElement(element, TERMINAL_ELEMENT)
+        terminalElement.attrib[DIRECTORY_ATTRIBUTE] = terminal.get_cwd()
 
     def savePanedRecursive(self,paned, element):
         splitElement = self.createSplitElement(element, paned)
         children = paned.get_children()
+        
         self.saveSplitChildRecursive(splitElement, children[0])
         self.saveSplitChildRecursive(splitElement, children[1])
 
@@ -219,6 +224,7 @@ class LayoutManager(plugin.MenuItem):
 
     def initRoot(self,rootElement):
         self.rootCommand = self.tryGetXmlAttribute(rootElement, COMMAND_ATTRIBUTE)
+        self.rootDirectory = self.tryGetXmlAttribute(rootElement, DIRECTORY_ATTRIBUTE)
         self.exportVariable = self.tryGetXmlAttribute(rootElement, EXPORT_TERMINAL_NUMBER_ATTRIBUTE)       
         self.nextTerminalNumber = 1
 
@@ -272,10 +278,12 @@ class LayoutManager(plugin.MenuItem):
             
         return True
 
-    def tryLoadTerminal(self, terminal, terminalElement):
+    def tryLoadTerminal(self, terminal, terminalElement):       
         if terminalElement is None:
             return False
         
+        self.setDirectory(terminal, terminalElement)
+
         if not self.exportVariable is None:
             self.exportTerminalNumber(terminal, self.exportVariable)
         
@@ -288,6 +296,15 @@ class LayoutManager(plugin.MenuItem):
     def exportTerminalNumber(self, terminal, variable):
         terminal.feed(EXPORT_TERMINAL_COMMAND % (variable, self.nextTerminalNumber) + NEWLINE)
         self.nextTerminalNumber += 1
+
+    def setDirectory(self, terminal, terminalElement):
+        directory = self.tryGetXmlAttribute(terminalElement, DIRECTORY_ATTRIBUTE)
+
+        if directory is None:
+            directory = self.rootDirectory
+            
+        if not directory is None:
+            terminal.feed(CHANGE_DIRECTORY_COMMAND % directory + NEWLINE)
 
     def getCommandForTerminal(self,terminalElement):
         command = self.tryGetXmlAttribute(terminalElement, COMMAND_ATTRIBUTE)
