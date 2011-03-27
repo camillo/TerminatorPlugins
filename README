@@ -18,7 +18,7 @@ Usage:
 Layout manager adds a 'Layout Manager' menu item into terminal's context menu.
 Layouts can be saved and loaded here.
 The load command target's the terminal, that you clicked to open the context menu (and not the whole tab), so start with a single terminal if you want the layout exacly as saved. Layout manager will never close any terminal.
-Layouts contains information about the arrangement of terminals and their current working directories.
+Layouts contains information about the arrangement of terminals and their current working directories. Only the current active tab is saved, others are ignored.
 
 Saved layouts are written to terminatorConfigPath/LayoutManager (~/.config/terminator/LayoutManager in my case) and can be customized with every text editor. See next section for details about the format of .layout files. Following settings can be configured:
 

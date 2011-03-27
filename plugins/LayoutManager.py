@@ -19,6 +19,7 @@ from terminatorlib.paned import HPaned
 from terminatorlib.paned import VPaned
 from terminatorlib.window import Window
 from terminatorlib.terminal import Terminal
+from terminatorlib.notebook import Notebook
 
 from xml.etree.ElementTree import parse
 import xml.etree.ElementTree as ET
@@ -157,7 +158,7 @@ class LayoutManager(plugin.MenuItem):
     def saveCallback(self, saveMenuItem, terminal):
         window = get_top_window(terminal)
         rootElement = self.createRootElement()
-        self.saveRecursive(window, rootElement)
+        self.saveRecursive(window, rootElement, terminal)
         self.indentXmlElement(rootElement)
         self.writeXmlToFile(rootElement)
 
@@ -167,13 +168,15 @@ class LayoutManager(plugin.MenuItem):
         rootElement.attrib[EXPORT_TERMINAL_NUMBER_ATTRIBUTE] = TERMINAL_NUMBER_VARIABLE
         return rootElement
                    
-    def saveRecursive(self, target, element):       
+    def saveRecursive(self, target, element, terminal = None):       
         if isinstance(target, Terminal):
             self.saveTerminal(target, element)
         elif isinstance(target, Paned):
             self.savePanedRecursive(target, element)
         elif isinstance(target, Window):
-            self.saveWindowRecursiv(target, element)
+            self.saveWindowRecursiv(target, element, terminal)
+        elif isinstance(target, Notebook):
+            self.saveNotebookRecursiv(target, element, terminal)
         else:
             err("ignoring unknown target type")
 
@@ -209,10 +212,14 @@ class LayoutManager(plugin.MenuItem):
         childElement = ET.SubElement(splitElement, CHILD_ELEMENT)           
         self.saveRecursive(child, childElement)       
         
-    def saveWindowRecursiv(self, window, element):
+    def saveWindowRecursiv(self, window, element, terminal):
         childElement = ET.SubElement(element, CHILD_ELEMENT)
         child = window.get_children()[0]
-        self.saveRecursive(child,childElement)
+        self.saveRecursive(child, childElement, terminal)
+ 
+    def saveNotebookRecursiv(self, notebook, element, terminal):
+        child = notebook.find_tab_root(terminal)
+        self.saveRecursive(child,element)
  
     def writeXmlToFile (self, element, filename = None):
         if filename is None:
@@ -318,7 +325,7 @@ class LayoutManager(plugin.MenuItem):
         
         if not handled:
             err("neither split, nor terminal found.")
-                
+
     def tryLoadSplitRecursive(self, terminal, splitElement):
         if splitElement == None:
             return False
@@ -328,11 +335,10 @@ class LayoutManager(plugin.MenuItem):
         if len(splitChildren) == 2:
             orientation = self.tryGetXmlAttribute(splitElement, ORIENTATION_ATTRIBUTE) 
             self.splitAndLoadAxisRecursive(terminal, orientation, splitChildren[0], splitChildren[1])
-            return True
         else:
             err("split element does not have exactly 2 child elements as children")
 
-        return False
+        return True
 
     def splitAndLoadAxisRecursive(self, terminal, orientation, child1, child2):
         isVertical = self.isVerticalOrientation(orientation)
@@ -344,7 +350,9 @@ class LayoutManager(plugin.MenuItem):
         self.loadChildRecursive(newTerminal, child2)
     
     def isVerticalOrientation(self, orientation):
-        if orientation == HORIZONTAL_VALUE:
+        if orientation is None:
+            err("orientation is None; use default")
+        elif orientation == HORIZONTAL_VALUE:
             return False
         elif not orientation == VERTICAL_VALUE:
             err("unknown orientation [%s]; use default" % orientation)
