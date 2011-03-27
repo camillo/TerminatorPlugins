@@ -451,6 +451,7 @@ class InputBoxDialog(gtk.Dialog):
             label.show()
 
         self.entry = gtk.Entry()
+        self.entry.connect("activate", self.click)
         self.entry.set_text(default_text)
         box.pack_start(self.entry)
         self.entry.show()

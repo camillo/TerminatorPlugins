@@ -29,7 +29,7 @@ The optional command attribute of root's or a terminal element:
 This command will be executed, when terminal is loaded. Terminal's command attribute overrides root's.
 
 The optional parameter attribute of root's element:
-The command attribute can include a placeholder for a parameter ("echo {}" for example). The placeholder will be replaced by the parameter, configured here as a comma separated list. Let's say you have a layout with 4 terminals and you want to open ssh connections to 4 different server. 
+The command attribute can include a placeholder for a parameter ("echo {}" for example). The placeholder will be replaced by the parameter, configured by a comma separated list. Let's say you have a layout with 4 terminals and you want to open ssh connections to 4 different server. 
 <root command="ssh {}" parameter="server1,server2,server3,server4"> ... </root>
 Note: if you override the command attribute for a terminal, the parameter will not be replaced but saved for the next terminal.
 Take care to provide enough parameter for all terminals. Command will be ignored if no parameter is left.
