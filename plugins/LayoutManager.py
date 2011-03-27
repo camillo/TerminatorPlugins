@@ -374,7 +374,7 @@ class LayoutManager(plugin.MenuItem):
         elif step == EXPORT_TERMINAL_NUMBER_ATTRIBUTE:
             self.exportTerminalNumber(terminal, self.exportVariable)
         elif step == COMMAND_ATTRIBUTE:
-            self.executeCommand(terminal, terminalElement)
+            self.executeTerminalCommand(terminal, terminalElement)
         else:
             err("ignoring unknown step [%s]" % step)
 
@@ -389,7 +389,7 @@ class LayoutManager(plugin.MenuItem):
             self.writeCommand(terminal, EXPORT_TERMINAL_COMMAND % (variable, self.nextTerminalNumber))
             self.nextTerminalNumber += 1
 
-    def executeCommand(self, terminal, terminalElement):
+    def executeTerminalCommand(self, terminal, terminalElement):
         command = self.getCommandForTerminal(terminalElement)
         self.writeCommand(terminal, command)
 
