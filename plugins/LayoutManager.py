@@ -39,6 +39,8 @@ LAYOUT_EXTENSION = ".layout"
 SAVE_COMMAND_CAPTION = "save"
 NEWLINE = "\n"
 INDENT_SPACE = "  "
+DEFAULT_PARAMETER_PLACEHOLDER = "{}"
+DEFAULT_PARAMETER_SEPARATOR = ","
 
 ROOT_ELEMENT = "root"
 CHILD_ELEMENT = "child"
@@ -46,10 +48,13 @@ SPLIT_ELEMENT = "split"
 TERMINAL_ELEMENT = "terminal"
 COMMAND_ATTRIBUTE = "command"
 DIRECTORY_ATTRIBUTE = "directory"
-ORIENTATION_ATTRIBUTE = "orientation"
-POSITION_ATTRIBUTE = "position"
 EXPORT_TERMINAL_NUMBER_ATTRIBUTE = "exportTerminalNumber"
 TAB_ATTRIBUTE = "tab"
+PARAMETER_ATTRIBUTE = "parameter"
+PARAMETER_PLACEHOLDER_ATTRIBUTE = "parameterPlaceholder"
+PARAMETER_SEPARATOR_ATTRIBUTE = "parameterSeparator"
+ORIENTATION_ATTRIBUTE = "orientation"
+POSITION_ATTRIBUTE = "position"
 ROOT_DEFAULT_COMMAND = ""
 HORIZONTAL_VALUE = "0"
 VERTICAL_VALUE = "1"
@@ -79,6 +84,10 @@ class LayoutManager(plugin.MenuItem):
     rootDirectory = None
     exportVariable = None
     tab = None
+    parameter = None
+    parameterPlaceholder = DEFAULT_PARAMETER_PLACEHOLDER
+    parameterSeparator = DEFAULT_PARAMETER_SEPARATOR
+    useParameter = False
 
     def __init__(self):
         plugin.MenuItem.__init__(self)
@@ -235,12 +244,42 @@ class LayoutManager(plugin.MenuItem):
         self.rootDirectory = self.tryGetXmlAttribute(rootElement, DIRECTORY_ATTRIBUTE)
         self.exportVariable = self.tryGetXmlAttribute(rootElement, EXPORT_TERMINAL_NUMBER_ATTRIBUTE)
         self.tab = self.tryGetXmlAttribute(rootElement, TAB_ATTRIBUTE)
+        self.setParameter(rootElement)
         self.nextTerminalNumber = 1
 
+    def setParameter(self, rootElement):
+        self.parameterPlaceholder = self.getParameterPlaceholder(rootElement)
+        self.parameterSeparator = self.getParameterSeparator(rootElement)
+        (self.useParameter, self.parameter) = self.tryParseParameter(rootElement)
+
+    def getParameterPlaceholder(self, rootElement):
+        placeholder = self.tryGetXmlAttribute(rootElement, PARAMETER_PLACEHOLDER_ATTRIBUTE)
+        if not placeholder:
+            placeholder = DEFAULT_PARAMETER_PLACEHOLDER
+
+        return placeholder
+
+    def getParameterSeparator(self, rootElement):
+        separator = self.tryGetXmlAttribute(rootElement, PARAMETER_SEPARATOR_ATTRIBUTE)
+        if not separator:
+            separator = DEFAULT_PARAMETER_SEPARATOR
+
+        return separator
+
+    def tryParseParameter(self, rootElement):
+        parameter = self.tryGetXmlAttribute(rootElement, PARAMETER_ATTRIBUTE)
+
+        if parameter:
+            parameter = parameter.split(self.parameterSeparator)
+            parameter.reverse()
+
+        return (not parameter is None, parameter)
+    
     def setTargetTab(self, terminal):
         if self.tab:
             window = get_top_window(terminal)
             window.tab_new()
+            #TODO: rename the tab to configured value
 
     def loadLayout(self, terminal, rootElement):
         childElement = rootElement.find(CHILD_ELEMENT)
@@ -301,15 +340,9 @@ class LayoutManager(plugin.MenuItem):
         if not self.exportVariable is None:
             self.exportTerminalNumber(terminal, self.exportVariable)
         
-        command = self.getCommandForTerminal(terminalElement)
-        if not command is None:
-            terminal.feed(command + NEWLINE)
+        self.executeCommand(terminal, terminalElement)
 
         return True   
-
-    def exportTerminalNumber(self, terminal, variable):
-        terminal.feed(EXPORT_TERMINAL_COMMAND % (variable, self.nextTerminalNumber) + NEWLINE)
-        self.nextTerminalNumber += 1
 
     def setDirectory(self, terminal, terminalElement):
         directory = self.tryGetXmlAttribute(terminalElement, DIRECTORY_ATTRIBUTE)
@@ -320,13 +353,36 @@ class LayoutManager(plugin.MenuItem):
         if not directory is None:
             terminal.feed(CHANGE_DIRECTORY_COMMAND % directory + NEWLINE)
 
+    def exportTerminalNumber(self, terminal, variable):
+        terminal.feed(EXPORT_TERMINAL_COMMAND % (variable, self.nextTerminalNumber) + NEWLINE)
+        self.nextTerminalNumber += 1
+
+    def executeCommand(self, terminal, terminalElement):
+        command = self.getCommandForTerminal(terminalElement)
+        if not command is None:
+            terminal.feed(command + NEWLINE)
+
     def getCommandForTerminal(self,terminalElement):
         command = self.tryGetXmlAttribute(terminalElement, COMMAND_ATTRIBUTE)
         if command is None:
             command = self.rootCommand
+            if self.useParameter:
+                command = self.insertCommandParameter(command)
         if command == "":
             command = None
         return command
+
+    def insertCommandParameter(self, command):
+        if not command:
+            return None
+        
+        if not self.parameter:
+            err("no parameter left for terminal; ignoring command")
+            return None
+        
+        parameter = self.parameter.pop()
+        
+        return command.replace(self.parameterPlaceholder, parameter)
 
     def tryGetXmlAttribute(self,element, attributeName):
         if attributeName in element.attrib:
