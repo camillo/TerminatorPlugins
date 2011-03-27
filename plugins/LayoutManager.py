@@ -390,10 +390,10 @@ class LayoutManager(plugin.MenuItem):
             self.nextTerminalNumber += 1
 
     def executeTerminalCommand(self, terminal, terminalElement):
-        command = self.getCommandForTerminal(terminalElement)
+        command = self.getTerminalCommand(terminalElement)
         self.writeCommand(terminal, command)
 
-    def getCommandForTerminal(self,terminalElement):
+    def getTerminalCommand(self,terminalElement):
         command = self.tryGetXmlAttribute(terminalElement, COMMAND_ATTRIBUTE)
         if command is None:
             command = self.rootCommand
