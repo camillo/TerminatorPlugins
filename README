@@ -46,6 +46,13 @@ Set an enviroment variable holding terminal's number. This is done, before comma
 The optional directory attribute of root's or a terminal element:
 Set the starting directory for a terminal. Terminal's directory attribute overrides root's.
 
+The optional executionOrder attribute of root's element:
+The default execution order for loading a terminal is:
+1. cd into directory
+2. set enviroment variable
+3. execute command
+This can be changed by setting attribute's value to a comma separated list containing following values 'command', 'directory' and 'exportTerminalNumber'. Missing values are appended in default order. If you use the command attribute like in the ssh example (see parameter attribute), you possibly want to set the eviroment variable inside the new ssh session and not on your host. This can be configured via "command,exportTerminalNumber". In this case, the possible configured start directory would be set inside the new ssh session (it's appanded after exportTerminalNumber). To prevent this, configure all three values: "directory,command,exportTerminalNumber"
+
 Layout Format:
 layouts are saved as xml files and must have the extension .layout. File's name is used as name for the layout. The format is hopefully self explaining and can be seen in this example:
 

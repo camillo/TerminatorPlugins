@@ -48,6 +48,7 @@ SPLIT_ELEMENT = "split"
 TERMINAL_ELEMENT = "terminal"
 COMMAND_ATTRIBUTE = "command"
 DIRECTORY_ATTRIBUTE = "directory"
+EXECUTION_ORDER_ATTRIBUTE = "executionOrder"
 EXPORT_TERMINAL_NUMBER_ATTRIBUTE = "exportTerminalNumber"
 TAB_ATTRIBUTE = "tab"
 PARAMETER_ATTRIBUTE = "parameter"
@@ -58,6 +59,8 @@ POSITION_ATTRIBUTE = "position"
 ROOT_DEFAULT_COMMAND = ""
 HORIZONTAL_VALUE = "0"
 VERTICAL_VALUE = "1"
+
+DEFAULT_EXECUTION_ORDER = [DIRECTORY_ATTRIBUTE, EXPORT_TERMINAL_NUMBER_ATTRIBUTE, COMMAND_ATTRIBUTE]
 
 WRONG_EXTENSION_MESSAGE = "wrong extension"
 FILE_NOT_FOUND_MESSAGE = "file not found"
@@ -88,6 +91,7 @@ class LayoutManager(plugin.MenuItem):
     parameterPlaceholder = DEFAULT_PARAMETER_PLACEHOLDER
     parameterSeparator = DEFAULT_PARAMETER_SEPARATOR
     useParameter = False
+    executionOrder = DEFAULT_EXECUTION_ORDER
 
     def __init__(self):
         plugin.MenuItem.__init__(self)
@@ -243,10 +247,34 @@ class LayoutManager(plugin.MenuItem):
         self.rootCommand = self.tryGetXmlAttribute(rootElement, COMMAND_ATTRIBUTE)
         self.rootDirectory = self.tryGetXmlAttribute(rootElement, DIRECTORY_ATTRIBUTE)
         self.exportVariable = self.tryGetXmlAttribute(rootElement, EXPORT_TERMINAL_NUMBER_ATTRIBUTE)
+        self.executionOrder = self.parseExecutionOrder(rootElement)
         self.tab = self.tryGetXmlAttribute(rootElement, TAB_ATTRIBUTE)
         self.setParameter(rootElement)
         self.nextTerminalNumber = 1
 
+    def parseExecutionOrder(self, rootElement):
+        executionOrder = self.tryGetXmlAttribute(rootElement, EXECUTION_ORDER_ATTRIBUTE)
+        if executionOrder:
+            executionOrder = executionOrder.split(DEFAULT_PARAMETER_SEPARATOR)
+            executionOrder = self.normalizeExecutionOrder(executionOrder)
+            self.addMissingExecutionSteps(executionOrder)
+        else:
+            executionOrder = DEFAULT_EXECUTION_ORDER 
+
+        return executionOrder
+
+    def normalizeExecutionOrder(self, executionOrder):
+        normalizedExecutionOrder = []
+        for step in executionOrder:
+            normalizedExecutionOrder.append(step.strip())
+
+        return normalizedExecutionOrder
+    
+    def addMissingExecutionSteps(self, executionOrder):
+        for step in DEFAULT_EXECUTION_ORDER:
+            if not step in executionOrder:
+                executionOrder.append(step)
+    
     def setParameter(self, rootElement):
         self.parameterPlaceholder = self.getParameterPlaceholder(rootElement)
         self.parameterSeparator = self.getParameterSeparator(rootElement)
@@ -327,14 +355,20 @@ class LayoutManager(plugin.MenuItem):
         if terminalElement is None:
             return False
         
-        self.setDirectory(terminal, terminalElement)
-
-        if not self.exportVariable is None:
-            self.exportTerminalNumber(terminal, self.exportVariable)
-        
-        self.executeCommand(terminal, terminalElement)
+        for step in self.executionOrder:
+            self.executeStep(step, terminal, terminalElement)
 
         return True   
+
+    def executeStep(self, step, terminal, terminalElement):
+        if step == DIRECTORY_ATTRIBUTE:
+            self.setDirectory(terminal, terminalElement)
+        elif step == EXPORT_TERMINAL_NUMBER_ATTRIBUTE:
+            self.exportTerminalNumber(terminal, self.exportVariable)
+        elif step == COMMAND_ATTRIBUTE:
+            self.executeCommand(terminal, terminalElement)
+        else:
+            err("ignoring unknown step [%s]" % step)
 
     def setDirectory(self, terminal, terminalElement):
         directory = self.tryGetXmlAttribute(terminalElement, DIRECTORY_ATTRIBUTE, self.rootDirectory)
@@ -343,8 +377,9 @@ class LayoutManager(plugin.MenuItem):
             self.writeCommand(terminal, CHANGE_DIRECTORY_COMMAND % directory)
 
     def exportTerminalNumber(self, terminal, variable):
-        self.writeCommand(terminal, EXPORT_TERMINAL_COMMAND % (variable, self.nextTerminalNumber))
-        self.nextTerminalNumber += 1
+        if not variable is None:
+            self.writeCommand(terminal, EXPORT_TERMINAL_COMMAND % (variable, self.nextTerminalNumber))
+            self.nextTerminalNumber += 1
 
     def executeCommand(self, terminal, terminalElement):
         command = self.getCommandForTerminal(terminalElement)
