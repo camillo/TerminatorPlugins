@@ -46,6 +46,9 @@ Set an enviroment variable holding terminal's number. This is done, before comma
 The optional directory attribute of root's or a terminal element:
 Set the starting directory for a terminal. Terminal's directory attribute overrides root's.
 
+The optional caption attribute of a terminal element:
+Set the caption for the terminal.
+
 The optional executionOrder attribute of root's element:
 The default execution order for loading a terminal is:
 1. cd into directory

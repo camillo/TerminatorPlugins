@@ -47,6 +47,7 @@ ROOT_ELEMENT = "root"
 CHILD_ELEMENT = "child"
 SPLIT_ELEMENT = "split"
 TERMINAL_ELEMENT = "terminal"
+CAPTION_ATTRIBUTE = "caption"
 COMMAND_ATTRIBUTE = "command"
 DIRECTORY_ATTRIBUTE = "directory"
 EXECUTION_ORDER_ATTRIBUTE = "executionOrder"
@@ -306,8 +307,7 @@ class LayoutManager(plugin.MenuItem):
         if self.tab:
             window = get_top_window(terminal)
             window.tab_new()
-            #TODO: rename the tab to configured value
-
+                   
     def loadLayout(self, terminal, rootElement):
         childElement = rootElement.find(CHILD_ELEMENT)
         if not childElement is None:
@@ -363,10 +363,17 @@ class LayoutManager(plugin.MenuItem):
         if terminalElement is None:
             return False
         
+        self.setTerminalCaption(terminal, terminalElement)
+        
         for step in self.executionOrder:
             self.executeStep(step, terminal, terminalElement)
 
         return True   
+
+    def setTerminalCaption(self, terminal, terminalElement):
+        caption = self.tryGetXmlAttribute(terminalElement, CAPTION_ATTRIBUTE)
+        if caption:
+            terminal.titlebar.termtext = caption
 
     def executeStep(self, step, terminal, terminalElement):
         if step == DIRECTORY_ATTRIBUTE:
