@@ -1,0 +1,70 @@
+This is a plugin for terminator, that saves and restores layouts.
+
+Usage:
+Layout manager adds a 'Layout Manager' menu item into terminal's context menu.
+Layouts can be saved and loaded here.
+The load command target's the terminal, that you clicked to open the context menu (and not the whole tab), so start with a single terminal if you want the layout exacly as saved. Layout manager will never close any terminal.
+Layouts contains information about the arrangement of terminals and their current working directories. Only the current active tab is saved, others are ignored.
+
+Saved layouts are written to terminatorConfigPath/LayoutManager (~/.config/terminator/LayoutManager in my case) and can be customized with every text editor. See next section for details about the format of .layout files. Following settings can be configured:
+
+The optional tab attribute of root's element:
+Instead of loading the layout into clicked terminal, open a new tab. Attribute's value is ignored and will hopefully used in later versions for setting tab's caption.
+
+The optional command attribute of root's or a terminal element:
+This command will be executed, when terminal is loaded. Terminal's command attribute overrides root's.
+
+The optional parameter attribute of root's element:
+The command attribute can include a placeholder for a parameter ("echo {}" for example). The placeholder will be replaced by the parameter, configured by a comma separated list. Let's say you have a layout with 4 terminals and you want to open ssh connections to 4 different server. 
+<root command="ssh {}" parameter="server1,server2,server3,server4"> ... </root>
+Note: if you override the command attribute for a terminal, the parameter will not be replaced but saved for the next terminal.
+Take care to provide enough parameter for all terminals. Command will be ignored if no parameter is left.
+
+The optional parameterPlaceholder attribute of root's element:
+If {} is no good parameter placeholder for your needs, change it here.
+
+The optional parameterSeparator attribute of root's element:
+If comma is no good separator for your needs, change it here.
+
+The optional exportTerminalNumber attribute of root's element:
+Set an enviroment variable holding terminal's number. This is done, before command's execution, so command can act different for every terminal. I use this for example to start the same bash script for all terminals and use the enviroment variable as switch what to do. Simple actions like opening ssh connections to different server can be easier configured by using the parameter attribute.
+
+The optional directory attribute of root's or a terminal element:
+Set the starting directory for a terminal. Terminal's directory attribute overrides root's.
+
+The optional caption attribute of a terminal element:
+Set the caption for the terminal.
+
+The optional executionOrder attribute of root's element:
+The default execution order for loading a terminal is:
+1. cd into directory
+2. set enviroment variable
+3. execute command
+This can be changed by setting attribute's value to a comma separated list containing following values 'command', 'directory' and 'exportTerminalNumber'. Missing values are appended in default order. If you use the command attribute like in the ssh example (see parameter attribute), you possibly want to set the eviroment variable inside the new ssh session and not on your host. This can be configured via "command,exportTerminalNumber". In this case, the possible configured start directory would be set inside the new ssh session (it's appanded after exportTerminalNumber). To prevent this, configure all three values: "directory,command,exportTerminalNumber"
+
+Layout Format:
+layouts are saved as xml files and must have the extension .layout. File's name is used as name for the layout. The format is hopefully self explaining and can be seen in this example:
+
+<root command="echo $terminalNumber" exportTerminalNumber="terminalNumber" directory="/home/camillo/" tab="live server">
+  <child>
+    <split orientation="1" position="213">
+      <child>
+        <split orientation="0" position="328">
+          <child>
+            <terminal command="" />
+          </child>
+          <child>
+            <terminal directory="/home/camillo/LayoutManager" />
+          </child>
+        </split>
+      </child>
+      <child>
+        <terminal command="ls" />
+      </child>
+    </split>
+  </child>
+</root>
+
+The position of the split elements are only written, but not used by the plugin yet.
+
+Layout Manager's code is public domain.
