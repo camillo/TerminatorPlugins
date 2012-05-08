@@ -1,0 +1,79 @@
+TerminalExporter allows you to save full terminal buffer into file and/or log terminal activities.
+
+Intention
+I found myself often in situations where I wanted to search through my terminal's output. I know that terminator offers a 'search' function, but i was never able to find it usefull. Most of these times I have thousands of lines of debug output and without grep and/or less I am lost. This is where TerminalExporter becomes handy. It exports the full terminal buffer into a file and you can do all the unix magic.
+I included logging features for cases where output runs that fast through the terminal that bufferd line limit becomes an issue.
+
+
+Usage
+In terminal's context menu an 'export terminal' item is shown. It provides following functions:
+
+- export terminal
+Full terminal buffer is exported into a file (into /tmp by default)
+
+- log terminal
+Terminal's session is loggend into a file (info /tmp by default).
+
+- stop log
+Stops logging of this session.
+
+- export and log terminal
+Combines export and log :-). First terminal's buffer is exported into a file and then session is logged into same file.
+
+
+Configuration
+All configuration is done in terminator's config file (~/.config/terminator/config on my system).
+Include a [[TerminalExporter]] section inside [plugins] section (see example at end of this file).
+Options are:
+
+- directory
+Default is /tmp.
+Exports and logs are written into this directory; no shortcuts like ~, $HOME etc are allowed.
+Content of your terminal may contain VERY SENSITIVE data. You probably do not want them inside /tmp.
+Make sure that configured directory exists.
+
+- exportNameToFile
+Default is /tmp/.terminatorExports.
+TerminalExporter generates a random, unique filename per export and log. These filenames are appended to the file, configured by this option. Set it to "", if you do not want to log the used filenames (see alias section in this document for usage).
+
+- exportNameToEnv
+Default is "" (not set).
+Set it to the name of an enviroment variable. If configured, TerminalExporter tries to export path and name of used file after every export and log. This is done by sending the command 'variable=pathPlusName' to the terminal. Of course this does not work, if your terminal does not provide a prompt at this time and is complete useless, if you are inside a ssh session. This is, why it is disabled by default.
+
+- mainMenuText
+Default is 'TerminalExporter'.
+Text of TerminalExporter's main menu item.
+
+- exportMenuText
+Default is 'export terminal'.
+Text of the menu item.
+
+- logMenuText
+Default is 'log terminal'.
+Text of the menu item.
+
+- stopLogMenuText
+Default is 'stop log'.
+Text of the menu item.
+
+- exportLogMenuText
+Default is 'export and log terminal'
+Text of the menu item.
+
+
+Alias; using the /tmp/.terminatorExports file
+It's a simple text file, containing the locations to exports and logs. I use following aliase; feel free to script what ever you need:
+alias tgrep='cat `tail -n1 /tmp/.terminatorExports` | grep'
+alias tless='cat `tail -n1 /tmp/.terminatorExports` | less'
+alias ttail='tail `tail -n1 /tmp/.terminatorExports`'
+
+using these aliase, I can grep, less and tail the last export or log.
+
+Config example
+[plugins]
+  [[TerminalExporter]]
+    directory = /home/camillo/terminatorExports
+    mainMenuText = export
+
+
+TerminalExporter's code is public domain.
