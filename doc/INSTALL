@@ -1,8 +1,9 @@
 Plugins are supported since 0.9x, so upgrade terminator if needed.
 
-Copy LayoutManager.py into one of terminator's plugin folders. The two possibilities are:
+Copy plugins (the python files in /plugins folder) into one of terminator's plugin folders. The two possibilities are:
 1. pathToTerminator/plugins (/usr/share/terminator/terminatorlib/plugins on my system)
 2. pathToTerminatorConfig/plugins (~/.config/terminator/plugins on my system)
 
 Do not forget to activate the plugin in terminator's preferences (older versions of terminator activate plugins automatically).
 
+The plugins are independent; no need to copy them all. Choose what you want to use.
