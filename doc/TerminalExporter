@@ -62,7 +62,7 @@ Text of the menu item.
 
 
 Alias; using the /tmp/.terminatorExports file
-It's a simple text file, containing the locations to exports and logs. I use following aliase; feel free to script what ever you need:
+It's a simple text file, containing the locations to exports and logs. I use following aliase; feel free to script whatever you need:
 alias tgrep='cat `tail -n1 /tmp/.terminatorExports` | grep'
 alias tless='cat `tail -n1 /tmp/.terminatorExports` | less'
 alias ttail='tail `tail -n1 /tmp/.terminatorExports`'
