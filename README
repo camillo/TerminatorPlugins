@@ -3,9 +3,6 @@ This is a plugin for terminator, that saves and restores layouts.
 see https://launchpad.net/terminator 
 for information about terminator.
 
-see http://www.tenshu.net/archives/2010/04/18/writing-terminator-plugins/ 
-for a short tutorial, how to write terminator plugins.
-
 Installation:
 Plugins are supported since 0.9x, so upgrade terminator if needed.
 Copy LayoutManager.py into one of terminator's plugin folders. The two possibilities are:
