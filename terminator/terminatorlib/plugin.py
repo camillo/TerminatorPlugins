@@ -29,7 +29,7 @@ import borg
 from config import Config
 from util import dbg, err, get_config_dir
 from terminator import Terminator
-
+from gtk import Label
 class Plugin(object):
     """Definition of our base plugin class"""
     capabilities = None
@@ -188,3 +188,18 @@ class MenuItem(Plugin):
         """Callback to transform the enclosed URL"""
         raise NotImplementedError
 
+class PluginConfig():
+    '''
+    Plugins may provide a nested class, inheriting from this one.
+    This nested class must have the magic name 'Config'
+    '''
+
+    def get_config_dialog(self, config):
+        '''
+        Override this method, to provide your own config dialog.
+        @return: a gtk widget
+        # FIXME: we need to auto-construct a UI for the plugin
+        '''
+        ret = Label()
+        ret.set_text("This plugin has no configuration options")
+        return ret 

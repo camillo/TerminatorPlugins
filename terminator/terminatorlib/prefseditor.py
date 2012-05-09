@@ -9,14 +9,14 @@ write it to a config file
 
 import os
 import gtk
-
+from sys import exc_info
 from util import dbg, err
 import config
 from keybindings import Keybindings, KeymapError
 from translation import _
 from encoding import TerminatorEncoding
 from terminator import Terminator
-from plugin import PluginRegistry
+from plugin import PluginRegistry, PluginConfig
 
 def color2hex(widget):
     """Pull the colour values out of a Gtk ColorPicker widget and return them
@@ -1177,9 +1177,28 @@ class PrefsEditor:
 
     def set_plugin(self, plugin):
         """Show the preferences for the selected plugin, if any"""
-        pluginpanelabel = self.builder.get_object('pluginpanelabel')
-        pluginconfig = self.config.plugin_get_config(plugin)
-        # FIXME: Implement this, we need to auto-construct a UI for the plugin
+        pluginBox = self.builder.get_object('hbox7')
+        pluginDialog = self.get_plugin_config_dialog(plugin)
+        while len(pluginBox.get_children()) > 1:
+            pluginBox.remove(pluginBox.get_children()[1])
+        pluginBox.pack_end(pluginDialog)
+        pluginBox.show_all()
+
+    def get_plugin_config_dialog(self, plugin):
+        try:
+            config = self.config.plugin_get_config(plugin)
+            pluginClass = self.registry.available_plugins[plugin]
+            if hasattr(pluginClass, 'Config'):
+                pluginConfig = getattr(pluginClass, 'Config')()
+            else:
+                pluginConfig = PluginConfig()
+            pluginDialog = pluginConfig.get_config_dialog(config)
+        except:
+            error = exc_info().__str__()
+            pluginDialog = gtk.Label()
+            err("error, loading config dialog:%s" % error)
+            pluginDialog.set_text("error, loading config dialog")
+        return pluginDialog
 
     def on_profile_name_edited(self, cell, path, newtext):
         """Update a profile name"""
