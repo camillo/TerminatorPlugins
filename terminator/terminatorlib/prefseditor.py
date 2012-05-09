@@ -18,6 +18,8 @@ from encoding import TerminatorEncoding
 from terminator import Terminator
 from plugin import PluginRegistry, PluginConfig
 
+PLUGIN_CONFIG_BOX = "pluginConfigBox"
+
 def color2hex(widget):
     """Pull the colour values out of a Gtk ColorPicker widget and return them
     as 8bit hex values, sinces its default behaviour is to give 16bit values"""
@@ -1177,7 +1179,7 @@ class PrefsEditor:
 
     def set_plugin(self, plugin):
         """Show the preferences for the selected plugin, if any"""
-        pluginBox = self.builder.get_object('hbox7')
+        pluginBox = self.builder.get_object(PLUGIN_CONFIG_BOX)
         pluginDialog = self.get_plugin_config_dialog(plugin)
         while len(pluginBox.get_children()) > 1:
             pluginBox.remove(pluginBox.get_children()[1])
