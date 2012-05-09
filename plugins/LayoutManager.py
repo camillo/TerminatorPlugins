@@ -11,7 +11,6 @@ from terminatorlib.translation import _
 
 from terminatorlib.util import dbg
 from terminatorlib.util import err
-from terminatorlib.util import get_top_window
 from terminatorlib.util import get_config_dir
 
 from terminatorlib.paned import Paned
@@ -79,6 +78,14 @@ EVENT_ACTIVATE = "activate"
 AVAILABLE = [LAYOUTMANAGER_NAME]
 #older versions of terminator require available instead of AVAILABLE
 available = [LAYOUTMANAGER_NAME]
+
+def get_top_window(widget):
+    """Return the Window instance a widget belongs to"""
+    parent = widget.get_parent()
+    while parent:
+        widget = parent
+        parent = widget.get_parent()
+    return(widget)
 
 class LayoutManager(plugin.MenuItem):
     
@@ -446,7 +453,7 @@ class LayoutManager(plugin.MenuItem):
         else:
             if level and (not element.tail or not element.tail.strip()):
                 element.tail = indentSpace
-
+    
 class InputBoxDialog(gtk.Dialog):
 
     def __init__(self, message="", default_text='', modal= True):
