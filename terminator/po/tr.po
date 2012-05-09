@@ -1,0 +1,536 @@
+# Turkish translation for terminator
+# Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
+# This file is distributed under the same license as the terminator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: terminator\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2011-08-21 01:31+0100\n"
+"PO-Revision-Date: 2011-01-07 18:07+0000\n"
+"Last-Translator: Erkin Batu Altunbaş <erkinbatu@gmail.com>\n"
+"Language-Team: Turkish <tr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2012-04-20 04:35+0000\n"
+"X-Generator: Launchpad (build 15120)\n"
+
+#: ../data/terminator.desktop.in.h:1
+msgid "Multiple terminals in one window"
+msgstr "Tek pencerede birden çok uçbirim"
+
+#: ../data/terminator.desktop.in.h:2
+msgid "Terminator"
+msgstr "Terminator"
+
+#: ../terminatorlib/container.py:149
+msgid "Close?"
+msgstr "Kapat?"
+
+#: ../terminatorlib/container.py:156
+msgid "Close _Terminals"
+msgstr "_Uçbirimleri Kapat"
+
+#: ../terminatorlib/container.py:158
+msgid "<big><b>Close multiple terminals?</b></big>"
+msgstr "<big><b>Birden çok uçbirim kapatılsın mı?</b></big>"
+
+#: ../terminatorlib/container.py:161
+#, python-format
+msgid ""
+"This %s has several terminals open. Closing the %s will also close all "
+"terminals within it."
+msgstr ""
+"%s içinde birden fazla terminal açık. %s kapatılırsa içindeki terminaller de "
+"sonlandırılacak."
+
+#: ../terminatorlib/encoding.py:35
+msgid "Current Locale"
+msgstr "Geçerli Yerel"
+
+#: ../terminatorlib/encoding.py:36 ../terminatorlib/encoding.py:49
+#: ../terminatorlib/encoding.py:68 ../terminatorlib/encoding.py:91
+#: ../terminatorlib/encoding.py:102
+msgid "Western"
+msgstr "Batı"
+
+#: ../terminatorlib/encoding.py:37 ../terminatorlib/encoding.py:69
+#: ../terminatorlib/encoding.py:81 ../terminatorlib/encoding.py:100
+msgid "Central European"
+msgstr "Orta Avrupa"
+
+#: ../terminatorlib/encoding.py:38
+msgid "South European"
+msgstr "Güney Avrupa"
+
+#: ../terminatorlib/encoding.py:39 ../terminatorlib/encoding.py:47
+#: ../terminatorlib/encoding.py:107
+msgid "Baltic"
+msgstr "Baltık"
+
+#. [False, "JOHAB", _("Korean") ],
+#: ../terminatorlib/encoding.py:40 ../terminatorlib/encoding.py:70
+#: ../terminatorlib/encoding.py:76 ../terminatorlib/encoding.py:78
+#: ../terminatorlib/encoding.py:83 ../terminatorlib/encoding.py:101
+msgid "Cyrillic"
+msgstr "Kiril"
+
+#: ../terminatorlib/encoding.py:41 ../terminatorlib/encoding.py:73
+#: ../terminatorlib/encoding.py:80 ../terminatorlib/encoding.py:106
+msgid "Arabic"
+msgstr "Arapça"
+
+#: ../terminatorlib/encoding.py:42 ../terminatorlib/encoding.py:86
+#: ../terminatorlib/encoding.py:103
+msgid "Greek"
+msgstr "Yunanca"
+
+#: ../terminatorlib/encoding.py:43
+msgid "Hebrew Visual"
+msgstr "Görsel İbranice"
+
+#: ../terminatorlib/encoding.py:44 ../terminatorlib/encoding.py:72
+#: ../terminatorlib/encoding.py:89 ../terminatorlib/encoding.py:105
+msgid "Hebrew"
+msgstr "İbranice"
+
+#: ../terminatorlib/encoding.py:45 ../terminatorlib/encoding.py:71
+#: ../terminatorlib/encoding.py:93 ../terminatorlib/encoding.py:104
+msgid "Turkish"
+msgstr "Türkçe"
+
+#: ../terminatorlib/encoding.py:46
+msgid "Nordic"
+msgstr "İskandinav"
+
+#: ../terminatorlib/encoding.py:48
+msgid "Celtic"
+msgstr "Kelt"
+
+#: ../terminatorlib/encoding.py:50 ../terminatorlib/encoding.py:92
+msgid "Romanian"
+msgstr "Romence"
+
+#. [False, "UTF-7", _("Unicode") ],
+#: ../terminatorlib/encoding.py:52
+msgid "Unicode"
+msgstr "Unicode"
+
+#. [False, "UTF-16", _("Unicode") ],
+#. [False, "UCS-2", _("Unicode") ],
+#. [False, "UCS-4", _("Unicode") ],
+#: ../terminatorlib/encoding.py:56
+msgid "Armenian"
+msgstr "Ermenice"
+
+#: ../terminatorlib/encoding.py:57 ../terminatorlib/encoding.py:58
+#: ../terminatorlib/encoding.py:62
+msgid "Chinese Traditional"
+msgstr "Geleneksel Çince"
+
+#: ../terminatorlib/encoding.py:59
+msgid "Cyrillic/Russian"
+msgstr "Kiril/Rusça"
+
+#: ../terminatorlib/encoding.py:60 ../terminatorlib/encoding.py:74
+#: ../terminatorlib/encoding.py:95
+msgid "Japanese"
+msgstr "Japonca"
+
+#: ../terminatorlib/encoding.py:61 ../terminatorlib/encoding.py:75
+#: ../terminatorlib/encoding.py:98
+msgid "Korean"
+msgstr "Korece"
+
+#: ../terminatorlib/encoding.py:63 ../terminatorlib/encoding.py:64
+#: ../terminatorlib/encoding.py:65 ../terminatorlib/encoding.py:67
+msgid "Chinese Simplified"
+msgstr "Basitleştirilmiş Çince"
+
+#: ../terminatorlib/encoding.py:66
+msgid "Georgian"
+msgstr "Gürcü Dili"
+
+#: ../terminatorlib/encoding.py:79 ../terminatorlib/encoding.py:94
+msgid "Cyrillic/Ukrainian"
+msgstr "Kiril/Ukraynaca"
+
+#: ../terminatorlib/encoding.py:82
+msgid "Croatian"
+msgstr "Hırvatça"
+
+#: ../terminatorlib/encoding.py:84
+msgid "Hindi"
+msgstr "Hintçe"
+
+#: ../terminatorlib/encoding.py:85
+msgid "Persian"
+msgstr "Farsça"
+
+#: ../terminatorlib/encoding.py:87
+msgid "Gujarati"
+msgstr "Gujarati Dili"
+
+#: ../terminatorlib/encoding.py:88
+msgid "Gurmukhi"
+msgstr "Gurmukhi"
+
+#: ../terminatorlib/encoding.py:90
+msgid "Icelandic"
+msgstr "İzlandaca"
+
+#: ../terminatorlib/encoding.py:96 ../terminatorlib/encoding.py:99
+#: ../terminatorlib/encoding.py:108
+msgid "Vietnamese"
+msgstr "Vietnamca"
+
+#: ../terminatorlib/encoding.py:97
+msgid "Thai"
+msgstr "Tai Dili"
+
+#: ../terminatorlib/notebook.py:278
+msgid "tab"
+msgstr "sekme"
+
+#: ../terminatorlib/notebook.py:439
+msgid "Close Tab"
+msgstr "Sekmeyi Kapat"
+
+#: ../terminatorlib/optionparse.py:47
+msgid "Display program version"
+msgstr "Program sürümünü göster"
+
+#: ../terminatorlib/optionparse.py:49
+msgid "Maximise the window"
+msgstr "Pencereyi büyült"
+
+#: ../terminatorlib/optionparse.py:51
+msgid "Make the window fill the screen"
+msgstr "Pencerenin ekranı kaplamasını sağla"
+
+#: ../terminatorlib/optionparse.py:53
+msgid "Disable window borders"
+msgstr "Pencere sınırlarını devredışı bırak"
+
+#: ../terminatorlib/optionparse.py:55
+msgid "Hide the window at startup"
+msgstr "Pencereyi başlangıçta sakla"
+
+#: ../terminatorlib/optionparse.py:56
+msgid "Specify a title for the window"
+msgstr "Pencere için bir isim belirt"
+
+#: ../terminatorlib/optionparse.py:58
+msgid "Set the preferred size and position of the window (see X man page)"
+msgstr ""
+"Pencerenin tercih edilen boyutu ve konumunu ayarlayın (X man sayfasına bakın)"
+
+#: ../terminatorlib/optionparse.py:60
+msgid "Specify a command to execute inside the terminal"
+msgstr "Uçbirimin içinden başlatmak için bir komut belirleyin"
+
+#: ../terminatorlib/optionparse.py:63
+msgid ""
+"Use the rest of the command line as a command to execute inside the "
+"terminal, and its arguments"
+msgstr ""
+"Komut satırının geri kalanını uçbirimin içinde argümanlarıyla başlatılacak "
+"bir komut olarak kullan."
+
+#: ../terminatorlib/optionparse.py:66
+msgid "Set the working directory"
+msgstr "Çalışma dizinini ayarla"
+
+#: ../terminatorlib/optionparse.py:67
+msgid "Set a custom WM_WINDOW_ROLE property on the window"
+msgstr "Pencereye özel bir WM_WINDOW_ROLE özelliği ayarla"
+
+#: ../terminatorlib/optionparse.py:69
+msgid "Select a layout"
+msgstr "Bir düzen seçin"
+
+#: ../terminatorlib/optionparse.py:70
+msgid "Use a different profile as the default"
+msgstr "Varsayılan olarak farklı bir profil kullan"
+
+#: ../terminatorlib/optionparse.py:73
+msgid "Disable DBus"
+msgstr "DBus'ı devredışı bırak"
+
+#: ../terminatorlib/optionparse.py:75
+msgid "Enable debugging information (twice for debug server)"
+msgstr ""
+"Hata bulma bilgilendirmesine izin ver (hata bulma sunucusu için iki katı)"
+
+#: ../terminatorlib/optionparse.py:77
+msgid "Comma separated list of classes to limit debugging to"
+msgstr "Hata bulmanın sınırlanacağı, virgüllerle ayrılmış olan sınıflar"
+
+#: ../terminatorlib/optionparse.py:79
+msgid "Comma separated list of methods to limit debugging to"
+msgstr "Hata bulmanın sınırlanacağı, virgüllerle ayrılmış olan metodlar"
+
+#: ../terminatorlib/plugins/activitywatch.py:22
+msgid "ActivityWatch plugin unavailable: please install python-notify"
+msgstr ""
+"ActivityWatch eklentisi kullanılabilir değil: lütfen python-notify kurun"
+
+#: ../terminatorlib/plugins/activitywatch.py:45
+msgid "Watch for activity"
+msgstr "Etkinlik için izle"
+
+#: ../terminatorlib/plugins/activitywatch.py:48
+msgid "Stop watching for activity"
+msgstr "Etkinlik için izlemeyi durdur"
+
+#: ../terminatorlib/plugins/activitywatch.py:106
+msgid "Watch for silence"
+msgstr ""
+
+#: ../terminatorlib/plugins/activitywatch.py:109
+msgid "Stop watching for silence"
+msgstr ""
+
+#: ../terminatorlib/plugins/custom_commands.py:50
+msgid "Custom Commands"
+msgstr "Özel Komutlar"
+
+#: ../terminatorlib/plugins/custom_commands.py:106
+msgid "Custom Commands Configuration"
+msgstr "Özel Komut Yapılandırması"
+
+#: ../terminatorlib/plugins/custom_commands.py:238
+msgid "New Command"
+msgstr "Yeni Komut"
+
+#: ../terminatorlib/plugins/custom_commands.py:248
+msgid "Enabled:"
+msgstr "Etkin:"
+
+#: ../terminatorlib/plugins/custom_commands.py:254
+msgid "Name:"
+msgstr "İsim:"
+
+#: ../terminatorlib/plugins/custom_commands.py:260
+msgid "Command:"
+msgstr "Komut:"
+
+#: ../terminatorlib/plugins/custom_commands.py:296
+#: ../terminatorlib/plugins/custom_commands.py:406
+msgid "You need to define a name and command"
+msgstr "Bir isim ve komut belirtmelisiniz"
+
+#: ../terminatorlib/plugins/custom_commands.py:313
+#: ../terminatorlib/plugins/custom_commands.py:425
+#, python-format
+msgid "Name *%s* already exist"
+msgstr "*%s* ismi zaten var"
+
+#: ../terminatorlib/plugins/terminalshot.py:28
+msgid "Terminal screenshot"
+msgstr "Uçbirim ekran görüntüsü"
+
+#: ../terminatorlib/prefseditor.py:942 ../terminatorlib/prefseditor.py:947
+msgid "New Profile"
+msgstr "Yeni Profil"
+
+#: ../terminatorlib/prefseditor.py:987 ../terminatorlib/prefseditor.py:992
+msgid "New Layout"
+msgstr "Yeni Düzen"
+
+#. Label
+#: ../terminatorlib/searchbar.py:50
+msgid "Search:"
+msgstr "Ara:"
+
+#: ../terminatorlib/searchbar.py:66
+msgid "Close Search bar"
+msgstr "Arama çubuğunu Kapat"
+
+#. Next Button
+#: ../terminatorlib/searchbar.py:71
+msgid "Next"
+msgstr "İleri"
+
+#. Previous Button
+#: ../terminatorlib/searchbar.py:77
+msgid "Prev"
+msgstr "Önceki"
+
+#: ../terminatorlib/searchbar.py:124
+msgid "Searching scrollback"
+msgstr "Geri kaydırarak arama"
+
+#: ../terminatorlib/searchbar.py:135 ../terminatorlib/searchbar.py:156
+msgid "No more results"
+msgstr "Başka sonuç yok"
+
+#: ../terminatorlib/searchbar.py:171
+msgid "Found at row"
+msgstr "Satırda bulundu"
+
+#: ../terminatorlib/terminal_popup_menu.py:51
+msgid "_Send email to..."
+msgstr "Şuna e-posta _gönder:"
+
+#: ../terminatorlib/terminal_popup_menu.py:52
+msgid "_Copy email address"
+msgstr "_E-posta adreslerini kopyala"
+
+#: ../terminatorlib/terminal_popup_menu.py:54
+msgid "Ca_ll VoIP address"
+msgstr "VoIP adresi a_ra"
+
+#: ../terminatorlib/terminal_popup_menu.py:55
+msgid "_Copy VoIP address"
+msgstr "VoIP adresini _kopyala"
+
+#: ../terminatorlib/terminal_popup_menu.py:57
+msgid "_Open link"
+msgstr "_Bağlantıyı aç"
+
+#: ../terminatorlib/terminal_popup_menu.py:58
+msgid "_Copy address"
+msgstr "_Adresi kopyala"
+
+#: ../terminatorlib/terminal_popup_menu.py:86
+msgid "Split H_orizontally"
+msgstr "Y_atay olarak Böl"
+
+#: ../terminatorlib/terminal_popup_menu.py:96
+msgid "Split V_ertically"
+msgstr "D_ikey olarak Böl"
+
+#: ../terminatorlib/terminal_popup_menu.py:106
+msgid "Open _Tab"
+msgstr "_Sekme Aç"
+
+#: ../terminatorlib/terminal_popup_menu.py:112
+msgid "Open _Debug Tab"
+msgstr "hata ayıkla"
+
+#: ../terminatorlib/terminal_popup_menu.py:126
+msgid "_Zoom terminal"
+msgstr "Uçbirimi _yakınlaştır"
+
+#: ../terminatorlib/terminal_popup_menu.py:130
+msgid "Ma_ximise terminal"
+msgstr "Uçbirimi _büyüt"
+
+#: ../terminatorlib/terminal_popup_menu.py:136
+msgid "_Restore all terminals"
+msgstr "Tüm uçbirimleri _geri al"
+
+#: ../terminatorlib/terminal_popup_menu.py:143
+msgid "Grouping"
+msgstr "Gruplandırma"
+
+#: ../terminatorlib/terminal_popup_menu.py:150
+msgid "Show _scrollbar"
+msgstr "K_aydırma çubuğunu göster"
+
+#: ../terminatorlib/terminal_popup_menu.py:156
+msgid "_Preferences"
+msgstr "_Tercihler"
+
+#: ../terminatorlib/terminal_popup_menu.py:163
+msgid "Profiles"
+msgstr "Profiller"
+
+#: ../terminatorlib/terminal_popup_menu.py:207
+msgid "Encodings"
+msgstr "Kodlamalar"
+
+#: ../terminatorlib/terminal_popup_menu.py:222
+msgid "Default"
+msgstr "Öntanımlı"
+
+#: ../terminatorlib/terminal_popup_menu.py:225
+msgid "User defined"
+msgstr "Kullanıcı tanımlı"
+
+#: ../terminatorlib/terminal_popup_menu.py:241
+msgid "Other Encodings"
+msgstr "Diğer Kodlamalar"
+
+#: ../terminatorlib/terminal.py:372
+msgid "New group..."
+msgstr "Yeni grup..."
+
+#: ../terminatorlib/terminal.py:377
+msgid "None"
+msgstr "Hiçbiri"
+
+#: ../terminatorlib/terminal.py:393
+#, python-format
+msgid "Remove group %s"
+msgstr "%s grubunu kaldır"
+
+#: ../terminatorlib/terminal.py:398
+msgid "G_roup all in tab"
+msgstr "Hepsini sekmede t_opla"
+
+#: ../terminatorlib/terminal.py:403
+msgid "Ungr_oup all in tab"
+msgstr "Hepsini sekmeden da_ğıt"
+
+#: ../terminatorlib/terminal.py:408
+msgid "Remove all groups"
+msgstr "Tüm grupları kaldır"
+
+#: ../terminatorlib/terminal.py:415
+#, python-format
+msgid "Close group %s"
+msgstr "%s grubunu kapat"
+
+#: ../terminatorlib/terminal.py:424
+msgid "Broadcast all"
+msgstr "Tümünü yayınla"
+
+#: ../terminatorlib/terminal.py:425
+msgid "Broadcast group"
+msgstr "Yayın grubu"
+
+#: ../terminatorlib/terminal.py:426
+msgid "Broadcast off"
+msgstr "Yayın kapalı"
+
+#: ../terminatorlib/terminal.py:439
+msgid "Split to this group"
+msgstr "Bu gruba böl"
+
+#: ../terminatorlib/terminal.py:444
+msgid "Autoclean groups"
+msgstr "Grupları kendiliğinden temizle"
+
+#: ../terminatorlib/terminal.py:451
+msgid "Insert terminal number"
+msgstr "Uçbirim numarası ekle"
+
+#: ../terminatorlib/terminal.py:455
+msgid "Insert padded terminal number"
+msgstr "Takımlı uçbirim numarası ekle"
+
+#: ../terminatorlib/terminal.py:1193
+msgid "Unable to find a shell"
+msgstr "Kabuk bulunamadı"
+
+#: ../terminatorlib/terminal.py:1210
+msgid "Unable to start shell:"
+msgstr "Kabuk başlatılamadı:"
+
+#: ../terminatorlib/window.py:242
+msgid "window"
+msgstr "pencere"
+
+#. FIXME: Why isn't this being done by Terminator() ?
+#: ../terminatorlib/window.py:612
+msgid "All"
+msgstr "Tümü"
+
+#: ../terminatorlib/window.py:633
+#, python-format
+msgid "Tab %d"
+msgstr "Sekme %d"

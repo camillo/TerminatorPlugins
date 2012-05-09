@@ -1,0 +1,212 @@
+.TH "TERMINATOR" "1" "Jan 5, 2008" "" ""
+.SH "NAME"
+Terminator \- Multiple GNOME terminals in one window
+.SH "SYNOPSIS"
+.B terminator
+.RI [ options ] 
+.br 
+.SH "DESCRIPTION"
+This manual page documents \fBTerminator\fP, a terminal emulator application.
+.PP 
+\fBTerminator\fP is a program that allows users to set up flexible
+arrangements of GNOME terminals. It is aimed at those who normally 
+arrange lots of terminals near each other, but don't want to use a 
+frame based window manager.
+.SH "OPTIONS"
+This program follow the usual GNU command line syntax, with long
+options starting with two dashes (`\-').
+A summary of options is included below.
+.TP 
+.B \-h, \-\-help
+Show summary of options
+.TP 
+.B \-v, \-\-version
+Show the version of the Terminator installation
+.TP
+.B \-m, \-\-maximise
+Start with a maximised window
+.TP 
+.B \-f, \-\-fullscreen
+Start with a fullscreen window
+.TP 
+.B \-b, \-\-borderless
+Instruct the window manager not to render borders/decoration on the 
+Terminator window (this works well with \-m)
+.TP 
+.B \-H, \-\-hidden
+Hide the Terminator window by default. Its visibility can be toggled
+with the \fBhide_window\fR keyboard shortcut (Ctrl-Shift-Alt-a by default)
+.TP
+.B \-T, \-\-title
+Force the Terminator window to use a specific name rather than updating it dynamically
+based on the wishes of the child shell.
+.TP
+.B \-\-geometry=GEOMETRY
+Specifies the preferred size and position of Terminator's window; see X(7).
+.TP
+.B \-e, \-\-command=COMMAND
+Runs the specified command instead of your default shell or profile specified command
+.TP 
+.B \-x, \-\-execute COMMAND [ARGS]
+Runs \fBthe rest of the command line\fR instead of your default shell or profile specified command.
+.TP
+.B \-\-working\-directory=DIR
+Set the terminal's working directory
+.TP
+.B \-r, \-\-role=ROLE
+Set a custom WM_WINDOW_ROLE property on the window
+.TP
+.B \-l, \-\-layout=LAYOUT
+Start Terminator with a specific layout. The argument here is the name
+of a saved layout.
+.TP
+.B \-d, \-\-debug
+Enable debugging output (please use this when reporting bugs). This 
+can be specified twice to enable a built-in python debugging server.
+.TP 
+.B \-\-debug\-classes=DEBUG_CLASSES
+If this is specified as a comma separated list, debugging output will 
+only be printed from the specified classes.
+.TP
+.B \-\-debug\-methods=DEBUG_METHODS
+If this is specified as a comma separated list, debugging outut will
+only be printed from the specified functions. If this is specified in
+addition to \-\-debug-classes, only the intersection of the two lists
+will be displayed
+.TP
+.SH "KEYBINDINGS"
+The following keybindings can be used to control Terminator:
+.TP 
+.B Super+R
+\fBR\fotate terminals clockwise.
+.TP 
+.B Super+Shift+R
+\fBR\fotate terminals counter-clockwise.
+.TP 
+.B Ctrl+Shift+O
+Split terminals H\fBo\fRrizontally.
+.TP 
+.B Ctrl+Shift+E
+Split terminals V\fBe\fRrtically.
+.TP 
+.B Ctrl+Shift+Right
+Move parent dragbar \fBRight\fR.
+.TP 
+.B Ctrl+Shift+Left
+Move parent dragbar \fBLeft\fR.
+.TP 
+.B Ctrl+Shift+Up
+Move parent dragbar \fBUp\fR.
+.TP 
+.B Ctrl+Shift+Down
+Move parent dragbar \fBDown\fR.
+.TP 
+.B Ctrl+Shift+S
+Hide/Show \fBS\fRcrollbar.
+.TP 
+.B Ctrl+Shift+F
+Search within terminal scrollback
+.TP
+.B Ctrl+Shift+N or Ctrl+Tab
+Move to \fBn\fRext terminal within the same tab, use Ctrl+PageDown to move to the next tab.
+If \fBcycle_term_tab\fR is \fBFalse\fR, cycle within the same tab will be disabled
+.TP 
+.B Ctrl+Shift+P or Ctrl+Shift+Tab
+Move to \fBp\fRrevious terminal within the same tab, use Ctrl+PageUp to move to the previous tab.
+If \fBcycle_term_tab\fR is \fBFalse\fR, cycle within the same tab will be disabled
+.TP 
+.B Alt+Up
+Move to the terminal \fBabove\fR the current one.
+.TP
+.B Alt+Down
+Move to the terminal \fBbelow\fR the current one.
+.TP
+.B Alt+Left
+Move to the terminal \fBleft of\fR the current one.
+.TP
+.B Alt+Right
+Move to the terminal \fBright of\fR the current one.
+.TP
+.B Ctrl+Shift+C
+Copy selected text to clipboard
+.TP
+.B Ctrl+Shift+V
+Paste clipboard text
+.TP
+.B Ctrl+Shift+W
+Close the current terminal.
+.TP 
+.B Ctrl+Shift+Q
+Quits Terminator
+.TP 
+.B Ctrl+Shift+X
+Toggle between showing all terminals and only showing the current one (maximise).
+.TP 
+.B Ctrl+Shift+Z
+Toggle between showing all terminals and only showing a scaled version of the current one (zoom).
+.TP 
+.B Ctrl+Shift+T
+Open new \fBt\fRab
+.TP
+.B Ctrl+PageDown
+Move to next Tab
+.TP
+.B Ctrl+PageUp
+Move to previous Tab
+.TP
+.B Ctrl+Shift+PageDown
+Swap tab position with next Tab
+.TP
+.B Ctrl+Shift+PageUp
+Swap tab position with previous Tab
+.TP
+.B Ctrl+Plus (+)
+Increase font size. \fBNote:\fP this may require you to press shift, depending on your keyboard
+.TP
+.B Ctrl+Minus (-)
+Decrease font size. \fBNote:\fP this may require you to press shift, depending on your keyboard
+.TP
+.B Ctrl+Zero (0)
+Restore font size to original setting.
+.TP
+.B F11
+Toggle fullscreen
+.TP
+.B Ctrl+Shift+R
+Reset terminal state
+.TP
+.B Ctrl+Shift+G
+Reset terminal state and clear window
+.TP
+.B Super+g
+Group all terminals so that any input sent to one of them, goes to all of them.
+.TP
+.B Super+Shift+G
+Remove grouping from all terminals.
+.TP
+.B Super+t
+Group all terminals in the current tab so input sent to one of them, goes to all terminals in the current tab.
+.TP
+.B Super+Shift+T
+Remove grouping from all terminals in the current tab.
+.TP
+.B Ctrl+Shift+I
+Open a new window (note: unlike in previous releases, this window is 
+part of the same Terminator process)
+.TP
+.B Super+i
+Spawn a new Terminator process
+.TP
+.SH "Drag and Drop"
+The layout can be modified by moving terminals with Drag and Drop.
+To start dragging a terminal, click and hold on its titlebar.
+Alternatively, hold down \fBCtrl\fP, click and hold the \fBright\fP mouse button.
+Then, \fB**Release Ctrl**\fP. You can now drag the terminal to the point in the layout you would like it to be.
+The zone where the terminal would be inserted will be highlighted.
+.SH "SEE ALSO"
+.BR terminator_config(5)
+.SH "AUTHOR"
+Terminator was written by Chris Jones <cmsj@tenshu.net> and others.
+.PP 
+This manual page was written by Chris Jones <cmsj@tenshu.net>
+and others.

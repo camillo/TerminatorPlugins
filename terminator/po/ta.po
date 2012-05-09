@@ -1,0 +1,539 @@
+# Tamil translation for terminator
+# Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
+# This file is distributed under the same license as the terminator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: terminator\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2011-08-21 01:31+0100\n"
+"PO-Revision-Date: 2012-04-30 05:06+0000\n"
+"Last-Translator: Jackseen Jeyaluck <Unknown>\n"
+"Language-Team: Tamil <ta@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2012-05-01 05:09+0000\n"
+"X-Generator: Launchpad (build 15171)\n"
+
+#: ../data/terminator.desktop.in.h:1
+msgid "Multiple terminals in one window"
+msgstr "ஒரு  சாளரத்தில் பல முனையங்கள்"
+
+#: ../data/terminator.desktop.in.h:2
+msgid "Terminator"
+msgstr "முனையம்"
+
+#: ../terminatorlib/container.py:149
+msgid "Close?"
+msgstr "மூடு ?"
+
+#: ../terminatorlib/container.py:156
+msgid "Close _Terminals"
+msgstr "முனையங்களை மூடு"
+
+#: ../terminatorlib/container.py:158
+msgid "<big><b>Close multiple terminals?</b></big>"
+msgstr "<big><b>பல முனையங்களை மூடு?</b></big>"
+
+#: ../terminatorlib/container.py:161
+#, python-format
+msgid ""
+"This %s has several terminals open. Closing the %s will also close all "
+"terminals within it."
+msgstr ""
+"இந்த% s திறந்த பல முனையங்கள் உண்டு. % s முடி கூட அதற்குள்ளாக அனைத்து "
+"முனையங்கள் மூடிவிடும்."
+
+#: ../terminatorlib/encoding.py:35
+msgid "Current Locale"
+msgstr "தற்போதைய மொழி உள்ளமைவு"
+
+#: ../terminatorlib/encoding.py:36 ../terminatorlib/encoding.py:49
+#: ../terminatorlib/encoding.py:68 ../terminatorlib/encoding.py:91
+#: ../terminatorlib/encoding.py:102
+msgid "Western"
+msgstr "மேற்கத்திய"
+
+#: ../terminatorlib/encoding.py:37 ../terminatorlib/encoding.py:69
+#: ../terminatorlib/encoding.py:81 ../terminatorlib/encoding.py:100
+msgid "Central European"
+msgstr "மத்திய ஐரோப்பா"
+
+#: ../terminatorlib/encoding.py:38
+msgid "South European"
+msgstr "தெற்கு ஐரோப்பா"
+
+#: ../terminatorlib/encoding.py:39 ../terminatorlib/encoding.py:47
+#: ../terminatorlib/encoding.py:107
+msgid "Baltic"
+msgstr "பால்டிக்"
+
+#. [False, "JOHAB", _("Korean") ],
+#: ../terminatorlib/encoding.py:40 ../terminatorlib/encoding.py:70
+#: ../terminatorlib/encoding.py:76 ../terminatorlib/encoding.py:78
+#: ../terminatorlib/encoding.py:83 ../terminatorlib/encoding.py:101
+msgid "Cyrillic"
+msgstr "சிரிலிக்"
+
+#: ../terminatorlib/encoding.py:41 ../terminatorlib/encoding.py:73
+#: ../terminatorlib/encoding.py:80 ../terminatorlib/encoding.py:106
+msgid "Arabic"
+msgstr "அராபிக்"
+
+#: ../terminatorlib/encoding.py:42 ../terminatorlib/encoding.py:86
+#: ../terminatorlib/encoding.py:103
+msgid "Greek"
+msgstr "கிரேக்க"
+
+#: ../terminatorlib/encoding.py:43
+msgid "Hebrew Visual"
+msgstr "ஹீப்ரு காட்சி"
+
+#: ../terminatorlib/encoding.py:44 ../terminatorlib/encoding.py:72
+#: ../terminatorlib/encoding.py:89 ../terminatorlib/encoding.py:105
+msgid "Hebrew"
+msgstr "ஹீப்ரூ"
+
+#: ../terminatorlib/encoding.py:45 ../terminatorlib/encoding.py:71
+#: ../terminatorlib/encoding.py:93 ../terminatorlib/encoding.py:104
+msgid "Turkish"
+msgstr "துருக்கிய"
+
+#: ../terminatorlib/encoding.py:46
+msgid "Nordic"
+msgstr "நார்டிக்"
+
+#: ../terminatorlib/encoding.py:48
+msgid "Celtic"
+msgstr "செல்டிக்"
+
+#: ../terminatorlib/encoding.py:50 ../terminatorlib/encoding.py:92
+msgid "Romanian"
+msgstr "ரோமேனியன்"
+
+#. [False, "UTF-7", _("Unicode") ],
+#: ../terminatorlib/encoding.py:52
+msgid "Unicode"
+msgstr "யுனிகோட்"
+
+#. [False, "UTF-16", _("Unicode") ],
+#. [False, "UCS-2", _("Unicode") ],
+#. [False, "UCS-4", _("Unicode") ],
+#: ../terminatorlib/encoding.py:56
+msgid "Armenian"
+msgstr "அர்மேனியன்"
+
+#: ../terminatorlib/encoding.py:57 ../terminatorlib/encoding.py:58
+#: ../terminatorlib/encoding.py:62
+msgid "Chinese Traditional"
+msgstr "சீன மரபுவழி"
+
+#: ../terminatorlib/encoding.py:59
+msgid "Cyrillic/Russian"
+msgstr "சிரிலிக்/ரஷ்யன்"
+
+#: ../terminatorlib/encoding.py:60 ../terminatorlib/encoding.py:74
+#: ../terminatorlib/encoding.py:95
+msgid "Japanese"
+msgstr "ஜப்பானிய"
+
+#: ../terminatorlib/encoding.py:61 ../terminatorlib/encoding.py:75
+#: ../terminatorlib/encoding.py:98
+msgid "Korean"
+msgstr "கொரியன்"
+
+#: ../terminatorlib/encoding.py:63 ../terminatorlib/encoding.py:64
+#: ../terminatorlib/encoding.py:65 ../terminatorlib/encoding.py:67
+msgid "Chinese Simplified"
+msgstr "எளிதாக்கிய சீனம்"
+
+#: ../terminatorlib/encoding.py:66
+msgid "Georgian"
+msgstr "ஜோர்ஜியன்"
+
+#: ../terminatorlib/encoding.py:79 ../terminatorlib/encoding.py:94
+msgid "Cyrillic/Ukrainian"
+msgstr "சிரிலிக்/உக்ரெயின்"
+
+#: ../terminatorlib/encoding.py:82
+msgid "Croatian"
+msgstr "குரோஷியன்"
+
+#: ../terminatorlib/encoding.py:84
+msgid "Hindi"
+msgstr "ஹிந்தி"
+
+#: ../terminatorlib/encoding.py:85
+msgid "Persian"
+msgstr "பெர்சியன்"
+
+#: ../terminatorlib/encoding.py:87
+msgid "Gujarati"
+msgstr "குஜராத்தி"
+
+#: ../terminatorlib/encoding.py:88
+msgid "Gurmukhi"
+msgstr "குருமுகி"
+
+#: ../terminatorlib/encoding.py:90
+msgid "Icelandic"
+msgstr "ஐஸ்லான்டிக்"
+
+#: ../terminatorlib/encoding.py:96 ../terminatorlib/encoding.py:99
+#: ../terminatorlib/encoding.py:108
+msgid "Vietnamese"
+msgstr "வியட்னாமியன்"
+
+#: ../terminatorlib/encoding.py:97
+msgid "Thai"
+msgstr "தாய்லாந்து"
+
+#: ../terminatorlib/notebook.py:278
+msgid "tab"
+msgstr "தத்தல்"
+
+#: ../terminatorlib/notebook.py:439
+msgid "Close Tab"
+msgstr "தத்தலை மூடுக"
+
+#: ../terminatorlib/optionparse.py:47
+msgid "Display program version"
+msgstr "நிரல் பதிப்பை காட்டு"
+
+#: ../terminatorlib/optionparse.py:49
+msgid "Maximise the window"
+msgstr "சாளரத்தை பெரிதாக்கு"
+
+#: ../terminatorlib/optionparse.py:51
+msgid "Make the window fill the screen"
+msgstr "சாளரத்தை படதிரையில் முழுதாக்கி காட்டு"
+
+#: ../terminatorlib/optionparse.py:53
+msgid "Disable window borders"
+msgstr "சாளர எல்லைகளை முடக்கு"
+
+#: ../terminatorlib/optionparse.py:55
+msgid "Hide the window at startup"
+msgstr "தொடங்கலின் போது சாளரத்தை மறை"
+
+#: ../terminatorlib/optionparse.py:56
+msgid "Specify a title for the window"
+msgstr "சாளரத்திற்கு ஒரு தலைப்பை குறிபிடுக"
+
+#: ../terminatorlib/optionparse.py:58
+msgid "Set the preferred size and position of the window (see X man page)"
+msgstr "சாளரத்தின் விருப்பமான அளவு மற்றும் நிலை அமை (பார்க்க X man page)"
+
+#: ../terminatorlib/optionparse.py:60
+msgid "Specify a command to execute inside the terminal"
+msgstr "முனைய உள்ளக இயக்கத்திற்கு கட்டளை ஒன்றை குறிப்பிடுக"
+
+#: ../terminatorlib/optionparse.py:63
+msgid ""
+"Use the rest of the command line as a command to execute inside the "
+"terminal, and its arguments"
+msgstr ""
+"முனையத்தில் உள்ள இயக்க ஒரு கட்டளை கட்டளை வரி பாக்கி, மற்றும் அதன் வாதங்களை "
+"பயன்படுத்த"
+
+#: ../terminatorlib/optionparse.py:66
+msgid "Set the working directory"
+msgstr "முனையத்தின் பணி அடைவை அமை"
+
+#: ../terminatorlib/optionparse.py:67
+msgid "Set a custom WM_WINDOW_ROLE property on the window"
+msgstr "சாளரத்தில் ஒரு தனிபயன் WM_WINDOW_ROLE சொத்து அமைக்க"
+
+#: ../terminatorlib/optionparse.py:69
+msgid "Select a layout"
+msgstr "ஒரு அமைப்பை தெரிக"
+
+#: ../terminatorlib/optionparse.py:70
+msgid "Use a different profile as the default"
+msgstr "முன்னிருப்பாக வேறொரு சுயவிவரத்தை பயன்படுத்துக"
+
+#: ../terminatorlib/optionparse.py:73
+msgid "Disable DBus"
+msgstr "DBus ஐ  முடக்கு"
+
+#: ../terminatorlib/optionparse.py:75
+msgid "Enable debugging information (twice for debug server)"
+msgstr "பிழைத்திருத்த தகவலை இயக்கு (இருமுறை பிழைத்திருத்த சேவையகத்தின்)"
+
+#: ../terminatorlib/optionparse.py:77
+msgid "Comma separated list of classes to limit debugging to"
+msgstr ""
+"என்று பிழைத்திருத்தங்களுக்கும் கட்டுப்படுத்த வகுப்புகள் கமாவால் "
+"பிரிக்கப்பட்ட பட்டியல்"
+
+#: ../terminatorlib/optionparse.py:79
+msgid "Comma separated list of methods to limit debugging to"
+msgstr ""
+"என்று பிழைத்திருத்தங்களுக்கும் கட்டுப்படுத்த முறைகள் கமாவால் பிரிக்கப்பட்ட "
+"பட்டியல்"
+
+#: ../terminatorlib/plugins/activitywatch.py:22
+msgid "ActivityWatch plugin unavailable: please install python-notify"
+msgstr ""
+"ActivityWatch செருகுநிரல் கிடைக்கவில்லை : தயவு செய்து  python-notify ஐ  "
+"நிறுவுக"
+
+#: ../terminatorlib/plugins/activitywatch.py:45
+msgid "Watch for activity"
+msgstr "நடவடிக்கையை கவனிக்க"
+
+#: ../terminatorlib/plugins/activitywatch.py:48
+msgid "Stop watching for activity"
+msgstr "நடவடிக்கை பார்த்துவிட்டு  நிறுத்துங்கள்"
+
+#: ../terminatorlib/plugins/activitywatch.py:106
+msgid "Watch for silence"
+msgstr "அமைதி கவனிக்க"
+
+#: ../terminatorlib/plugins/activitywatch.py:109
+msgid "Stop watching for silence"
+msgstr "அமைதி பார்த்துவிட்டு  நிறுத்துங்கள்"
+
+#: ../terminatorlib/plugins/custom_commands.py:50
+msgid "Custom Commands"
+msgstr "தனிபயன் கட்டளைகள்"
+
+#: ../terminatorlib/plugins/custom_commands.py:106
+msgid "Custom Commands Configuration"
+msgstr "Custom Commands Configuration"
+
+#: ../terminatorlib/plugins/custom_commands.py:238
+msgid "New Command"
+msgstr "புதிய கட்டளை"
+
+#: ../terminatorlib/plugins/custom_commands.py:248
+msgid "Enabled:"
+msgstr "செயல்படுத்தப்படும்:"
+
+#: ../terminatorlib/plugins/custom_commands.py:254
+msgid "Name:"
+msgstr "பெயர்:"
+
+#: ../terminatorlib/plugins/custom_commands.py:260
+msgid "Command:"
+msgstr "கட்டளை:"
+
+#: ../terminatorlib/plugins/custom_commands.py:296
+#: ../terminatorlib/plugins/custom_commands.py:406
+msgid "You need to define a name and command"
+msgstr "நீங்கள் ஒரு பெயர் மற்றும் கட்டளை வரையறுக்க வேண்டும்"
+
+#: ../terminatorlib/plugins/custom_commands.py:313
+#: ../terminatorlib/plugins/custom_commands.py:425
+#, python-format
+msgid "Name *%s* already exist"
+msgstr "பெயர் *%s * ஏற்கனவே"
+
+#: ../terminatorlib/plugins/terminalshot.py:28
+msgid "Terminal screenshot"
+msgstr "முனை திரை"
+
+#: ../terminatorlib/prefseditor.py:942 ../terminatorlib/prefseditor.py:947
+msgid "New Profile"
+msgstr "புதிய விவரம்"
+
+#: ../terminatorlib/prefseditor.py:987 ../terminatorlib/prefseditor.py:992
+msgid "New Layout"
+msgstr "புதிய வடிவமைப்பு"
+
+#. Label
+#: ../terminatorlib/searchbar.py:50
+msgid "Search:"
+msgstr "தேடல்:"
+
+#: ../terminatorlib/searchbar.py:66
+msgid "Close Search bar"
+msgstr "தேடல் பட்டையை மூடு"
+
+#. Next Button
+#: ../terminatorlib/searchbar.py:71
+msgid "Next"
+msgstr "அடுத்த"
+
+#. Previous Button
+#: ../terminatorlib/searchbar.py:77
+msgid "Prev"
+msgstr "முந்தைய"
+
+#: ../terminatorlib/searchbar.py:124
+msgid "Searching scrollback"
+msgstr "பினுருளியை தேடுக"
+
+#: ../terminatorlib/searchbar.py:135 ../terminatorlib/searchbar.py:156
+msgid "No more results"
+msgstr "வேறு முடிவுகள் இல்லை"
+
+#: ../terminatorlib/searchbar.py:171
+msgid "Found at row"
+msgstr "வரிசையில் காணப்பட்டது"
+
+#: ../terminatorlib/terminal_popup_menu.py:51
+msgid "_Send email to..."
+msgstr "மின்னஞ்சல் அனுப்ப"
+
+#: ../terminatorlib/terminal_popup_menu.py:52
+msgid "_Copy email address"
+msgstr "மின்னஞ்சல் முகவரியை நகலெடுக்கவும்"
+
+#: ../terminatorlib/terminal_popup_menu.py:54
+msgid "Ca_ll VoIP address"
+msgstr "VoIP முகவரியை அழைக்கவும்"
+
+#: ../terminatorlib/terminal_popup_menu.py:55
+msgid "_Copy VoIP address"
+msgstr "VoIP முகவரியை நகலெடுக்கவும்"
+
+#: ../terminatorlib/terminal_popup_menu.py:57
+msgid "_Open link"
+msgstr "திறந்த இணைப்பு"
+
+#: ../terminatorlib/terminal_popup_menu.py:58
+msgid "_Copy address"
+msgstr "திறந்த இணைப்பு"
+
+#: ../terminatorlib/terminal_popup_menu.py:86
+msgid "Split H_orizontally"
+msgstr "சமதளத்தில் பிரி"
+
+#: ../terminatorlib/terminal_popup_menu.py:96
+msgid "Split V_ertically"
+msgstr "நெடுதளமாக பிரி"
+
+#: ../terminatorlib/terminal_popup_menu.py:106
+msgid "Open _Tab"
+msgstr "திறந்த தாவல்"
+
+#: ../terminatorlib/terminal_popup_menu.py:112
+msgid "Open _Debug Tab"
+msgstr "திறந்த பிழைத்திருத்த தாவல்"
+
+#: ../terminatorlib/terminal_popup_menu.py:126
+msgid "_Zoom terminal"
+msgstr "முனையத்தை பெரிதாக்க"
+
+#: ../terminatorlib/terminal_popup_menu.py:130
+msgid "Ma_ximise terminal"
+msgstr "முனையத்தை முழு அளவில் பெரிதாக்க"
+
+#: ../terminatorlib/terminal_popup_menu.py:136
+msgid "_Restore all terminals"
+msgstr "அனைத்து முனயங்களையும்  திரும்பப்பெறு"
+
+#: ../terminatorlib/terminal_popup_menu.py:143
+msgid "Grouping"
+msgstr "குழுவாக்கம்"
+
+#: ../terminatorlib/terminal_popup_menu.py:150
+msgid "Show _scrollbar"
+msgstr "சுருள் பட்டியை காட்டு"
+
+#: ../terminatorlib/terminal_popup_menu.py:156
+msgid "_Preferences"
+msgstr "முன்னுரிமைகள்"
+
+#: ../terminatorlib/terminal_popup_menu.py:163
+msgid "Profiles"
+msgstr "விவரக்குறிப்புகள்"
+
+#: ../terminatorlib/terminal_popup_menu.py:207
+msgid "Encodings"
+msgstr "குறியாக்கம்"
+
+#: ../terminatorlib/terminal_popup_menu.py:222
+msgid "Default"
+msgstr "முன்னிருப்பு"
+
+#: ../terminatorlib/terminal_popup_menu.py:225
+msgid "User defined"
+msgstr "பயனர் வரையறுத்தது"
+
+#: ../terminatorlib/terminal_popup_menu.py:241
+msgid "Other Encodings"
+msgstr "ஏனைய குறியாக்கம்"
+
+#: ../terminatorlib/terminal.py:372
+msgid "New group..."
+msgstr "புதிய குழு"
+
+#: ../terminatorlib/terminal.py:377
+msgid "None"
+msgstr "எதுவுமில்லை"
+
+#: ../terminatorlib/terminal.py:393
+#, python-format
+msgid "Remove group %s"
+msgstr "குழுக்களை நீக்க %s"
+
+#: ../terminatorlib/terminal.py:398
+msgid "G_roup all in tab"
+msgstr "அனைத்து தாவலில் குழு"
+
+#: ../terminatorlib/terminal.py:403
+msgid "Ungr_oup all in tab"
+msgstr "தாவலில் பிரி அனைத்து"
+
+#: ../terminatorlib/terminal.py:408
+msgid "Remove all groups"
+msgstr "அனைத்து குழுக்களை நீக்க"
+
+#: ../terminatorlib/terminal.py:415
+#, python-format
+msgid "Close group %s"
+msgstr "குழுவை மூடு  %s"
+
+#: ../terminatorlib/terminal.py:424
+msgid "Broadcast all"
+msgstr "அனைத்தையும்  ஒளிபரப்பு"
+
+#: ../terminatorlib/terminal.py:425
+msgid "Broadcast group"
+msgstr "குழுவை ஒளிபரப்பு"
+
+#: ../terminatorlib/terminal.py:426
+msgid "Broadcast off"
+msgstr "ஒளிபரப்பை அணை"
+
+#: ../terminatorlib/terminal.py:439
+msgid "Split to this group"
+msgstr "இந்த குழுவை பிரிக்க"
+
+#: ../terminatorlib/terminal.py:444
+msgid "Autoclean groups"
+msgstr "குழுக்களை தன்னியக்க சுத்தமாக்கி"
+
+#: ../terminatorlib/terminal.py:451
+msgid "Insert terminal number"
+msgstr "முனையத்தில் எண்ணை சேர்க்க"
+
+#: ../terminatorlib/terminal.py:455
+msgid "Insert padded terminal number"
+msgstr "Padded முனைய எண்ணை சேர்க்க"
+
+#: ../terminatorlib/terminal.py:1193
+msgid "Unable to find a shell"
+msgstr "நிரப்பட்ட முனைய எண்ணை சேர்க்க"
+
+#: ../terminatorlib/terminal.py:1210
+msgid "Unable to start shell:"
+msgstr "ஓட்டை  ஆரம்பிக்க முடியவில்லை:"
+
+#: ../terminatorlib/window.py:242
+msgid "window"
+msgstr "சாளரம்"
+
+#. FIXME: Why isn't this being done by Terminator() ?
+#: ../terminatorlib/window.py:612
+msgid "All"
+msgstr "அனைத்து"
+
+#: ../terminatorlib/window.py:633
+#, python-format
+msgid "Tab %d"
+msgstr "தாவல் %d"

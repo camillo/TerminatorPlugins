@@ -1,0 +1,256 @@
+terminator 0.97:
+  * Allow font dimming in inactive terminals
+  * Allow URL handler plugins to override label text for URL context
+    menus
+  * When copying a URL, run it through the URL handler first so the
+    resulting URL is copied, rather than the original text
+
+terminator 0.96:
+  * Unity support for opening new windows (Lucian Adrian Grijincu)
+  * Fix searching with infinite scrollback (Julien Thewys #755077)
+  * Fix searching on Ubuntu 10.10 and 11.04, and implement searching
+    by regular expression (Roberto Aguilar #709018)
+  * Optimise various low level components so they are dramatically
+    faster (Stephen Boddy)
+  * Fix various bugs (Stephen Boddy)
+  * Fix cursor colours (#700969) and a cursor blink issue (Tony Baker)
+  * Improve and extend drag&drop support to include more sources of
+    text, e.g. Gtk file chooser path buttons (#643425)
+  * Add a plugin to watch a terminal for inactvity (i.e. silence)
+  * Fix loading layouts with more than two tabs (#646826)
+  * Fix order of tabs created from saved layouts (#615930)
+  * Add configuration to remove terminal dimensions from titlebars
+    (patch from João Pinto #691213)
+  * Restore split positions more accurately (patch from Glenn Moss 
+    #797953)
+  * Fix activity notification in active terminals. (patch from Chris
+    Newton #748681)
+  * Stop leaking child processes if terminals are closed using the
+    context menu (#308025)
+  * Don't forget tab order and custom labels when closing terminals
+    in them (#711356)
+	* Each terminal is assigned a unique identifier and this is exposed
+	  to the processes inside the terminal via the environment variable
+		TERMINATOR_UUID
+  * Expand dbus support to start covering useful methods. Also add
+    a commandline tool called 'remotinator' that can be used to control
+    Terminator from a terminal running inside it.
+  * Fix terminal font settings for users of older Linux distributions
+
+terminator 0.95:
+  * Add a configuration option to enable a DBus server
+  * Add a configuration option to disable font anti-aliasing
+  * Improved error handling in various locations
+  * Maven URL handler plugin (thanks to Julien Nicoulaud)
+
+terminator 0.94:
+  * Improved support for entirely hiding Terminal titlebars
+  * Plugin configuration via preferences UI
+  * New plugins: Terminal Screenshot, Watch Terminal Activity
+  * Add preferences support for profile encodings (LP: #597340)
+  * Deprecate the tabbar_hide option, replacing it with a 'hidden'
+	   option for tab_position.
+  * Add profiles, custom titlebar and custom tab labels to layouts.
+  * Improved directional navigation
+  * Backwards compatibility fixes for RHEL 5.5.
+  * Disabled-by-default keybindings for switching broadcast modes
+  * Bug fixes for LPs: #566925, #563445, #583041, #589200, #576279,
+	   #597340, #554571, #597651, #308025, #600280, #576276, #570706,
+	   #575827 and some other bugs.
+
+terminator 0.93:
+  * Add preferences support for alternate_screen_scroll (LP: #558832).
+  * Bug fixes for LPs: #562490, #563911, #546665, #558324, #490627,
+	   #558376, #558375, #559185, #558330, #554571, #554440, #561697, 
+		 #562039, #558832, #561710, #563445 and some other bugs.
+
+terminator 0.92:
+  * Lots of juicy bug fixes
+  * Implement the Palette section of the Profile preferences
+
+terminator 0.91:
+  * Fix various stupid release bugs from 0.90
+
+terminator 0.90:
+  * Almost complete refactoring of the code. This almost
+	   inevitably means some regressions, unfortunately, but
+		 it brings serious internal improvements and some new
+		 features.
+  * Brand new preferences editor, including profiles and
+	   layouts. The editor now saves to a config file.
+
+terminator 0.14:
+  * Major reworking of the grouping interface by Stephen
+	   Boddy
+  * Keybindings can now be disabled by setting them to "None"
+  * Change default behaviour to enable full transparency
+  * Terminal titlebars can now be edited like tab labels
+  * Geometry hinting is now available and enabled by default
+  * Lots of bug fixing
+
+terminator 0.13:
+  * Bug fixes
+  * Added a shortcut key to make the window appear/disappear
+	   (somewhat like a "Quake console" mode. Needs the deskbar
+		  python bindings to work)
+  * Update pot generation to use intltool-update
+  * Allow users to permanently fix the title of a tab
+  * Added command line option to specify working directory
+  * Improve transparency support in composited desktops.
+  * The tab bar can now be hidden and/or scrolled.
+  * Add configurability of cursor colour and shape
+  * Support various VoIP URIs
+  * Add command line option to force a particular window title
+  * Add a hotkey for spawning a new Terminator instance
+	   (emulates a "new window" feature)
+  * Ability to group by tab
+  * SunOS support (via patch from Lewis Thompson)
+  * Silly notify-osd message on exit (suggested by pitti)
+  * Drag and drop icon is now a scaled terminal image
+
+terminator 0.12:
+  * Bug fixes
+  * Simultaneous typing support
+  * Directional terminal navigation
+  * Improved search UI
+  * Graphical Profile Editor
+  * Bug numbers for launchpad.net are now URLs
+
+terminator 0.11:
+  * Bug fixes
+  * X session support
+
+terminator 0.10:
+  * Various bug fixes.
+  * New, improved config file parsing
+  * Improved spawning of more complex terminal commands
+  * Debug server (not useful for most people)
+  * Configurable keyboard shortcuts
+  * Scrollback searching
+  * Support --geometry
+
+terminator 0.9:
+  * Tab support
+  * Drag & Drop support
+  * Added support for ~/.config/terminator/config
+  * Switch the meanings of "horizontal" and "vertical" wrt splitting,
+    after extensive user feedback. Added context menu icons to try and
+    make the meaning clearer.
+  * Added keybindings for terms size and scrollbar manipulation. Thanks 
+    Emmanuel Bretelle.
+  * Completely revamped config system which now transparently makes use
+    of gconf settings if they are available, falls back to sensible
+    defaults if not, and can be overridden entirely by ~/.config/terminator/config
+  * Support terminal zooming - now you can quickly hide all terminals apart
+    from one and either scale the fontsize or not.
+  * New application icon from Cory Kontros
+  * FreeBSD support (thanks to Thomas Hurst)
+  * Watch the system monospace font setting. Closes LP #197960
+  * Proxy support (via GNOME and $http_proxy)
+  * GConf backend now caches
+  * Fix redundant title when there is only one Term. Closes LP#215210 
+  * Try much harder to find a usable shell
+  * Support encodings a-la GNOME Terminal
+  * Move python support code to a terminatorlib module
+  * Many other bug fixes and wider compatibility with GNOME Terminal
+  * Add support to cycle term within the same tab. Closes LP#238205.
+    This can be disabled by setting cycle_term_tab to False in 
+    ~/.config/terminator/config
+
+terminator 0.8.1:
+  * Fixed ChangeLog
+  * Revert URI matching behaviour to the same as gnome-terminal
+  * Close LP #179315 with a fuller fix that provides proper colour support
+
+terminator 0.8:
+  * Make dependency on python-gnome optional. Non-gnome users can now reap
+    the glorious benefits of Terminator and will only lose the ability to
+    open email URLs (assuming their browser won't handle this for them).
+    Closes LP #184809
+  * Remove blank translations from .desktop file to fix empty menu entries.
+    Closes LP #187187
+  * Add application icon at various sizes including a window icon
+  * New options parser allowing -x support. Closes LP191124
+  * More translations (thanks!)
+
+terminator 0.7:
+
+  * Fullscreen support, via a patch from Thomas Meire. Closes LP #178914
+  * Improved behaviour when closing terminals/window. Result of work by 
+    Thomas Meire. Closes LP #161121
+  * Freedesktop .desktop file and appropriate setup.py entry for 
+    installing it. Closes LP #178943
+  * Translation support, with Spanish, Dutch, Italian and Romanian 
+    translations. Closes LP #161120
+  * Stop clashing with gnome-terminal's paste shortcut key, move 
+    horizontal splitting shortcut too, and add support for 
+    gnome-terminal's copy/paste shortcuts. Closes LP #179310
+  * Borderless support (tell your window manager not to decorate 
+    Terminator)
+  * Font zooming support. Closes LP #178792
+  * Set the VTE widget to have a tooltip of its window title. This may be
+    reverted if it is annoying
+  * Support GNOME Terminal profile settings for backgrounds. 
+    Closes LP #180717
+  * Use our own default values if there is no gnome-terminal profile. 
+    Closes LP #179315
+
+terminator 0.6:
+
+  * Use new gnome-terminal gconf key to find available profiles
+  * Move a few more hardcoded items to our settings array (not that 
+    it can be overridden yet)
+  * Fix handling of exiting child processes to properly track 
+    gnome-terminal settings
+  * Add Ctrl-Tab and Ctrl-Shift-Tab as options for switching terminals 
+    (patch from Kees Cook)
+  * Stop using parent.show_all() when removing/adding a terminal and 
+    instead show the actual widgets that have been created. This 
+    prevents scrollbars from re-appearing after they have been hidden
+
+terminator 0.5:
+
+  * The terminator window is now able to resize smaller, 
+    thanks to Kees Cook for the fix.
+  * Email addresses are now matched and opened correctly. 
+    Closes LP #139015
+  * Double clicking a URL now selects the whole URL. Closes LP #129533
+  * The default behaviour is now to open a single 80x24 terminal rather
+    than four terminals in a maximised window. Closes LP #126219 and
+    should force me to fix LP #87720
+  * There are now hotkeys for switching between terminals, splitting 
+    terminals and closing them. Closes LP #149931 and #148622(thanks 
+    to Huanghe for patches for this)
+  * If there is only one terminal, closing it will not produce a quit 
+    message
+
+terminator 0.4:
+
+  * Architecture should be all, not any
+  * Fix section
+  * Add AUTHORS file
+  * Rename script to drop the .py
+  * Handle the gnome-terminal profile better by offering command options
+  * Fudge around some resizing issues
+  * Fix child spawning to avoid segfaulting zsh
+  * Misc. code formatting/style improvements
+  * Refactor terminal splitting into one axis agnostic function
+  * Flesh out setup.py a tiny bit more
+
+terminator 0.3:
+
+  * Implemented terminal closing, which correctly reparents its sibling
+    (if any)
+  * Updated documentation to reflect a serious bug with shells that aren't
+    bash (or at least zsh)
+
+terminator 0.2:
+
+  * Support dynamically splitting terminals
+
+terminator 0.1:
+
+  * Fixed some distribution wording
+  * Fix build-depends
+  * Initial release 
+

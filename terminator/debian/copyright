@@ -1,0 +1,65 @@
+This package was debianized by Chris Jones <cmsj@tenshu.net> on
+Sat, 28 Jul 2007 04:12:30 +0100.
+
+It was downloaded from https://launchpad.net/terminator/+download
+
+Upstream Authors (in no discernible order):
+
+    Chris Jones
+    Huang He
+    Kees Cook
+    Thomas Meire
+    Nicolas Valcarcel
+    Emmanuel Bretelle
+    Chris Oattes
+    Markus Korn
+    Mackenzie Morgan
+    Daniel T Chen
+    Nicolas Roman
+    Takao Fujiwara
+    Jordan Callicoat
+    Stephen Boddy
+
+Artwork:
+    Cory Kontros - Produced our current icon under the CC-by-SA licence
+    Cristian Grada - Drew our original icon and licenced it to us under this licence
+
+Translations:
+    Thomas Meire
+    Maxim Derkach
+    Nicolas Valcárcel
+    Mats Henrikson
+    Nizar Kerkeni
+    "Data"
+    Cristian Grada
+    "zhuqin"
+    and many others.
+
+    Seriously, thank you very much to the translators. A few minutes of 
+    their dedication opens up userbases like nothing else.
+
+Copyright: 
+
+    <Copyright (C) 2006-2010 Chris Jones and others>
+
+License:
+
+    This package is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation version 2.
+ 
+    This package is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+ 
+    You should have received a copy of the GNU General Public License
+    along with this package; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+On Debian systems, the complete text of the GNU General
+Public License can be found in `/usr/share/common-licenses/GPL-2'.
+
+The Debian packaging is (C) 2007, Chris Jones <cmsj@tenshu.net> and
+is licensed under the GPL, see above.
+

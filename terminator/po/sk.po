@@ -1,0 +1,537 @@
+# Slovak translation for terminator
+# Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
+# This file is distributed under the same license as the terminator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: terminator\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2011-08-21 01:31+0100\n"
+"PO-Revision-Date: 2010-12-06 01:53+0000\n"
+"Last-Translator: Stano Kobella <Stano110@azet.sk>\n"
+"Language-Team: Slovak <sk@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2012-04-20 04:35+0000\n"
+"X-Generator: Launchpad (build 15120)\n"
+
+#: ../data/terminator.desktop.in.h:1
+msgid "Multiple terminals in one window"
+msgstr "Viaceré terminály v jednom okne"
+
+#: ../data/terminator.desktop.in.h:2
+msgid "Terminator"
+msgstr "Terminátor"
+
+#: ../terminatorlib/container.py:149
+msgid "Close?"
+msgstr "Zatvoriť?"
+
+#: ../terminatorlib/container.py:156
+msgid "Close _Terminals"
+msgstr "Zatvoriť _terminály"
+
+#: ../terminatorlib/container.py:158
+msgid "<big><b>Close multiple terminals?</b></big>"
+msgstr "<big><b>Chcete zatvoriť viac terminálov?</b></big>"
+
+#: ../terminatorlib/container.py:161
+#, python-format
+msgid ""
+"This %s has several terminals open. Closing the %s will also close all "
+"terminals within it."
+msgstr ""
+"Tento %s má niekoľko otvorených terminálov. Zavretím %s sa tiež zavrú všetky "
+"jeho terminály."
+
+#: ../terminatorlib/encoding.py:35
+msgid "Current Locale"
+msgstr "Aktuálne lokálne nastavenie"
+
+#: ../terminatorlib/encoding.py:36 ../terminatorlib/encoding.py:49
+#: ../terminatorlib/encoding.py:68 ../terminatorlib/encoding.py:91
+#: ../terminatorlib/encoding.py:102
+msgid "Western"
+msgstr "západné"
+
+#: ../terminatorlib/encoding.py:37 ../terminatorlib/encoding.py:69
+#: ../terminatorlib/encoding.py:81 ../terminatorlib/encoding.py:100
+msgid "Central European"
+msgstr "stredoeurópske"
+
+#: ../terminatorlib/encoding.py:38
+msgid "South European"
+msgstr "juhoeurópske"
+
+#: ../terminatorlib/encoding.py:39 ../terminatorlib/encoding.py:47
+#: ../terminatorlib/encoding.py:107
+msgid "Baltic"
+msgstr "pobaltské"
+
+#. [False, "JOHAB", _("Korean") ],
+#: ../terminatorlib/encoding.py:40 ../terminatorlib/encoding.py:70
+#: ../terminatorlib/encoding.py:76 ../terminatorlib/encoding.py:78
+#: ../terminatorlib/encoding.py:83 ../terminatorlib/encoding.py:101
+msgid "Cyrillic"
+msgstr "azbuka"
+
+#: ../terminatorlib/encoding.py:41 ../terminatorlib/encoding.py:73
+#: ../terminatorlib/encoding.py:80 ../terminatorlib/encoding.py:106
+msgid "Arabic"
+msgstr "arabské"
+
+#: ../terminatorlib/encoding.py:42 ../terminatorlib/encoding.py:86
+#: ../terminatorlib/encoding.py:103
+msgid "Greek"
+msgstr "grécke"
+
+#: ../terminatorlib/encoding.py:43
+msgid "Hebrew Visual"
+msgstr "hebrejské vizuálne"
+
+#: ../terminatorlib/encoding.py:44 ../terminatorlib/encoding.py:72
+#: ../terminatorlib/encoding.py:89 ../terminatorlib/encoding.py:105
+msgid "Hebrew"
+msgstr "hebrejské"
+
+#: ../terminatorlib/encoding.py:45 ../terminatorlib/encoding.py:71
+#: ../terminatorlib/encoding.py:93 ../terminatorlib/encoding.py:104
+msgid "Turkish"
+msgstr "turecké"
+
+#: ../terminatorlib/encoding.py:46
+msgid "Nordic"
+msgstr "nordické"
+
+#: ../terminatorlib/encoding.py:48
+msgid "Celtic"
+msgstr "keltské"
+
+#: ../terminatorlib/encoding.py:50 ../terminatorlib/encoding.py:92
+msgid "Romanian"
+msgstr "rumunské"
+
+#. [False, "UTF-7", _("Unicode") ],
+#: ../terminatorlib/encoding.py:52
+msgid "Unicode"
+msgstr "Unicode"
+
+#. [False, "UTF-16", _("Unicode") ],
+#. [False, "UCS-2", _("Unicode") ],
+#. [False, "UCS-4", _("Unicode") ],
+#: ../terminatorlib/encoding.py:56
+msgid "Armenian"
+msgstr "arménske"
+
+#: ../terminatorlib/encoding.py:57 ../terminatorlib/encoding.py:58
+#: ../terminatorlib/encoding.py:62
+msgid "Chinese Traditional"
+msgstr "čínske (tradičné)"
+
+#: ../terminatorlib/encoding.py:59
+msgid "Cyrillic/Russian"
+msgstr "azbuka/ruské"
+
+#: ../terminatorlib/encoding.py:60 ../terminatorlib/encoding.py:74
+#: ../terminatorlib/encoding.py:95
+msgid "Japanese"
+msgstr "japonské"
+
+#: ../terminatorlib/encoding.py:61 ../terminatorlib/encoding.py:75
+#: ../terminatorlib/encoding.py:98
+msgid "Korean"
+msgstr "kórejské"
+
+#: ../terminatorlib/encoding.py:63 ../terminatorlib/encoding.py:64
+#: ../terminatorlib/encoding.py:65 ../terminatorlib/encoding.py:67
+msgid "Chinese Simplified"
+msgstr "čínske (zjednodušené)"
+
+#: ../terminatorlib/encoding.py:66
+msgid "Georgian"
+msgstr "rumunské"
+
+#: ../terminatorlib/encoding.py:79 ../terminatorlib/encoding.py:94
+msgid "Cyrillic/Ukrainian"
+msgstr "azbuka/ukrajinské"
+
+#: ../terminatorlib/encoding.py:82
+msgid "Croatian"
+msgstr "chorvátske"
+
+#: ../terminatorlib/encoding.py:84
+msgid "Hindi"
+msgstr "hindské"
+
+#: ../terminatorlib/encoding.py:85
+msgid "Persian"
+msgstr "perzské"
+
+#: ../terminatorlib/encoding.py:87
+msgid "Gujarati"
+msgstr "guadžarátske"
+
+#: ../terminatorlib/encoding.py:88
+msgid "Gurmukhi"
+msgstr "gurmukhské"
+
+#: ../terminatorlib/encoding.py:90
+msgid "Icelandic"
+msgstr "islandské"
+
+#: ../terminatorlib/encoding.py:96 ../terminatorlib/encoding.py:99
+#: ../terminatorlib/encoding.py:108
+msgid "Vietnamese"
+msgstr "vietnamské"
+
+#: ../terminatorlib/encoding.py:97
+msgid "Thai"
+msgstr "thajské"
+
+#: ../terminatorlib/notebook.py:278
+msgid "tab"
+msgstr "záložka"
+
+#: ../terminatorlib/notebook.py:439
+msgid "Close Tab"
+msgstr "Zatvoriť záložku"
+
+#: ../terminatorlib/optionparse.py:47
+msgid "Display program version"
+msgstr "Zobraziť verziu programu"
+
+#: ../terminatorlib/optionparse.py:49
+msgid "Maximise the window"
+msgstr "Maximalizovať okno"
+
+#: ../terminatorlib/optionparse.py:51
+msgid "Make the window fill the screen"
+msgstr "Vyplniť oknom obrazovku"
+
+#: ../terminatorlib/optionparse.py:53
+msgid "Disable window borders"
+msgstr "Zakázať okraje okna"
+
+#: ../terminatorlib/optionparse.py:55
+msgid "Hide the window at startup"
+msgstr "Skryť okno pri spustení"
+
+#: ../terminatorlib/optionparse.py:56
+msgid "Specify a title for the window"
+msgstr "Zadať nadpis pre okno"
+
+#: ../terminatorlib/optionparse.py:58
+msgid "Set the preferred size and position of the window (see X man page)"
+msgstr ""
+"Nastaviť uprednostnenú šírku a pozíciu okna (pozri stránku X manuálu)"
+
+#: ../terminatorlib/optionparse.py:60
+msgid "Specify a command to execute inside the terminal"
+msgstr "Zadať príkaz na vykonanie vnútri terminálu"
+
+#: ../terminatorlib/optionparse.py:63
+msgid ""
+"Use the rest of the command line as a command to execute inside the "
+"terminal, and its arguments"
+msgstr ""
+"Použiť zvyšok príkazového riadku ako príkaz na vykonanie vnútri terminálu, a "
+"jeho argumenty"
+
+#: ../terminatorlib/optionparse.py:66
+msgid "Set the working directory"
+msgstr "Nastaviť pracovný adresár"
+
+#: ../terminatorlib/optionparse.py:67
+msgid "Set a custom WM_WINDOW_ROLE property on the window"
+msgstr "Nastaviť voliteľnú vlastnosť okna WM_WINDOW_ROLE"
+
+#: ../terminatorlib/optionparse.py:69
+msgid "Select a layout"
+msgstr "Vybrať rozmiestnenie"
+
+#: ../terminatorlib/optionparse.py:70
+msgid "Use a different profile as the default"
+msgstr "Použiť iný profil ako predvolený"
+
+#: ../terminatorlib/optionparse.py:73
+msgid "Disable DBus"
+msgstr "Zakázať DBus"
+
+#: ../terminatorlib/optionparse.py:75
+msgid "Enable debugging information (twice for debug server)"
+msgstr ""
+"Zobraziť informáciu odchrobáčkovača (dvojmo pre odchrobáčkovací server)"
+
+#: ../terminatorlib/optionparse.py:77
+msgid "Comma separated list of classes to limit debugging to"
+msgstr "Zoznam tried oddelených čiarkami pre obmedzenie odchrobáčkovania na"
+
+#: ../terminatorlib/optionparse.py:79
+msgid "Comma separated list of methods to limit debugging to"
+msgstr "Zoznam metód oddelených čiarkami pre obmedzenie odchrobáčkovania na"
+
+#: ../terminatorlib/plugins/activitywatch.py:22
+msgid "ActivityWatch plugin unavailable: please install python-notify"
+msgstr ""
+"Nedostupný plugin sledovania aktivít ActivityWatch: prosím nainštaluj python-"
+"notify"
+
+#: ../terminatorlib/plugins/activitywatch.py:45
+msgid "Watch for activity"
+msgstr "Sledovať aktivity"
+
+#: ../terminatorlib/plugins/activitywatch.py:48
+msgid "Stop watching for activity"
+msgstr "Zastaviť sledovanie aktivity"
+
+#: ../terminatorlib/plugins/activitywatch.py:106
+msgid "Watch for silence"
+msgstr ""
+
+#: ../terminatorlib/plugins/activitywatch.py:109
+msgid "Stop watching for silence"
+msgstr ""
+
+#: ../terminatorlib/plugins/custom_commands.py:50
+msgid "Custom Commands"
+msgstr "Voliteľné príkazy"
+
+#: ../terminatorlib/plugins/custom_commands.py:106
+msgid "Custom Commands Configuration"
+msgstr "Konfigurácia voliteľných príkazov"
+
+#: ../terminatorlib/plugins/custom_commands.py:238
+msgid "New Command"
+msgstr "Nový príkaz"
+
+#: ../terminatorlib/plugins/custom_commands.py:248
+msgid "Enabled:"
+msgstr "Povolené:"
+
+#: ../terminatorlib/plugins/custom_commands.py:254
+msgid "Name:"
+msgstr "Názov:"
+
+#: ../terminatorlib/plugins/custom_commands.py:260
+msgid "Command:"
+msgstr "Príkaz:"
+
+#: ../terminatorlib/plugins/custom_commands.py:296
+#: ../terminatorlib/plugins/custom_commands.py:406
+msgid "You need to define a name and command"
+msgstr "Musíš zadať nejaké meno a príkaz"
+
+#: ../terminatorlib/plugins/custom_commands.py:313
+#: ../terminatorlib/plugins/custom_commands.py:425
+#, python-format
+msgid "Name *%s* already exist"
+msgstr "Meno *%s* už existuje"
+
+#: ../terminatorlib/plugins/terminalshot.py:28
+msgid "Terminal screenshot"
+msgstr "Snímka terminálu"
+
+#: ../terminatorlib/prefseditor.py:942 ../terminatorlib/prefseditor.py:947
+msgid "New Profile"
+msgstr "Nový profil"
+
+#: ../terminatorlib/prefseditor.py:987 ../terminatorlib/prefseditor.py:992
+msgid "New Layout"
+msgstr "Nový rozmiestnenie"
+
+#. Label
+#: ../terminatorlib/searchbar.py:50
+msgid "Search:"
+msgstr "Hľadať:"
+
+#: ../terminatorlib/searchbar.py:66
+msgid "Close Search bar"
+msgstr "Zavrieť vyhľadávací panel"
+
+#. Next Button
+#: ../terminatorlib/searchbar.py:71
+msgid "Next"
+msgstr "Ďalej"
+
+#. Previous Button
+#: ../terminatorlib/searchbar.py:77
+msgid "Prev"
+msgstr "Predošlé"
+
+#: ../terminatorlib/searchbar.py:124
+msgid "Searching scrollback"
+msgstr "Prehľadáva sa naspäť"
+
+#: ../terminatorlib/searchbar.py:135 ../terminatorlib/searchbar.py:156
+msgid "No more results"
+msgstr "Žiadne ďalšie výsledky"
+
+#: ../terminatorlib/searchbar.py:171
+msgid "Found at row"
+msgstr "Nájdené v riadku"
+
+#: ../terminatorlib/terminal_popup_menu.py:51
+msgid "_Send email to..."
+msgstr "Po_slať email pre..."
+
+#: ../terminatorlib/terminal_popup_menu.py:52
+msgid "_Copy email address"
+msgstr "Kopírovať emailovú adresu"
+
+#: ../terminatorlib/terminal_popup_menu.py:54
+msgid "Ca_ll VoIP address"
+msgstr "Zavo_lať na VoIP adresu"
+
+#: ../terminatorlib/terminal_popup_menu.py:55
+msgid "_Copy VoIP address"
+msgstr "Kopírovať VoIP adresu"
+
+#: ../terminatorlib/terminal_popup_menu.py:57
+msgid "_Open link"
+msgstr "_Otvoriť linku"
+
+#: ../terminatorlib/terminal_popup_menu.py:58
+msgid "_Copy address"
+msgstr "Kopírovať adresu"
+
+#: ../terminatorlib/terminal_popup_menu.py:86
+msgid "Split H_orizontally"
+msgstr "Rozdeliť v_odorovne"
+
+#: ../terminatorlib/terminal_popup_menu.py:96
+msgid "Split V_ertically"
+msgstr "Rozdeliť zvisl_e"
+
+#: ../terminatorlib/terminal_popup_menu.py:106
+msgid "Open _Tab"
+msgstr "Otvoriť _záložku"
+
+#: ../terminatorlib/terminal_popup_menu.py:112
+msgid "Open _Debug Tab"
+msgstr "Otvoriť záložku La_denie"
+
+#: ../terminatorlib/terminal_popup_menu.py:126
+msgid "_Zoom terminal"
+msgstr "_Priblížiť terminál"
+
+#: ../terminatorlib/terminal_popup_menu.py:130
+msgid "Ma_ximise terminal"
+msgstr "Ma_ximalizovať terminál"
+
+#: ../terminatorlib/terminal_popup_menu.py:136
+msgid "_Restore all terminals"
+msgstr "Obnoviť všetky terminály"
+
+#: ../terminatorlib/terminal_popup_menu.py:143
+msgid "Grouping"
+msgstr "Zoskupovanie"
+
+#: ../terminatorlib/terminal_popup_menu.py:150
+msgid "Show _scrollbar"
+msgstr "Zobraziť po_suvník"
+
+#: ../terminatorlib/terminal_popup_menu.py:156
+msgid "_Preferences"
+msgstr "_Nastavenia"
+
+#: ../terminatorlib/terminal_popup_menu.py:163
+msgid "Profiles"
+msgstr "Profily"
+
+#: ../terminatorlib/terminal_popup_menu.py:207
+msgid "Encodings"
+msgstr "Kódovania"
+
+#: ../terminatorlib/terminal_popup_menu.py:222
+msgid "Default"
+msgstr "Predvolené"
+
+#: ../terminatorlib/terminal_popup_menu.py:225
+msgid "User defined"
+msgstr "Definované užívateľom"
+
+#: ../terminatorlib/terminal_popup_menu.py:241
+msgid "Other Encodings"
+msgstr "Iné kódovania"
+
+#: ../terminatorlib/terminal.py:372
+msgid "New group..."
+msgstr "Nová skupina..."
+
+#: ../terminatorlib/terminal.py:377
+msgid "None"
+msgstr "Žiadna"
+
+#: ../terminatorlib/terminal.py:393
+#, python-format
+msgid "Remove group %s"
+msgstr "Odobrať skupinu %s"
+
+#: ../terminatorlib/terminal.py:398
+msgid "G_roup all in tab"
+msgstr "Zoskupiť všetko na karte"
+
+#: ../terminatorlib/terminal.py:403
+msgid "Ungr_oup all in tab"
+msgstr "Rozskupiť všetko na karte"
+
+#: ../terminatorlib/terminal.py:408
+msgid "Remove all groups"
+msgstr "Odobrať všetky skupiny"
+
+#: ../terminatorlib/terminal.py:415
+#, python-format
+msgid "Close group %s"
+msgstr "Zatvoriť skupinu %s"
+
+#: ../terminatorlib/terminal.py:424
+msgid "Broadcast all"
+msgstr "Vysielať všetko"
+
+#: ../terminatorlib/terminal.py:425
+msgid "Broadcast group"
+msgstr "Vysielacia skupina"
+
+#: ../terminatorlib/terminal.py:426
+msgid "Broadcast off"
+msgstr "Vysielanie vypnuté"
+
+#: ../terminatorlib/terminal.py:439
+msgid "Split to this group"
+msgstr "Rozdeliť po túto skupinu"
+
+#: ../terminatorlib/terminal.py:444
+msgid "Autoclean groups"
+msgstr "Automatické čistenie skupín"
+
+#: ../terminatorlib/terminal.py:451
+msgid "Insert terminal number"
+msgstr "Zadať číslo terminálu"
+
+#: ../terminatorlib/terminal.py:455
+msgid "Insert padded terminal number"
+msgstr "Vložiť vypchané číslo terminála"
+
+#: ../terminatorlib/terminal.py:1193
+msgid "Unable to find a shell"
+msgstr "Nepodarilo sa nájsť shell"
+
+#: ../terminatorlib/terminal.py:1210
+msgid "Unable to start shell:"
+msgstr "Nepodarilo sa spustiť shell:"
+
+#: ../terminatorlib/window.py:242
+msgid "window"
+msgstr "okno"
+
+#. FIXME: Why isn't this being done by Terminator() ?
+#: ../terminatorlib/window.py:612
+msgid "All"
+msgstr "Všetky"
+
+#: ../terminatorlib/window.py:633
+#, python-format
+msgid "Tab %d"
+msgstr "Karta %d"

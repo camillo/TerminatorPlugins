@@ -1,0 +1,529 @@
+# Simplified Chinese translation for terminator
+# Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
+# This file is distributed under the same license as the terminator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: terminator\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2011-08-21 01:31+0100\n"
+"PO-Revision-Date: 2012-04-07 16:20+0000\n"
+"Last-Translator: Wang Dianjin <Unknown>\n"
+"Language-Team: Simplified Chinese <zh_CN@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2012-04-20 04:35+0000\n"
+"X-Generator: Launchpad (build 15120)\n"
+
+#: ../data/terminator.desktop.in.h:1
+msgid "Multiple terminals in one window"
+msgstr "一个窗口里多个终端"
+
+#: ../data/terminator.desktop.in.h:2
+msgid "Terminator"
+msgstr "Terminator"
+
+#: ../terminatorlib/container.py:149
+msgid "Close?"
+msgstr "确定关闭？"
+
+#: ../terminatorlib/container.py:156
+msgid "Close _Terminals"
+msgstr "关闭终端 (_T)"
+
+#: ../terminatorlib/container.py:158
+msgid "<big><b>Close multiple terminals?</b></big>"
+msgstr "<big><b>关闭多个终端？</b></big>"
+
+#: ../terminatorlib/container.py:161
+#, python-format
+msgid ""
+"This %s has several terminals open. Closing the %s will also close all "
+"terminals within it."
+msgstr "这个 %s 含有多个终端. 关掉 %s 也会把其中的终端关掉."
+
+#: ../terminatorlib/encoding.py:35
+msgid "Current Locale"
+msgstr "当前语言环境"
+
+#: ../terminatorlib/encoding.py:36 ../terminatorlib/encoding.py:49
+#: ../terminatorlib/encoding.py:68 ../terminatorlib/encoding.py:91
+#: ../terminatorlib/encoding.py:102
+msgid "Western"
+msgstr "西方"
+
+#: ../terminatorlib/encoding.py:37 ../terminatorlib/encoding.py:69
+#: ../terminatorlib/encoding.py:81 ../terminatorlib/encoding.py:100
+msgid "Central European"
+msgstr "中欧"
+
+#: ../terminatorlib/encoding.py:38
+msgid "South European"
+msgstr "南欧"
+
+#: ../terminatorlib/encoding.py:39 ../terminatorlib/encoding.py:47
+#: ../terminatorlib/encoding.py:107
+msgid "Baltic"
+msgstr "波罗的海语系"
+
+#. [False, "JOHAB", _("Korean") ],
+#: ../terminatorlib/encoding.py:40 ../terminatorlib/encoding.py:70
+#: ../terminatorlib/encoding.py:76 ../terminatorlib/encoding.py:78
+#: ../terminatorlib/encoding.py:83 ../terminatorlib/encoding.py:101
+msgid "Cyrillic"
+msgstr "西里尔文"
+
+#: ../terminatorlib/encoding.py:41 ../terminatorlib/encoding.py:73
+#: ../terminatorlib/encoding.py:80 ../terminatorlib/encoding.py:106
+msgid "Arabic"
+msgstr "阿拉伯语"
+
+#: ../terminatorlib/encoding.py:42 ../terminatorlib/encoding.py:86
+#: ../terminatorlib/encoding.py:103
+msgid "Greek"
+msgstr "希腊语"
+
+#: ../terminatorlib/encoding.py:43
+msgid "Hebrew Visual"
+msgstr "可视希伯来语"
+
+#: ../terminatorlib/encoding.py:44 ../terminatorlib/encoding.py:72
+#: ../terminatorlib/encoding.py:89 ../terminatorlib/encoding.py:105
+msgid "Hebrew"
+msgstr "希伯来语"
+
+#: ../terminatorlib/encoding.py:45 ../terminatorlib/encoding.py:71
+#: ../terminatorlib/encoding.py:93 ../terminatorlib/encoding.py:104
+msgid "Turkish"
+msgstr "土耳其语"
+
+#: ../terminatorlib/encoding.py:46
+msgid "Nordic"
+msgstr "日耳曼语"
+
+#: ../terminatorlib/encoding.py:48
+msgid "Celtic"
+msgstr "凯尔特语"
+
+#: ../terminatorlib/encoding.py:50 ../terminatorlib/encoding.py:92
+msgid "Romanian"
+msgstr "罗马尼亚语"
+
+#. [False, "UTF-7", _("Unicode") ],
+#: ../terminatorlib/encoding.py:52
+msgid "Unicode"
+msgstr "Unicode"
+
+#. [False, "UTF-16", _("Unicode") ],
+#. [False, "UCS-2", _("Unicode") ],
+#. [False, "UCS-4", _("Unicode") ],
+#: ../terminatorlib/encoding.py:56
+msgid "Armenian"
+msgstr "亚美尼亚语"
+
+#: ../terminatorlib/encoding.py:57 ../terminatorlib/encoding.py:58
+#: ../terminatorlib/encoding.py:62
+msgid "Chinese Traditional"
+msgstr "繁体中文"
+
+#: ../terminatorlib/encoding.py:59
+msgid "Cyrillic/Russian"
+msgstr "西里尔语/俄语"
+
+#: ../terminatorlib/encoding.py:60 ../terminatorlib/encoding.py:74
+#: ../terminatorlib/encoding.py:95
+msgid "Japanese"
+msgstr "日语"
+
+#: ../terminatorlib/encoding.py:61 ../terminatorlib/encoding.py:75
+#: ../terminatorlib/encoding.py:98
+msgid "Korean"
+msgstr "韩语"
+
+#: ../terminatorlib/encoding.py:63 ../terminatorlib/encoding.py:64
+#: ../terminatorlib/encoding.py:65 ../terminatorlib/encoding.py:67
+msgid "Chinese Simplified"
+msgstr "简体中文"
+
+#: ../terminatorlib/encoding.py:66
+msgid "Georgian"
+msgstr "格鲁吉亚语"
+
+#: ../terminatorlib/encoding.py:79 ../terminatorlib/encoding.py:94
+msgid "Cyrillic/Ukrainian"
+msgstr "西里尔语/乌克兰语"
+
+#: ../terminatorlib/encoding.py:82
+msgid "Croatian"
+msgstr "克罗地亚语"
+
+#: ../terminatorlib/encoding.py:84
+msgid "Hindi"
+msgstr "印地语"
+
+#: ../terminatorlib/encoding.py:85
+msgid "Persian"
+msgstr "波斯语"
+
+#: ../terminatorlib/encoding.py:87
+msgid "Gujarati"
+msgstr "古吉拉特语"
+
+#: ../terminatorlib/encoding.py:88
+msgid "Gurmukhi"
+msgstr "果鲁穆奇语"
+
+#: ../terminatorlib/encoding.py:90
+msgid "Icelandic"
+msgstr "冰岛语"
+
+#: ../terminatorlib/encoding.py:96 ../terminatorlib/encoding.py:99
+#: ../terminatorlib/encoding.py:108
+msgid "Vietnamese"
+msgstr "越南语"
+
+#: ../terminatorlib/encoding.py:97
+msgid "Thai"
+msgstr "泰语"
+
+#: ../terminatorlib/notebook.py:278
+msgid "tab"
+msgstr "标签页"
+
+#: ../terminatorlib/notebook.py:439
+msgid "Close Tab"
+msgstr "关闭标签"
+
+#: ../terminatorlib/optionparse.py:47
+msgid "Display program version"
+msgstr "显示程序版本"
+
+#: ../terminatorlib/optionparse.py:49
+msgid "Maximise the window"
+msgstr "最大化窗口"
+
+#: ../terminatorlib/optionparse.py:51
+msgid "Make the window fill the screen"
+msgstr "让窗口占有整个屏幕"
+
+#: ../terminatorlib/optionparse.py:53
+msgid "Disable window borders"
+msgstr "隐藏窗口边缘"
+
+#: ../terminatorlib/optionparse.py:55
+msgid "Hide the window at startup"
+msgstr "启动的时候隐藏窗口"
+
+#: ../terminatorlib/optionparse.py:56
+msgid "Specify a title for the window"
+msgstr "给窗口命名"
+
+#: ../terminatorlib/optionparse.py:58
+msgid "Set the preferred size and position of the window (see X man page)"
+msgstr "设置默认的窗口大小和位置 (参见 X 的 man 档案)"
+
+#: ../terminatorlib/optionparse.py:60
+msgid "Specify a command to execute inside the terminal"
+msgstr "指出要在终端中执行的命令"
+
+#: ../terminatorlib/optionparse.py:63
+msgid ""
+"Use the rest of the command line as a command to execute inside the "
+"terminal, and its arguments"
+msgstr ""
+
+#: ../terminatorlib/optionparse.py:66
+msgid "Set the working directory"
+msgstr "设置工作目录"
+
+#: ../terminatorlib/optionparse.py:67
+msgid "Set a custom WM_WINDOW_ROLE property on the window"
+msgstr "设置窗口自定义的 WM_WINDOW_ROLE"
+
+#: ../terminatorlib/optionparse.py:69
+msgid "Select a layout"
+msgstr "选择一个窗口布局"
+
+#: ../terminatorlib/optionparse.py:70
+msgid "Use a different profile as the default"
+msgstr "设置新的默认配置"
+
+#: ../terminatorlib/optionparse.py:73
+msgid "Disable DBus"
+msgstr "禁用DBus"
+
+#: ../terminatorlib/optionparse.py:75
+msgid "Enable debugging information (twice for debug server)"
+msgstr "启用调试信息(调试服务器两次)"
+
+#: ../terminatorlib/optionparse.py:77
+msgid "Comma separated list of classes to limit debugging to"
+msgstr ""
+
+#: ../terminatorlib/optionparse.py:79
+msgid "Comma separated list of methods to limit debugging to"
+msgstr ""
+
+#: ../terminatorlib/plugins/activitywatch.py:22
+msgid "ActivityWatch plugin unavailable: please install python-notify"
+msgstr "ActivityWatch插件不可用: 请安装python-notify"
+
+#: ../terminatorlib/plugins/activitywatch.py:45
+msgid "Watch for activity"
+msgstr "察看活动的进程"
+
+#: ../terminatorlib/plugins/activitywatch.py:48
+msgid "Stop watching for activity"
+msgstr "停止察看活动的进程"
+
+#: ../terminatorlib/plugins/activitywatch.py:106
+msgid "Watch for silence"
+msgstr "查看协议"
+
+#: ../terminatorlib/plugins/activitywatch.py:109
+msgid "Stop watching for silence"
+msgstr "停止查看协议"
+
+#: ../terminatorlib/plugins/custom_commands.py:50
+msgid "Custom Commands"
+msgstr "自定义命令"
+
+#: ../terminatorlib/plugins/custom_commands.py:106
+msgid "Custom Commands Configuration"
+msgstr "自定义命令"
+
+#: ../terminatorlib/plugins/custom_commands.py:238
+msgid "New Command"
+msgstr "新命令"
+
+#: ../terminatorlib/plugins/custom_commands.py:248
+msgid "Enabled:"
+msgstr "启用："
+
+#: ../terminatorlib/plugins/custom_commands.py:254
+msgid "Name:"
+msgstr "名称:"
+
+#: ../terminatorlib/plugins/custom_commands.py:260
+msgid "Command:"
+msgstr "命令："
+
+#: ../terminatorlib/plugins/custom_commands.py:296
+#: ../terminatorlib/plugins/custom_commands.py:406
+msgid "You need to define a name and command"
+msgstr "你需要定义名称和命令"
+
+#: ../terminatorlib/plugins/custom_commands.py:313
+#: ../terminatorlib/plugins/custom_commands.py:425
+#, python-format
+msgid "Name *%s* already exist"
+msgstr "*%s*已经存在"
+
+#: ../terminatorlib/plugins/terminalshot.py:28
+msgid "Terminal screenshot"
+msgstr "终端截图"
+
+#: ../terminatorlib/prefseditor.py:942 ../terminatorlib/prefseditor.py:947
+msgid "New Profile"
+msgstr "新配置"
+
+#: ../terminatorlib/prefseditor.py:987 ../terminatorlib/prefseditor.py:992
+msgid "New Layout"
+msgstr "新布局"
+
+#. Label
+#: ../terminatorlib/searchbar.py:50
+msgid "Search:"
+msgstr "搜索："
+
+#: ../terminatorlib/searchbar.py:66
+msgid "Close Search bar"
+msgstr "关闭搜索栏"
+
+#. Next Button
+#: ../terminatorlib/searchbar.py:71
+msgid "Next"
+msgstr "下一个"
+
+#. Previous Button
+#: ../terminatorlib/searchbar.py:77
+msgid "Prev"
+msgstr "上一个"
+
+#: ../terminatorlib/searchbar.py:124
+msgid "Searching scrollback"
+msgstr "回滚搜索"
+
+#: ../terminatorlib/searchbar.py:135 ../terminatorlib/searchbar.py:156
+msgid "No more results"
+msgstr "无更多结果"
+
+#: ../terminatorlib/searchbar.py:171
+msgid "Found at row"
+msgstr ""
+
+#: ../terminatorlib/terminal_popup_menu.py:51
+msgid "_Send email to..."
+msgstr "发送邮件到...(_S)"
+
+#: ../terminatorlib/terminal_popup_menu.py:52
+msgid "_Copy email address"
+msgstr "复制邮件地址(_C)"
+
+#: ../terminatorlib/terminal_popup_menu.py:54
+msgid "Ca_ll VoIP address"
+msgstr "呼叫(_L) Voip 地址"
+
+#: ../terminatorlib/terminal_popup_menu.py:55
+msgid "_Copy VoIP address"
+msgstr "复制(_C) Voip 地址"
+
+#: ../terminatorlib/terminal_popup_menu.py:57
+msgid "_Open link"
+msgstr "打开连接(_O)"
+
+#: ../terminatorlib/terminal_popup_menu.py:58
+msgid "_Copy address"
+msgstr "复制地址(_C)"
+
+#: ../terminatorlib/terminal_popup_menu.py:86
+msgid "Split H_orizontally"
+msgstr "水平分割(_H)"
+
+#: ../terminatorlib/terminal_popup_menu.py:96
+msgid "Split V_ertically"
+msgstr "垂直分割(_V)"
+
+#: ../terminatorlib/terminal_popup_menu.py:106
+msgid "Open _Tab"
+msgstr "打开标签(_T)"
+
+#: ../terminatorlib/terminal_popup_menu.py:112
+msgid "Open _Debug Tab"
+msgstr "打开Debug标签(_D)"
+
+#: ../terminatorlib/terminal_popup_menu.py:126
+msgid "_Zoom terminal"
+msgstr "放大终端(_Z)"
+
+#: ../terminatorlib/terminal_popup_menu.py:130
+msgid "Ma_ximise terminal"
+msgstr "最大化(_x) 选中的页面"
+
+#: ../terminatorlib/terminal_popup_menu.py:136
+msgid "_Restore all terminals"
+msgstr "还原所有终端(_R)"
+
+#: ../terminatorlib/terminal_popup_menu.py:143
+msgid "Grouping"
+msgstr "分组"
+
+#: ../terminatorlib/terminal_popup_menu.py:150
+msgid "Show _scrollbar"
+msgstr "显示滚动条"
+
+#: ../terminatorlib/terminal_popup_menu.py:156
+msgid "_Preferences"
+msgstr "首选项 (_P)"
+
+#: ../terminatorlib/terminal_popup_menu.py:163
+msgid "Profiles"
+msgstr "配置"
+
+#: ../terminatorlib/terminal_popup_menu.py:207
+msgid "Encodings"
+msgstr "编码"
+
+#: ../terminatorlib/terminal_popup_menu.py:222
+msgid "Default"
+msgstr "默认"
+
+#: ../terminatorlib/terminal_popup_menu.py:225
+msgid "User defined"
+msgstr "用户定义"
+
+#: ../terminatorlib/terminal_popup_menu.py:241
+msgid "Other Encodings"
+msgstr "其他编码"
+
+#: ../terminatorlib/terminal.py:372
+msgid "New group..."
+msgstr "新建组"
+
+#: ../terminatorlib/terminal.py:377
+msgid "None"
+msgstr "无"
+
+#: ../terminatorlib/terminal.py:393
+#, python-format
+msgid "Remove group %s"
+msgstr "移除组 %s"
+
+#: ../terminatorlib/terminal.py:398
+msgid "G_roup all in tab"
+msgstr ""
+
+#: ../terminatorlib/terminal.py:403
+msgid "Ungr_oup all in tab"
+msgstr ""
+
+#: ../terminatorlib/terminal.py:408
+msgid "Remove all groups"
+msgstr "移除所有的组"
+
+#: ../terminatorlib/terminal.py:415
+#, python-format
+msgid "Close group %s"
+msgstr "关闭组 %s"
+
+#: ../terminatorlib/terminal.py:424
+msgid "Broadcast all"
+msgstr ""
+
+#: ../terminatorlib/terminal.py:425
+msgid "Broadcast group"
+msgstr "广播组"
+
+#: ../terminatorlib/terminal.py:426
+msgid "Broadcast off"
+msgstr "广播关闭"
+
+#: ../terminatorlib/terminal.py:439
+msgid "Split to this group"
+msgstr "分离到这个组"
+
+#: ../terminatorlib/terminal.py:444
+msgid "Autoclean groups"
+msgstr "自动清理分组"
+
+#: ../terminatorlib/terminal.py:451
+msgid "Insert terminal number"
+msgstr "插入终端编号"
+
+#: ../terminatorlib/terminal.py:455
+msgid "Insert padded terminal number"
+msgstr ""
+
+#: ../terminatorlib/terminal.py:1193
+msgid "Unable to find a shell"
+msgstr "无法找到shell"
+
+#: ../terminatorlib/terminal.py:1210
+msgid "Unable to start shell:"
+msgstr "无法启动shell："
+
+#: ../terminatorlib/window.py:242
+msgid "window"
+msgstr "窗口"
+
+#. FIXME: Why isn't this being done by Terminator() ?
+#: ../terminatorlib/window.py:612
+msgid "All"
+msgstr "全部"
+
+#: ../terminatorlib/window.py:633
+#, python-format
+msgid "Tab %d"
+msgstr "标签 %d"

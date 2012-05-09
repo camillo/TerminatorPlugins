@@ -1,0 +1,44 @@
+It's strongly recommended to install Terminator using your OS's package
+system rather than using setup.py yourself.  You can find instructions
+for many distributions at:
+
+  http://www.tenshu.net/terminator/
+
+If you don't have this option, please make sure you satisfy Terminator's
+dependencies yourself:
+
+ * Python 2.5+, 2.6 recommended:
+     Debian/Ubuntu: python
+     FreeBSD: lang/python26
+
+ * Python VTE bindings:
+     Debian/Ubuntu: python-vte
+     FreeBSD: x11-toolkits/py-vte
+
+If you don't care about native language support or icons, Terminator
+should run just fine directly from this directory, just:
+
+    ./terminator --help
+
+And go from there.  Manpages are available in the 'doc' directory.
+
+To install properly, run:
+
+    ./setup.py install --record=install-files.txt
+
+See --help for an overview of the available options; e.g. --prefix to
+install to a custom base directory, and --without-gettext to avoid
+installing natural language support files.
+
+setup.py supports basic uninstallation provided --record was used for
+installation as above:
+
+    ./setup.py uninstall --manifest=install-files.txt
+
+Note that uninstall will avoid removing most empty directories so it
+won't harm e.g. locale or icon directories which only contain Terminator
+data.  It also won't rebuild the icon cache, so you may wish to:
+
+     gtk-update-icon-cache -q -f ${PREFIX}/share/icons/hicolor
+
+Where ${PREFIX} is the base install directory; e.g. /usr/local.
