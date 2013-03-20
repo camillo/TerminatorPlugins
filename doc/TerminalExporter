@@ -20,6 +20,11 @@ Stops logging of this session.
 - export and log terminal
 Combines export and log :-). First terminal's buffer is exported into a file and then session is logged into same file.
 
+- show console
+Export and start log (if not running); split terminal.
+New terminal offers aliases tgrep, tless and ttail; they are
+targeting original terminal's logfile.
+For other unix stuff find current logfile name in enviroment variable <TERMINAL_LOGFILE>.
 
 Configuration
 All configuration is done in terminator's config file (~/.config/terminator/config on my system).
@@ -60,14 +65,13 @@ Text of the menu item.
 Default is 'export and log terminal'
 Text of the menu item.
 
+- consoleLogfileVariable
+Default is 'TERMINAL_LOGFILE'
+Current logfile's full path is exported to this enviroment variable, when using 'show console'.
 
-Alias; using the /tmp/.terminatorExports file
-It's a simple text file, containing the locations to exports and logs. I use following aliase; feel free to script whatever you need:
-alias tgrep='cat `tail -n1 /tmp/.terminatorExports` | grep'
-alias tless='cat `tail -n1 /tmp/.terminatorExports` | less'
-alias ttail='tail `tail -n1 /tmp/.terminatorExports`'
-
-using these aliase, I can grep, less and tail the last export or log.
+- consoleAlias
+Default is "tgrep='cat %s | grep'", "ttail='tail %s'", "tless='less %s'"
+These aliases are set if using 'show console'. %s is replaced by logfile's name.
 
 Config example
 [plugins]
