@@ -22,6 +22,7 @@ SETTING_MENU_EXPORT = "exportMenuText"
 SETTING_MENU_STOP_LOG = "stopLogMenuText"
 SETTING_MENU_START_LOG = "logMenuText"
 SETTING_MENU_EXPORT_LOG = "exportLogMenuText"
+SETTING_MENU_CONSOLE = "showConsole"
 DEFAULT_SETTINGS = {SETTING_DIR            : "/tmp",
                     SETTING_EXPORT_FILE    : "/tmp/.terminatorExports",
                     SETTING_EXPORT_ENV     : "",
@@ -30,6 +31,7 @@ DEFAULT_SETTINGS = {SETTING_DIR            : "/tmp",
                     SETTING_MENU_STOP_LOG  : "stop log",
                     SETTING_MENU_START_LOG : "log terminal",
                     SETTING_MENU_EXPORT_LOG: "export and log terminal",
+                    SETTING_MENU_CONSOLE   : "show console",
                     }
 
 
@@ -96,12 +98,16 @@ class TerminalExporter(plugin.MenuItem):
             logItem = gtk.MenuItem(_(self.pluginConfig[SETTING_MENU_EXPORT_LOG]))
             logItem.connect("activate", self.doExportLog, terminal)
             submenu.append(logItem)
+        consoleItem = gtk.MenuItem(_(self.pluginConfig[SETTING_MENU_CONSOLE]))
+        consoleItem.connect("activate", self.doConsole, terminal)
+        submenu.append(consoleItem)
         item.set_submenu(submenu)
         menuitems.append(item)
     
     def doExportLog(self, widget, terminal):
         filename = self.doExport(widget, terminal)
         self.doLog(widget, terminal, filename)
+        return filename
     
     def doExport(self, widget, terminal):
         """
@@ -132,6 +138,15 @@ class TerminalExporter(plugin.MenuItem):
     def doStopLog(self, widget, terminal):
         vte = terminal.get_vte()
         vte.disconnect(self.loggingTerminals.pop(terminal).watcher)
+
+    def doConsole(self, widget, terminal):
+        filename = self.doExportLog(widget, terminal)
+        terminal.parent.split_axis(terminal, True)
+        newTerminal = terminal.parent.get_children()[1]
+        newTerminal.titlebar.set_custom_string(EXPORTER_NAME)
+        newTerminal.feed("alias tgrep='cat %s | grep'\n" % filename)
+        newTerminal.feed("alias ttail='tail %s'\n" % filename)
+        newTerminal.feed("alias tless='less %s'\n" % filename)
 
     def logNotify(self, _vte, terminal):
         vte = terminal.get_vte()
