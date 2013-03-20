@@ -17,12 +17,15 @@ EXPORTER_NAME="TerminalExporter"
 SETTING_DIR = "directory"
 SETTING_EXPORT_FILE = "exportNameToFile"
 SETTING_EXPORT_ENV = "exportNameToEnv"
+SETTING_CONSOLE_ALIAS = "consoleAlias"
+SETTING_CONSOLE_LOGFILE_VARIABLE = "consoleLogfileVariable"
 SETTING_MENU_MAIN = "mainMenuText"
 SETTING_MENU_EXPORT = "exportMenuText"
 SETTING_MENU_STOP_LOG = "stopLogMenuText"
 SETTING_MENU_START_LOG = "logMenuText"
 SETTING_MENU_EXPORT_LOG = "exportLogMenuText"
 SETTING_MENU_CONSOLE = "showConsole"
+
 DEFAULT_SETTINGS = {SETTING_DIR            : "/tmp",
                     SETTING_EXPORT_FILE    : "/tmp/.terminatorExports",
                     SETTING_EXPORT_ENV     : "",
@@ -32,6 +35,10 @@ DEFAULT_SETTINGS = {SETTING_DIR            : "/tmp",
                     SETTING_MENU_START_LOG : "log terminal",
                     SETTING_MENU_EXPORT_LOG: "export and log terminal",
                     SETTING_MENU_CONSOLE   : "show console",
+                    SETTING_CONSOLE_ALIAS  : ["tgrep='cat %s | grep'",
+                                              "ttail='tail %s'",
+                                              "tless='less %s'"],
+                    SETTING_CONSOLE_LOGFILE_VARIABLE : 'TERMINAL_LOGFILE',
                     }
 
 
@@ -140,13 +147,19 @@ class TerminalExporter(plugin.MenuItem):
         vte.disconnect(self.loggingTerminals.pop(terminal).watcher)
 
     def doConsole(self, widget, terminal):
-        filename = self.doExportLog(widget, terminal)
+        if terminal in self.loggingTerminals:
+            filename = self.loggingTerminals[terminal].filename
+        else:
+            filename = self.doExportLog(widget, terminal)
         terminal.parent.split_axis(terminal, True)
         newTerminal = terminal.parent.get_children()[1]
         newTerminal.titlebar.set_custom_string(EXPORTER_NAME)
-        newTerminal.feed("alias tgrep='cat %s | grep'\n" % filename)
-        newTerminal.feed("alias ttail='tail %s'\n" % filename)
-        newTerminal.feed("alias tless='less %s'\n" % filename)
+        for alias in self.pluginConfig[SETTING_CONSOLE_ALIAS]:
+            newTerminal.feed ("alias %s\n" % alias % filename)
+        variableName = self.pluginConfig[SETTING_CONSOLE_LOGFILE_VARIABLE]
+        if variableName:
+            newTerminal.feed("export %s=%s\n" % (variableName, filename))
+
 
     def logNotify(self, _vte, terminal):
         vte = terminal.get_vte()
