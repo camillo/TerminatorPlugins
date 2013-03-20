@@ -1,16 +1,15 @@
-This are some plugins for terminator, I wrote for my own convenience.
+=================================================================
+======== This is my branch for hacking on terminator lib ========
+=================================================================
 
-see https://launchpad.net/terminator 
-for information about terminator.
+Nothing here is supposed to used live. It may be unstable, unsecure,
+break your pc into peaces and kill your first born.
 
-see ./doc folder for detailed docu about the plugins.
+Use the master branch for stable plugins.
 
-Following plugins are included, yet:
-- LayoutManager
-  Saves and restores Layouts, plus some extra functions for custom commands.
+This said: I try to enhance plugin possibilities here. Most of the code
+is good and I will try to get some commits into terminator's official trunk.
 
-- TerminalExporter
-  Exports full terminal (including buffer) into file.
-  Allows to log terminal's action into file.
+If you see usefull aspects of here and want to contribute, please
+contact me (or just do and send a pull request).
 
-Code for all plugins is public domain.
