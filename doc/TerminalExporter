@@ -39,7 +39,7 @@ Make sure that configured directory exists.
 
 - exportNameToFile
 Default is /tmp/.terminatorExports.
-TerminalExporter generates a random, unique filename per export and log. These filenames are appended to the file, configured by this option. Set it to "", if you do not want to log the used filenames (see alias section in this document for usage).
+TerminalExporter generates a random, unique filename per export and log. These filenames are appended to the file, configured by this option. Set it to "", if you do not want to log the used filenames.
 
 - exportNameToEnv
 Default is "" (not set).
