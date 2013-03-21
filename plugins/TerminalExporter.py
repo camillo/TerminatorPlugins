@@ -187,7 +187,7 @@ class TerminalExporter(plugin.MenuItem):
     def getFilename(self):
         filename = path.join(self.pluginConfig[SETTING_DIR], uuid.uuid1().__str__())
         ret = "%s.terminatorExport" % filename
-        if self.pluginConfig[SETTING_EXPORT_FILE] != "":
+        if self.pluginConfig[SETTING_EXPORT_FILE]:
             with open(self.pluginConfig[SETTING_EXPORT_FILE], "a") as targetFile:
                 targetFile.writelines(ret + "\n")
                 targetFile.close()
