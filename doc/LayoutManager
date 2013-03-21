@@ -54,7 +54,7 @@ layouts are saved as xml files and must have the extension .layout. File's name 
             <terminal command="" />
           </child>
           <child>
-            <terminal directory="/home/camillo/LayoutManager" />
+            <terminal directory="/home/camillo/LayoutManager" caption="foo" />
           </child>
         </split>
       </child>
