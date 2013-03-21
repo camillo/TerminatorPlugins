@@ -191,6 +191,9 @@ class LayoutManager(plugin.MenuItem):
     def saveTerminal(self,terminal, element):
         terminalElement = ET.SubElement(element, TERMINAL_ELEMENT)
         terminalElement.attrib[DIRECTORY_ATTRIBUTE] = terminal.get_cwd()
+        caption = terminal.titlebar.get_custom_string()
+        if caption:
+            terminalElement.attrib[CAPTION_ATTRIBUTE] = caption
 
     def savePanedRecursive(self,paned, element):
         splitElement = self.createSplitElement(element, paned)
@@ -380,7 +383,7 @@ class LayoutManager(plugin.MenuItem):
     def setTerminalCaption(self, terminal, terminalElement):
         caption = self.tryGetXmlAttribute(terminalElement, CAPTION_ATTRIBUTE)
         if caption:
-            terminal.titlebar.termtext = caption
+            terminal.titlebar.set_custom_string(caption)
 
     def executeStep(self, step, terminal, terminalElement):
         if step == DIRECTORY_ATTRIBUTE:
