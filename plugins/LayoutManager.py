@@ -2,6 +2,12 @@
 Created on Feb 25, 2011
 
 @author: Daniel Marohn
+
+licence: public domain
+
+This is a plugin for terminator, that saves and restores layouts.
+
+Find updates here: https://github.com/camillo/TerminatorPlugins
 '''
 
 import gtk
@@ -28,16 +34,14 @@ from os.path import isfile
 from os.path import exists
 from os.path import join
 
-from os import listdir
-from os import makedirs
+from os import listdir, makedirs, linesep
 
 LAYOUTMANAGER_NAME = "LayoutManager"
 LAYOUTMANAGER_DISPLAY_NAME = "Layout Manager"
-LAYOUTMANAGER_CAPABILITIES = ['terminal_menu']
 
 LAYOUT_EXTENSION = ".layout"
 SAVE_COMMAND_CAPTION = "save"
-NEWLINE = "\n"
+NEWLINE = linesep
 INDENT_SPACE = "  "
 DEFAULT_PARAMETER_PLACEHOLDER = "{}"
 DEFAULT_PARAMETER_SEPARATOR = ","
@@ -81,8 +85,12 @@ AVAILABLE = [LAYOUTMANAGER_NAME]
 available = AVAILABLE
 
 
-def get_top_window(widget):
-    """ Return the Window instance a widget belongs to. """
+def getTopWindow(widget):
+    """
+    Return the Window instance a widget belongs to.
+    @param widget: The gtk widget, that's top window will returned.
+    @return: Gtk Window instance, given widget belongs to.
+    """
     parent = widget.get_parent()
     while parent:
         widget = parent
@@ -91,8 +99,12 @@ def get_top_window(widget):
 
 
 class LayoutManager(plugin.MenuItem):
+    """
+    Layout manager saves and loads layouts.
+    """
 
-    capabilities = LAYOUTMANAGER_CAPABILITIES
+    capabilities = ['terminal_menu', ]
+
     configDir = None
     nextTerminalNumber = 0
     rootCommand = None
@@ -110,6 +122,11 @@ class LayoutManager(plugin.MenuItem):
         self.setConfigDir()
 
     def setConfigDir(self):
+        """
+        Set the directory, where our layouts are saved.
+        We use terminator's config dir plus LayoutManager (most likley
+        ~/.config/terminator/LayoutManager).
+        """
         if self.configDir is None:
             configDir = join(get_config_dir(), LAYOUTMANAGER_NAME)
             if not exists(configDir):
@@ -117,27 +134,50 @@ class LayoutManager(plugin.MenuItem):
             self.configDir = configDir
 
     def callback(self, menuitems, menu, terminal):
+        """
+        Terminator calls this when user right clicked into a terminal.
+        We add our context menu item here.
+        @param menuitems: List of menu items, that will be displayed.
+        @param menu: Full gtk menu instance; not used here.
+        @param terminal: The terminal instance, that got the right click.
+        """
         mainItem = self.createMainItem(terminal)
         menuitems.append(mainItem)
 
     def createMainItem(self, terminal):
+        """
+        Create the 'Layout Manager' menu item.
+        @param terminal: The terminal this context menu item belongs to.
+        @return: The gtk menu item to display in user's context menu.
+        """
         mainItem, submenu = self.createMainItems()
 
         submenu.append(self.createSaveItem(terminal))
         submenu.append(gtk.SeparatorMenuItem())
 
-        for currentFile in listdir(self.configDir):
-            self.tryAddLayoutMenuItem(currentFile, terminal, submenu)
+        possibleLayouts = listdir(self.configDir)
+        possibleLayouts.sort()
+
+        for currentPossibleLayout in possibleLayouts:
+            self.tryAddLayoutMenuItem(currentPossibleLayout, terminal, submenu)
 
         return mainItem
 
     def createMainItems(self):
+        """
+        Create the 'Layout Manager' menu item, together with the sub menu
+        for saved layouts.
+        """
         mainItem = gtk.MenuItem(_(LAYOUTMANAGER_DISPLAY_NAME))
         submenu = gtk.Menu()
         mainItem.set_submenu(submenu)
         return mainItem, submenu
 
     def createSaveItem(self, terminal):
+        """
+        Create the 'save' menu item, together with bindings for activation.
+        @param terminal: The terminal this context menu item belongs to.
+        """
         saveItem = gtk.ImageMenuItem(SAVE_COMMAND_CAPTION)
         image = gtk.Image()
         image.set_from_icon_name(gtk.STOCK_FLOPPY, gtk.ICON_SIZE_MENU)
@@ -146,6 +186,12 @@ class LayoutManager(plugin.MenuItem):
         return saveItem
 
     def tryAddLayoutMenuItem(self, name, terminal, menu):
+        """
+        Checks if given file is a layout and add a context menu item if so.
+        @param name: The file name of the possible layout.
+        @param terminal: The terminal this context menu item belongs to.
+        @param menu: Full gtk menu instance; not used here.
+        """
         isLayout, shortname = self.tryGetLayoutShortName(name)
         if isLayout:
             layoutItem = gtk.MenuItem(_(shortname))
@@ -157,6 +203,12 @@ class LayoutManager(plugin.MenuItem):
             return False
 
     def tryGetLayoutShortName(self, name):
+        """
+        Check if given file name has extension 'layout'.
+        @param name: The possible layout to check.
+        @return: (True, short name) if has correct extension;
+        (False, err) otherwise.
+        """
         if isfile(join(self.configDir, name)):
             shortname, extension = splitext(name)
             if extension == LAYOUT_EXTENSION:
@@ -167,13 +219,23 @@ class LayoutManager(plugin.MenuItem):
             return False, FILE_NOT_FOUND_MESSAGE
 
     def saveCallback(self, saveMenuItem, terminal):
-        window = get_top_window(terminal)
+        """
+        Called by gtk, if user clicked the save menu item.
+        @param saveMenuItem: The clicked gtk item; not used here.
+        @param terminal: The terminal this context menu item belongs to.
+        """
+        window = getTopWindow(terminal)
         rootElement = self.createRootElement()
         self.saveRecursive(window, rootElement, terminal)
         self.indentXmlElement(rootElement)
         self.writeXmlToFile(rootElement)
 
     def createRootElement(self, name=ROOT_ELEMENT):
+        """
+        Create the xml root element, that is used to save the layout.
+        @param name: Name of root's element.
+        @return: Root xml element.
+        """
         rootElement = ET.Element(name)
         rootElement.attrib[COMMAND_ATTRIBUTE] = ROOT_DEFAULT_COMMAND
         rootElement.attrib[EXPORT_TERMINAL_NUMBER_ATTRIBUTE] = TERMINAL_NUMBER_VARIABLE
@@ -181,6 +243,9 @@ class LayoutManager(plugin.MenuItem):
         return rootElement
 
     def saveRecursive(self, target, element, terminal=None):
+        """
+
+        """
         if isinstance(target, Terminal):
             self.saveTerminal(target, element)
         elif isinstance(target, Paned):
@@ -208,7 +273,7 @@ class LayoutManager(plugin.MenuItem):
 
     def createSplitElement(self, element, paned):
         splitElement = ET.SubElement(element, SPLIT_ELEMENT)
-        #the position is not used yet.
+        # the position is not used yet.
         splitElement.attrib[POSITION_ATTRIBUTE] = str(paned.get_position())
         splitElement.attrib[ORIENTATION_ATTRIBUTE] = self.getOrientation(paned)
         return splitElement
@@ -328,7 +393,7 @@ class LayoutManager(plugin.MenuItem):
 
     def setTargetTab(self, terminal):
         if self.tab:
-            window = get_top_window(terminal)
+            window = getTopWindow(terminal)
             window.tab_new()
 
     def loadLayout(self, terminal, rootElement):
