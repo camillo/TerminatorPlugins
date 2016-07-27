@@ -35,6 +35,12 @@ Set the starting directory for a terminal. Terminal's directory attribute overri
 The optional caption attribute of a terminal element:
 Set the caption for the terminal.
 
+The optional group attribute of a root element:
+Set the group of all terminals.
+
+The optional group attribute of a terminal element:
+Set the group of the terminal.
+
 The optional executionOrder attribute of root's element:
 The default execution order for loading a terminal is:
 1. cd into directory
@@ -45,7 +51,7 @@ This can be changed by setting attribute's value to a comma separated list conta
 Layout Format:
 layouts are saved as xml files and must have the extension .layout. File's name is used as name for the layout. The format is hopefully self explaining and can be seen in this example:
 
-<root command="echo $terminalNumber" exportTerminalNumber="terminalNumber" directory="/home/camillo/" tab="live server">
+<root command="echo $terminalNumber" exportTerminalNumber="terminalNumber" directory="/home/camillo/" tab="live server" group="MAIN GROUP">
   <child>
     <split orientation="1" position="213">
       <child>
@@ -54,7 +60,7 @@ layouts are saved as xml files and must have the extension .layout. File's name 
             <terminal command="" />
           </child>
           <child>
-            <terminal directory="/home/camillo/LayoutManager" caption="foo" />
+            <terminal directory="/home/camillo/LayoutManager" caption="foo" group="SPECIFIC GROUP" />
           </child>
         </split>
       </child>
