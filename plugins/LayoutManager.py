@@ -52,6 +52,7 @@ SPLIT_ELEMENT = "split"
 TERMINAL_ELEMENT = "terminal"
 CAPTION_ATTRIBUTE = "caption"
 COMMAND_ATTRIBUTE = "command"
+GROUP_ATTRIBUTE = "group"
 DIRECTORY_ATTRIBUTE = "directory"
 EXECUTION_ORDER_ATTRIBUTE = "executionOrder"
 EXPORT_TERMINAL_NUMBER_ATTRIBUTE = "exportTerminalNumber"
@@ -66,7 +67,7 @@ HORIZONTAL_VALUE = "0"
 VERTICAL_VALUE = "1"
 
 DEFAULT_EXECUTION_ORDER = [DIRECTORY_ATTRIBUTE,
-                           EXPORT_TERMINAL_NUMBER_ATTRIBUTE, COMMAND_ATTRIBUTE]
+                           EXPORT_TERMINAL_NUMBER_ATTRIBUTE, COMMAND_ATTRIBUTE, GROUP_ATTRIBUTE]
 
 WRONG_EXTENSION_MESSAGE = "wrong extension"
 FILE_NOT_FOUND_MESSAGE = "file not found"
@@ -108,6 +109,7 @@ class LayoutManager(plugin.MenuItem):
     configDir = None
     nextTerminalNumber = 0
     rootCommand = None
+    rootGroup = None
     rootDirectory = None
     exportVariable = None
     tab = None
@@ -338,6 +340,8 @@ class LayoutManager(plugin.MenuItem):
             rootElement, DIRECTORY_ATTRIBUTE)
         self.exportVariable = self.tryGetXmlAttribute(
             rootElement, EXPORT_TERMINAL_NUMBER_ATTRIBUTE)
+        self.rootGroup = self.tryGetXmlAttribute(
+            rootElement, GROUP_ATTRIBUTE)
         self.executionOrder = self.parseExecutionOrder(rootElement)
         self.tab = self.tryGetXmlAttribute(rootElement, TAB_ATTRIBUTE)
         self.setParameter(rootElement)
@@ -472,6 +476,8 @@ class LayoutManager(plugin.MenuItem):
             self.exportTerminalNumber(terminal, self.exportVariable)
         elif step == COMMAND_ATTRIBUTE:
             self.executeTerminalCommand(terminal, terminalElement)
+        elif step == GROUP_ATTRIBUTE:
+            self.setTerminalGroup(terminal, terminalElement)
         else:
             err("ignoring unknown step [%s]" % step)
 
@@ -492,6 +498,21 @@ class LayoutManager(plugin.MenuItem):
     def executeTerminalCommand(self, terminal, terminalElement):
         command = self.getTerminalCommand(terminalElement)
         self.writeCommand(terminal, command)
+
+    def setTerminalGroup(self, terminal, terminalElement):
+        group = self.tryGetXmlAttribute(
+            terminalElement, GROUP_ATTRIBUTE)
+
+        if not group:
+            group = self.rootGroup
+
+        if group:
+            if group not in terminal.terminator.groups:
+                terminal.terminator.create_group(group)
+
+            terminal.group = group
+            terminal.titlebar.set_group_label(group)
+            terminal.key_broadcast_off()
 
     def getTerminalCommand(self, terminalElement):
         command = self.tryGetXmlAttribute(terminalElement, COMMAND_ATTRIBUTE)
