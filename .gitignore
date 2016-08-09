@@ -1,4 +1,4 @@
 *.pyc
-.ropeproject
 *.swp
-TerminatorPlugins.iml
+*.iml
+.idea

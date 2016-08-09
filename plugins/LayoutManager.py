@@ -507,20 +507,23 @@ class LayoutManager(plugin.MenuItem):
         if command is None:
             command = self.root_command
             if self.use_parameter:
-                command = self.insert_command_parameter(command)
+                command = self.insert_command_parameter(command, terminal_element)
         if command == "":
             command = None
         return command
 
-    def insert_command_parameter(self, command):
+    def insert_command_parameter(self, command, terminal_element):
         if not command:
             return None
 
-        if not self.parameter:
-            err("no parameter left for terminal; ignoring command")
-            return None
+        parameter = self.try_get_xml_attribute(terminal_element, PARAMETER_ATTRIBUTE)
 
-        parameter = self.parameter.pop()
+        if not parameter:
+            if not self.parameter:
+                err("no parameter left for terminal; ignoring command")
+                return None
+
+            parameter = self.parameter.pop()
 
         return command.replace(self.parameter_placeholder, parameter)
 
