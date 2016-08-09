@@ -1,4 +1,4 @@
-'''
+"""
 Created on Feb 25, 2011
 
 @author: Daniel Marohn
@@ -8,32 +8,22 @@ licence: public domain
 This is a plugin for terminator, that saves and restores layouts.
 
 Find updates here: https://github.com/camillo/TerminatorPlugins
-'''
+"""
 
 import gtk
 
 import terminatorlib.plugin as plugin
-from terminatorlib.translation import _
-
-from terminatorlib.util import dbg
-from terminatorlib.util import err
-from terminatorlib.util import get_config_dir
-
-from terminatorlib.paned import Paned
-from terminatorlib.paned import HPaned
-from terminatorlib.paned import VPaned
+from terminatorlib.util import dbg, err, get_config_dir
+from terminatorlib.paned import Paned, HPaned, VPaned
 from terminatorlib.window import Window
 from terminatorlib.terminal import Terminal
 from terminatorlib.notebook import Notebook
 
 from xml.etree.ElementTree import parse
-import xml.etree.ElementTree as ET
+# import xml.etree.ElementTree as ElementTree
+from xml.etree import ElementTree
 
-from os.path import splitext
-from os.path import isfile
-from os.path import exists
-from os.path import join
-
+from os.path import splitext, isfile, exists, join
 from os import listdir, makedirs, linesep
 
 LAYOUTMANAGER_NAME = "LayoutManager"
@@ -66,8 +56,7 @@ ROOT_DEFAULT_COMMAND = ""
 HORIZONTAL_VALUE = "0"
 VERTICAL_VALUE = "1"
 
-DEFAULT_EXECUTION_ORDER = [DIRECTORY_ATTRIBUTE,
-                           EXPORT_TERMINAL_NUMBER_ATTRIBUTE, COMMAND_ATTRIBUTE, GROUP_ATTRIBUTE]
+DEFAULT_EXECUTION_ORDER = [DIRECTORY_ATTRIBUTE, EXPORT_TERMINAL_NUMBER_ATTRIBUTE, COMMAND_ATTRIBUTE, GROUP_ATTRIBUTE]
 
 WRONG_EXTENSION_MESSAGE = "wrong extension"
 FILE_NOT_FOUND_MESSAGE = "file not found"
@@ -82,11 +71,11 @@ EXPORT_TERMINAL_COMMAND = "export %s=%d"
 EVENT_ACTIVATE = "activate"
 
 AVAILABLE = [LAYOUTMANAGER_NAME]
-#older versions of terminator require available instead of AVAILABLE
+# older versions of terminator require available instead of AVAILABLE
 available = AVAILABLE
 
 
-def getTopWindow(widget):
+def get_top_window(widget):
     """
     Return the Window instance a widget belongs to.
     @param widget: The gtk widget, that's top window will returned.
@@ -96,7 +85,7 @@ def getTopWindow(widget):
     while parent:
         widget = parent
         parent = widget.get_parent()
-    return(widget)
+    return widget
 
 
 class LayoutManager(plugin.MenuItem):
@@ -107,33 +96,33 @@ class LayoutManager(plugin.MenuItem):
     capabilities = ['terminal_menu', ]
 
     configDir = None
-    nextTerminalNumber = 0
-    rootCommand = None
-    rootGroup = None
-    rootDirectory = None
-    exportVariable = None
+    next_terminal_number = 0
+    root_command = None
+    root_group = None
+    root_directory = None
+    export_variable = None
     tab = None
     parameter = None
-    parameterPlaceholder = DEFAULT_PARAMETER_PLACEHOLDER
-    parameterSeparator = DEFAULT_PARAMETER_SEPARATOR
-    useParameter = False
-    executionOrder = DEFAULT_EXECUTION_ORDER
+    parameter_placeholder = DEFAULT_PARAMETER_PLACEHOLDER
+    parameter_separator = DEFAULT_PARAMETER_SEPARATOR
+    use_parameter = False
+    execution_order = DEFAULT_EXECUTION_ORDER
 
     def __init__(self):
-        plugin.MenuItem.__init__(self)
-        self.setConfigDir()
+        super(LayoutManager, self).__init__()
+        self.set_config_dir()
 
-    def setConfigDir(self):
+    def set_config_dir(self):
         """
         Set the directory, where our layouts are saved.
-        We use terminator's config dir plus LayoutManager (most likley
+        We use terminator's config dir plus LayoutManager (most likely
         ~/.config/terminator/LayoutManager).
         """
         if self.configDir is None:
-            configDir = join(get_config_dir(), LAYOUTMANAGER_NAME)
-            if not exists(configDir):
-                makedirs(configDir)
-            self.configDir = configDir
+            config_dir = join(get_config_dir(), LAYOUTMANAGER_NAME)
+            if not exists(config_dir):
+                makedirs(config_dir)
+            self.configDir = config_dir
 
     def callback(self, menuitems, menu, terminal):
         """
@@ -143,68 +132,69 @@ class LayoutManager(plugin.MenuItem):
         @param menu: Full gtk menu instance; not used here.
         @param terminal: The terminal instance, that got the right click.
         """
-        mainItem = self.createMainItem(terminal)
-        menuitems.append(mainItem)
+        main_item = self.create_main_item(terminal)
+        menuitems.append(main_item)
 
-    def createMainItem(self, terminal):
+    def create_main_item(self, terminal):
         """
         Create the 'Layout Manager' menu item.
         @param terminal: The terminal this context menu item belongs to.
         @return: The gtk menu item to display in user's context menu.
         """
-        mainItem, submenu = self.createMainItems()
+        main_item, submenu = self.create_main_items()
 
-        submenu.append(self.createSaveItem(terminal))
+        submenu.append(self.create_save_item(terminal))
         submenu.append(gtk.SeparatorMenuItem())
 
-        possibleLayouts = listdir(self.configDir)
-        possibleLayouts.sort()
+        possible_layouts = listdir(self.configDir)
+        possible_layouts.sort()
 
-        for currentPossibleLayout in possibleLayouts:
-            self.tryAddLayoutMenuItem(currentPossibleLayout, terminal, submenu)
+        for possible_layout in possible_layouts:
+            self.try_add_layout_menu_item(possible_layout, terminal, submenu)
 
-        return mainItem
+        return main_item
 
-    def createMainItems(self):
+    @staticmethod
+    def create_main_items():
         """
         Create the 'Layout Manager' menu item, together with the sub menu
         for saved layouts.
         """
-        mainItem = gtk.MenuItem(_(LAYOUTMANAGER_DISPLAY_NAME))
+        main_item = gtk.MenuItem(LAYOUTMANAGER_DISPLAY_NAME)
         submenu = gtk.Menu()
-        mainItem.set_submenu(submenu)
-        return mainItem, submenu
+        main_item.set_submenu(submenu)
+        return main_item, submenu
 
-    def createSaveItem(self, terminal):
+    def create_save_item(self, terminal):
         """
         Create the 'save' menu item, together with bindings for activation.
         @param terminal: The terminal this context menu item belongs to.
         """
-        saveItem = gtk.ImageMenuItem(SAVE_COMMAND_CAPTION)
+        save_item = gtk.ImageMenuItem(SAVE_COMMAND_CAPTION)
         image = gtk.Image()
         image.set_from_icon_name(gtk.STOCK_FLOPPY, gtk.ICON_SIZE_MENU)
-        saveItem.set_image(image)
-        saveItem.connect(EVENT_ACTIVATE, self.saveCallback, terminal)
-        return saveItem
+        save_item.set_image(image)
+        save_item.connect(EVENT_ACTIVATE, self.save_callback, terminal)
+        return save_item
 
-    def tryAddLayoutMenuItem(self, name, terminal, menu):
+    def try_add_layout_menu_item(self, name, terminal, menu):
         """
         Checks if given file is a layout and add a context menu item if so.
         @param name: The file name of the possible layout.
         @param terminal: The terminal this context menu item belongs to.
         @param menu: Full gtk menu instance; not used here.
         """
-        isLayout, shortname = self.tryGetLayoutShortName(name)
-        if isLayout:
-            layoutItem = gtk.MenuItem(_(shortname))
-            layoutItem.connect(EVENT_ACTIVATE, self.loadCallback, terminal)
-            menu.append(layoutItem)
+        is_layout, short_name = self.try_get_layout_short_name(name)
+        if is_layout:
+            layout_item = gtk.MenuItem(short_name)
+            layout_item.connect(EVENT_ACTIVATE, self.load_callback, terminal)
+            menu.append(layout_item)
             return True
         else:
-            dbg("ignoring [%s] : %s" % (name, shortname))
+            dbg("ignoring [%s] : %s" % (name, short_name))
             return False
 
-    def tryGetLayoutShortName(self, name):
+    def try_get_layout_short_name(self, name):
         """
         Check if given file name has extension 'layout'.
         @param name: The possible layout to check.
@@ -212,75 +202,73 @@ class LayoutManager(plugin.MenuItem):
         (False, err) otherwise.
         """
         if isfile(join(self.configDir, name)):
-            shortname, extension = splitext(name)
+            short_name, extension = splitext(name)
             if extension == LAYOUT_EXTENSION:
-                return True, shortname
+                return True, short_name
             else:
                 return False, WRONG_EXTENSION_MESSAGE
         else:
             return False, FILE_NOT_FOUND_MESSAGE
 
-    def saveCallback(self, saveMenuItem, terminal):
+    def save_callback(self, _, terminal):
         """
         Called by gtk, if user clicked the save menu item.
-        @param saveMenuItem: The clicked gtk item; not used here.
         @param terminal: The terminal this context menu item belongs to.
+        @param _: full menu item; not used
         """
-        window = getTopWindow(terminal)
-        rootElement = self.createRootElement()
-        self.saveRecursive(window, rootElement, terminal)
-        self.indentXmlElement(rootElement)
-        self.writeXmlToFile(rootElement)
+        window = get_top_window(terminal)
+        root_element = self.create_root_element()
+        self.save_recursive(window, root_element, terminal)
+        self.indent_xml_element(root_element)
+        self.write_xml_to_file(root_element)
 
-    def createRootElement(self, name=ROOT_ELEMENT):
+    @staticmethod
+    def create_root_element(name=ROOT_ELEMENT):
         """
         Create the xml root element, that is used to save the layout.
         @param name: Name of root's element.
         @return: Root xml element.
         """
-        rootElement = ET.Element(name)
-        rootElement.attrib[COMMAND_ATTRIBUTE] = ROOT_DEFAULT_COMMAND
-        rootElement.attrib[EXPORT_TERMINAL_NUMBER_ATTRIBUTE] = TERMINAL_NUMBER_VARIABLE
+        root_element = ElementTree.Element(name)
+        root_element.attrib[COMMAND_ATTRIBUTE] = ROOT_DEFAULT_COMMAND
+        root_element.attrib[EXPORT_TERMINAL_NUMBER_ATTRIBUTE] = TERMINAL_NUMBER_VARIABLE
 
-        return rootElement
+        return root_element
 
-    def saveRecursive(self, target, element, terminal=None):
-        """
-
-        """
+    def save_recursive(self, target, element, terminal=None):
         if isinstance(target, Terminal):
-            self.saveTerminal(target, element)
+            self.save_terminal(target, element)
         elif isinstance(target, Paned):
-            self.savePanedRecursive(target, element)
+            self.save_paned_recursive(target, element)
         elif isinstance(target, Window):
-            self.saveWindowRecursiv(target, element, terminal)
+            self.save_window_recursive(target, element, terminal)
         elif isinstance(target, Notebook):
-            self.saveNotebookRecursiv(target, element, terminal)
+            self.save_notebook_recursive(target, element, terminal)
         else:
-            err("ignoring unknown target type")
+            err("ignoring unknown target type %s" % target.__class__)
 
-    def saveTerminal(self, terminal, element):
-        terminalElement = ET.SubElement(element, TERMINAL_ELEMENT)
-        terminalElement.attrib[DIRECTORY_ATTRIBUTE] = terminal.get_cwd()
+    @staticmethod
+    def save_terminal(terminal, element):
+        terminal_element = ElementTree.SubElement(element, TERMINAL_ELEMENT)
+        terminal_element.attrib[DIRECTORY_ATTRIBUTE] = terminal.get_cwd()
         caption = terminal.titlebar.get_custom_string()
         if caption:
-            terminalElement.attrib[CAPTION_ATTRIBUTE] = caption
+            terminal_element.attrib[CAPTION_ATTRIBUTE] = caption
 
-    def savePanedRecursive(self, paned, element):
-        splitElement = self.createSplitElement(element, paned)
+    def save_paned_recursive(self, paned, element):
+        split_element = self.create_split_element(element, paned)
         children = paned.get_children()
 
-        self.saveSplitChildRecursive(splitElement, children[0])
-        self.saveSplitChildRecursive(splitElement, children[1])
+        self.save_split_child_recursive(split_element, children[0])
+        self.save_split_child_recursive(split_element, children[1])
 
-    def createSplitElement(self, element, paned):
-        splitElement = ET.SubElement(element, SPLIT_ELEMENT)
-        # the position is not used yet.
-        splitElement.attrib[POSITION_ATTRIBUTE] = str(paned.get_position())
-        splitElement.attrib[ORIENTATION_ATTRIBUTE] = self.getOrientation(paned)
-        return splitElement
+    def create_split_element(self, element, paned):
+        split_element = ElementTree.SubElement(element, SPLIT_ELEMENT)
+        split_element.attrib[ORIENTATION_ATTRIBUTE] = self.get_orientation(paned)
+        return split_element
 
-    def getOrientation(self, paned):
+    @staticmethod
+    def get_orientation(paned):
         if isinstance(paned, VPaned):
             orientation = VERTICAL_VALUE
         else:
@@ -290,160 +278,161 @@ class LayoutManager(plugin.MenuItem):
 
         return orientation
 
-    def saveSplitChildRecursive(self, splitElement, child):
-        childElement = ET.SubElement(splitElement, CHILD_ELEMENT)
-        self.saveRecursive(child, childElement)
+    def save_split_child_recursive(self, split_element, child):
+        child_element = ElementTree.SubElement(split_element, CHILD_ELEMENT)
+        self.save_recursive(child, child_element)
 
-    def saveWindowRecursiv(self, window, element, terminal):
-        childElement = ET.SubElement(element, CHILD_ELEMENT)
+    def save_window_recursive(self, window, element, terminal):
+        child_element = ElementTree.SubElement(element, CHILD_ELEMENT)
         child = window.get_children()[0]
-        self.saveRecursive(child, childElement, terminal)
+        self.save_recursive(child, child_element, terminal)
 
-    def saveNotebookRecursiv(self, notebook, element, terminal):
+    def save_notebook_recursive(self, notebook, element, terminal):
         child = notebook.find_tab_root(terminal)
-        self.saveRecursive(child, element)
+        self.save_recursive(child, element)
 
-    def writeXmlToFile(self, element, filename=None):
+    def write_xml_to_file(self, element, filename=None):
         if filename is None:
-            newFilename = inputBox(title=SAVE_BOX_TITLE,
-                                   message=SAVE_BOX_MESSAGE, default_text="")
-            if not (newFilename is None or newFilename == ""):
-                self.writeXmlToFile(element, newFilename)
+            new_filename = input_box(title=SAVE_BOX_TITLE,
+                                     message=SAVE_BOX_MESSAGE, default_text="")
+            if not (new_filename is None or new_filename == ""):
+                self.write_xml_to_file(element, new_filename)
             else:
                 dbg("no filename provided; abort saving")
         else:
-            targetFileName = join(self.configDir, filename)
-            targetFileName = targetFileName + LAYOUT_EXTENSION
-            ET.ElementTree(element).write(targetFileName)
+            target_filename = join(self.configDir, filename)
+            target_filename += LAYOUT_EXTENSION
+            ElementTree.ElementTree(element).write(target_filename)
 
-    def loadCallback(self, layoutMenuItem, terminal):
-        tree = self.loadXmlTree(layoutMenuItem)
-        rootElement = tree.getroot()
+    def load_callback(self, layout_menu_item, terminal):
+        tree = self.load_xml_tree(layout_menu_item)
+        root_element = tree.getroot()
 
-        self.initRoot(rootElement)
+        self.init_root(root_element)
 
-        self.setTargetTab(terminal)
+        self.set_target_tab(terminal)
 
-        self.loadLayout(terminal, rootElement)
+        self.load_layout(terminal, root_element)
 
-    def loadXmlTree(self, layoutMenuItem):
-        fileName = layoutMenuItem.props.label + LAYOUT_EXTENSION
-        fileName = join(self.configDir, fileName)
-        dbg("loading Layout config [%s]" % fileName)
+    def load_xml_tree(self, layout_menu_item):
+        filename = layout_menu_item.props.label + LAYOUT_EXTENSION
+        filename = join(self.configDir, filename)
+        dbg("loading Layout config [%s]" % filename)
 
-        return parse(fileName)
+        return parse(filename)
 
-    def initRoot(self, rootElement):
-        self.rootCommand = self.tryGetXmlAttribute(
-            rootElement, COMMAND_ATTRIBUTE)
-        self.rootDirectory = self.tryGetXmlAttribute(
-            rootElement, DIRECTORY_ATTRIBUTE)
-        self.exportVariable = self.tryGetXmlAttribute(
-            rootElement, EXPORT_TERMINAL_NUMBER_ATTRIBUTE)
-        self.rootGroup = self.tryGetXmlAttribute(
-            rootElement, GROUP_ATTRIBUTE)
-        self.executionOrder = self.parseExecutionOrder(rootElement)
-        self.tab = self.tryGetXmlAttribute(rootElement, TAB_ATTRIBUTE)
-        self.setParameter(rootElement)
-        self.nextTerminalNumber = 1
+    def init_root(self, root_element):
+        self.root_command = self.try_get_xml_attribute(
+            root_element, COMMAND_ATTRIBUTE)
+        self.root_directory = self.try_get_xml_attribute(
+            root_element, DIRECTORY_ATTRIBUTE)
+        self.export_variable = self.try_get_xml_attribute(
+            root_element, EXPORT_TERMINAL_NUMBER_ATTRIBUTE)
+        self.root_group = self.try_get_xml_attribute(
+            root_element, GROUP_ATTRIBUTE)
+        self.execution_order = self.parse_execution_order(root_element)
+        self.tab = self.try_get_xml_attribute(root_element, TAB_ATTRIBUTE)
+        self.set_parameter(root_element)
+        self.next_terminal_number = 1
 
-    def parseExecutionOrder(self, rootElement):
-        executionOrder = self.tryGetXmlAttribute(
-            rootElement, EXECUTION_ORDER_ATTRIBUTE)
-        if executionOrder:
-            executionOrder = executionOrder.split(DEFAULT_PARAMETER_SEPARATOR)
-            executionOrder = self.normalizeExecutionOrder(executionOrder)
-            self.addMissingExecutionSteps(executionOrder)
+    def parse_execution_order(self, root_element):
+        execution_order = self.try_get_xml_attribute(
+            root_element, EXECUTION_ORDER_ATTRIBUTE)
+        if execution_order:
+            execution_order = execution_order.split(DEFAULT_PARAMETER_SEPARATOR)
+            execution_order = self.normalize_execution_order(execution_order)
+            self.add_missing_execution_steps(execution_order)
         else:
-            executionOrder = DEFAULT_EXECUTION_ORDER
+            execution_order = DEFAULT_EXECUTION_ORDER
 
-        return executionOrder
+        return execution_order
 
-    def normalizeExecutionOrder(self, executionOrder):
-        normalizedExecutionOrder = []
-        for step in executionOrder:
-            normalizedExecutionOrder.append(step.strip())
+    @staticmethod
+    def normalize_execution_order(execution_order):
+        normalized_execution_order = []
+        for step in execution_order:
+            normalized_execution_order.append(step.strip())
 
-        return normalizedExecutionOrder
+        return normalized_execution_order
 
-    def addMissingExecutionSteps(self, executionOrder):
+    @staticmethod
+    def add_missing_execution_steps(execution_order):
         for step in DEFAULT_EXECUTION_ORDER:
-            if not step in executionOrder:
-                executionOrder.append(step)
+            if step not in execution_order:
+                execution_order.append(step)
 
-    def setParameter(self, rootElement):
-        self.parameterPlaceholder = self.getParameterPlaceholder(rootElement)
-        self.parameterSeparator = self.getParameterSeparator(rootElement)
-        self.useParameter, self.parameter = self.tryParseParameter(rootElement)
+    def set_parameter(self, root_element):
+        self.parameter_placeholder = self.get_parameter_placeholder(root_element)
+        self.parameter_separator = self.get_parameter_separator(root_element)
+        self.use_parameter, self.parameter = self.try_parse_parameter(root_element)
 
-    def getParameterPlaceholder(self, rootElement):
-        return self.tryGetXmlAttribute(
-            rootElement, PARAMETER_PLACEHOLDER_ATTRIBUTE,
+    def get_parameter_placeholder(self, root_element):
+        return self.try_get_xml_attribute(
+            root_element, PARAMETER_PLACEHOLDER_ATTRIBUTE,
             DEFAULT_PARAMETER_PLACEHOLDER)
 
-    def getParameterSeparator(self, rootElement):
-        return self.tryGetXmlAttribute(
-            rootElement, PARAMETER_SEPARATOR_ATTRIBUTE,
+    def get_parameter_separator(self, root_element):
+        return self.try_get_xml_attribute(
+            root_element, PARAMETER_SEPARATOR_ATTRIBUTE,
             DEFAULT_PARAMETER_SEPARATOR)
 
-    def tryParseParameter(self, rootElement):
-        parameter = self.tryGetXmlAttribute(rootElement, PARAMETER_ATTRIBUTE)
+    def try_parse_parameter(self, root_element):
+        parameter = self.try_get_xml_attribute(root_element, PARAMETER_ATTRIBUTE)
 
         if parameter:
-            parameter = parameter.split(self.parameterSeparator)
+            parameter = parameter.split(self.parameter_separator)
             parameter.reverse()
 
-        return (not parameter is None, parameter)
+        return parameter is not None, parameter
 
-    def setTargetTab(self, terminal):
+    def set_target_tab(self, terminal):
         if self.tab:
-            window = getTopWindow(terminal)
+            window = get_top_window(terminal)
             window.tab_new()
 
-    def loadLayout(self, terminal, rootElement):
-        childElement = rootElement.find(CHILD_ELEMENT)
-        if not childElement is None:
-            self.loadChildRecursive(terminal, childElement)
+    def load_layout(self, terminal, root_element):
+        child_element = root_element.find(CHILD_ELEMENT)
+        if child_element is not None:
+            self.load_child_recursive(terminal, child_element)
         else:
             err("rootElement has no child childElement; abort loading")
 
-    def loadChildRecursive(self, terminal, childElement):
-        targetElement = childElement.find(SPLIT_ELEMENT)
-        handled = self.tryLoadSplitRecursive(terminal, targetElement)
+    def load_child_recursive(self, terminal, child_element):
+        target_element = child_element.find(SPLIT_ELEMENT)
+        handled = self.try_load_split_recursive(terminal, target_element)
 
         if not handled:
-            targetElement = childElement.find(TERMINAL_ELEMENT)
-            handled = self.tryLoadTerminal(terminal, targetElement)
+            target_element = child_element.find(TERMINAL_ELEMENT)
+            handled = self.try_load_terminal(terminal, target_element)
 
         if not handled:
             err("neither split, nor terminal found.")
 
-    def tryLoadSplitRecursive(self, terminal, splitElement):
-        if splitElement is None:
+    def try_load_split_recursive(self, terminal, split_element):
+        if split_element is None:
             return False
-        #TODO: pass the position to terminator's pane
-        #position = self.tryGetXmlAttribute(splitElement, POSITION_ATTRIBUTE)
-        splitChildren = list(splitElement.findall(CHILD_ELEMENT))
-        if len(splitChildren) == 2:
-            orientation = self.tryGetXmlAttribute(
-                splitElement, ORIENTATION_ATTRIBUTE)
-            self.splitAndLoadAxisRecursive(terminal, orientation,
-                                           splitChildren[0], splitChildren[1])
+        split_children = list(split_element.findall(CHILD_ELEMENT))
+        if len(split_children) == 2:
+            orientation = self.try_get_xml_attribute(
+                split_element, ORIENTATION_ATTRIBUTE)
+            self.split_and_load_axis_recursive(terminal, orientation,
+                                               split_children[0], split_children[1])
         else:
-            err("split element needs excatly two chiled elements.")
+            err("split element needs exactly two child elements.")
 
         return True
 
-    def splitAndLoadAxisRecursive(self, terminal, orientation, child1, child2):
-        isVertical = self.isVerticalOrientation(orientation)
-        terminal.parent.split_axis(terminal, isVertical)
+    def split_and_load_axis_recursive(self, terminal, orientation, child1, child2):
+        is_vertical = self.is_vertical_orientation(orientation)
+        terminal.parent.split_axis(terminal, is_vertical)
 
-        newTerminal = terminal.parent.get_children()[1]
+        new_terminal = terminal.parent.get_children()[1]
 
-        self.loadChildRecursive(terminal, child1)
-        self.loadChildRecursive(newTerminal, child2)
+        self.load_child_recursive(terminal, child1)
+        self.load_child_recursive(new_terminal, child2)
 
-    def isVerticalOrientation(self, orientation):
+    @staticmethod
+    def is_vertical_orientation(orientation):
         if orientation is None:
             err("orientation is None; use default")
         elif orientation == HORIZONTAL_VALUE:
@@ -453,58 +442,57 @@ class LayoutManager(plugin.MenuItem):
 
         return True
 
-    def tryLoadTerminal(self, terminal, terminalElement):
-        if terminalElement is None:
+    def try_load_terminal(self, terminal, terminal_element):
+        if terminal_element is None:
             return False
 
-        self.setTerminalCaption(terminal, terminalElement)
+        self.set_terminal_caption(terminal, terminal_element)
 
-        for step in self.executionOrder:
-            self.executeStep(step, terminal, terminalElement)
+        for step in self.execution_order:
+            self.execute_step(step, terminal, terminal_element)
 
         return True
 
-    def setTerminalCaption(self, terminal, terminalElement):
-        caption = self.tryGetXmlAttribute(terminalElement, CAPTION_ATTRIBUTE)
+    def set_terminal_caption(self, terminal, terminal_element):
+        caption = self.try_get_xml_attribute(terminal_element, CAPTION_ATTRIBUTE)
         if caption:
             terminal.titlebar.set_custom_string(caption)
 
-    def executeStep(self, step, terminal, terminalElement):
+    def execute_step(self, step, terminal, terminal_element):
         if step == DIRECTORY_ATTRIBUTE:
-            self.setDirectory(terminal, terminalElement)
+            self.set_directory(terminal, terminal_element)
         elif step == EXPORT_TERMINAL_NUMBER_ATTRIBUTE:
-            self.exportTerminalNumber(terminal, self.exportVariable)
+            self.export_terminal_number(terminal, self.export_variable)
         elif step == COMMAND_ATTRIBUTE:
-            self.executeTerminalCommand(terminal, terminalElement)
+            self.execute_terminal_command(terminal, terminal_element)
         elif step == GROUP_ATTRIBUTE:
-            self.setTerminalGroup(terminal, terminalElement)
+            self.set_terminal_group(terminal, terminal_element)
         else:
             err("ignoring unknown step [%s]" % step)
 
-    def setDirectory(self, terminal, terminalElement):
-        directory = self.tryGetXmlAttribute(
-            terminalElement, DIRECTORY_ATTRIBUTE, self.rootDirectory)
+    def set_directory(self, terminal, terminal_element):
+        directory = self.try_get_xml_attribute(
+            terminal_element, DIRECTORY_ATTRIBUTE, self.root_directory)
 
         if directory:
-            self.writeCommand(terminal, CHANGE_DIRECTORY_COMMAND % directory)
+            self.write_command(terminal, CHANGE_DIRECTORY_COMMAND % directory)
 
-    def exportTerminalNumber(self, terminal, variable):
-        if not variable is None:
-            self.writeCommand(
-                terminal, EXPORT_TERMINAL_COMMAND %
-                (variable, self.nextTerminalNumber))
-            self.nextTerminalNumber += 1
+    def export_terminal_number(self, terminal, variable):
+        if variable is not None:
+            self.write_command(
+                terminal, EXPORT_TERMINAL_COMMAND % (variable, self.next_terminal_number))
+            self.next_terminal_number += 1
 
-    def executeTerminalCommand(self, terminal, terminalElement):
-        command = self.getTerminalCommand(terminalElement)
-        self.writeCommand(terminal, command)
+    def execute_terminal_command(self, terminal, terminal_element):
+        command = self.get_terminal_command(terminal_element)
+        self.write_command(terminal, command)
 
-    def setTerminalGroup(self, terminal, terminalElement):
-        group = self.tryGetXmlAttribute(
-            terminalElement, GROUP_ATTRIBUTE)
+    def set_terminal_group(self, terminal, terminal_element):
+        group = self.try_get_xml_attribute(
+            terminal_element, GROUP_ATTRIBUTE)
 
         if not group:
-            group = self.rootGroup
+            group = self.root_group
 
         if group:
             if group not in terminal.terminator.groups:
@@ -514,17 +502,17 @@ class LayoutManager(plugin.MenuItem):
             terminal.titlebar.set_group_label(group)
             terminal.key_broadcast_off()
 
-    def getTerminalCommand(self, terminalElement):
-        command = self.tryGetXmlAttribute(terminalElement, COMMAND_ATTRIBUTE)
+    def get_terminal_command(self, terminal_element):
+        command = self.try_get_xml_attribute(terminal_element, COMMAND_ATTRIBUTE)
         if command is None:
-            command = self.rootCommand
-            if self.useParameter:
-                command = self.insertCommandParameter(command)
+            command = self.root_command
+            if self.use_parameter:
+                command = self.insert_command_parameter(command)
         if command == "":
             command = None
         return command
 
-    def insertCommandParameter(self, command):
+    def insert_command_parameter(self, command):
         if not command:
             return None
 
@@ -534,36 +522,37 @@ class LayoutManager(plugin.MenuItem):
 
         parameter = self.parameter.pop()
 
-        return command.replace(self.parameterPlaceholder, parameter)
+        return command.replace(self.parameter_placeholder, parameter)
 
-    def writeCommand(self, terminal, command):
+    @staticmethod
+    def write_command(terminal, command):
         if command:
             terminal.feed(command + NEWLINE)
 
-    def tryGetXmlAttribute(self, element, attributeName, default=None):
-        if attributeName in element.attrib:
-            return element.attrib[attributeName]
+    @staticmethod
+    def try_get_xml_attribute(element, attribute_name, default=None):
+        if attribute_name in element.attrib:
+            return element.attrib[attribute_name]
         else:
             return default
 
-    def indentXmlElement(self, element, level=0):
-        indentSpace = NEWLINE + level * INDENT_SPACE
+    def indent_xml_element(self, element, level=0):
+        indent_space = NEWLINE + level * INDENT_SPACE
         if len(element):
             if not element.text or not element.text.strip():
-                element.text = indentSpace + INDENT_SPACE
+                element.text = indent_space + INDENT_SPACE
             if not element.tail or not element.tail.strip():
-                element.tail = indentSpace
+                element.tail = indent_space
             for element in element:
-                self.indentXmlElement(element, level + 1)
+                self.indent_xml_element(element, level + 1)
             if not element.tail or not element.tail.strip():
-                element.tail = indentSpace
+                element.tail = indent_space
         else:
             if level and (not element.tail or not element.tail.strip()):
-                element.tail = indentSpace
+                element.tail = indent_space
 
 
 class InputBoxDialog(gtk.Dialog):
-
     def __init__(self, message="", default_text='', modal=True):
         gtk.Dialog.__init__(self)
         self.connect("destroy", self.quit)
@@ -599,17 +588,17 @@ class InputBoxDialog(gtk.Dialog):
         button.show()
         self.ret = None
 
-    def quit(self, w=None, event=None):
+    def quit(self, *_):
         self.hide()
         self.destroy()
         gtk.main_quit()
 
-    def click(self, button):
+    def click(self, *_):
         self.ret = self.entry.get_text()
         self.quit()
 
 
-def inputBox(title="Input Box", message="", default_text='', modal=True):
+def input_box(title="Input Box", message="", default_text='', modal=True):
     win = InputBoxDialog(message, default_text, modal=modal)
     win.set_title(title)
     win.show()
