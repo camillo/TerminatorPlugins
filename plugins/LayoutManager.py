@@ -35,10 +35,12 @@ INDENT_SPACE = '  '
 DEFAULT_PARAMETER_PLACEHOLDER = '{}'
 DEFAULT_PARAMETER_SEPARATOR = ','
 
+XML_NAMESPACE = 'http://camillo/layoutmanager'
 ROOT_ELEMENT = 'root'
 CHILD_ELEMENT = 'child'
 SPLIT_ELEMENT = 'split'
 TERMINAL_ELEMENT = 'terminal'
+NAMESPACE_ATTRIBUTE = 'xmlns'
 CAPTION_ATTRIBUTE = 'caption'
 COMMAND_ATTRIBUTE = 'command'
 GROUP_ATTRIBUTE = 'group'
@@ -232,6 +234,7 @@ class LayoutManager(plugin.MenuItem):
         @return: Root xml element.
         """
         root_element = ElementTree.Element(name)
+        root_element.attrib[NAMESPACE_ATTRIBUTE] = XML_NAMESPACE
         root_element.attrib[COMMAND_ATTRIBUTE] = ROOT_DEFAULT_COMMAND
         root_element.attrib[EXPORT_TERMINAL_NUMBER_ATTRIBUTE] = TERMINAL_NUMBER_VARIABLE
 
@@ -390,33 +393,32 @@ class LayoutManager(plugin.MenuItem):
             window.tab_new()
 
     def load_layout(self, terminal, root_element):
-        child_element = root_element.find(CHILD_ELEMENT)
+        child_element = self.try_get_xml_child(root_element, CHILD_ELEMENT)
         if child_element is not None:
             self.load_child_recursive(terminal, child_element)
         else:
             err('rootElement has no childElement; abort loading')
 
     def load_child_recursive(self, terminal, child_element):
-        target_element = child_element.find(SPLIT_ELEMENT)
+        target_element = self.try_get_xml_child(child_element, SPLIT_ELEMENT)
         handled = self.try_load_split_recursive(terminal, target_element)
 
         if not handled:
-            target_element = child_element.find(TERMINAL_ELEMENT)
+            target_element = self.try_get_xml_child(child_element, TERMINAL_ELEMENT)
             handled = self.try_load_terminal(terminal, target_element)
 
         if not handled:
-            err('neither split, nor terminal found.')
+            err('neither split, nor terminal found: %s' % child_element)
 
     def try_load_split_recursive(self, terminal, split_element):
         if split_element is None:
             return False
-        split_children = list(split_element.findall(CHILD_ELEMENT))
+        split_children = list(self.try_get_xml_children(split_element, CHILD_ELEMENT))
         if len(split_children) == 2:
             orientation = self.try_get_xml_attribute(split_element, ORIENTATION_ATTRIBUTE)
             self.split_and_load_axis_recursive(terminal, orientation, split_children[0], split_children[1])
         else:
-            err('split element needs exactly two child elements.')
-
+            err('split element needs exactly two child elements. You have: %d' % len(split_children))
         return True
 
     def split_and_load_axis_recursive(self, terminal, orientation, child1, child2):
@@ -523,6 +525,28 @@ class LayoutManager(plugin.MenuItem):
     def write_command(terminal, command):
         if command:
             terminal.feed(command + NEWLINE)
+
+    def try_get_xml_child(self, element, child_name):
+        """This is to be compatible with old save format, that did not include a namespace."""
+        for name in self.get_possible_child_names(child_name):
+            child = element.find(name)
+            if child is not None:
+                return child
+        return None
+
+    def try_get_xml_children(self, element, child_name):
+        """This is to be compatible with old save format, that did not include a namespace."""
+        for name in self.get_possible_child_names(child_name):
+            children = element.findall(name)
+            if len(children) > 0:
+                return children
+        return []
+
+    @staticmethod
+    def get_possible_child_names(name):
+        """This is to be compatible with old save format, that did not include a namespace."""
+        return ['{' + XML_NAMESPACE + '}' + name,
+                name]
 
     @staticmethod
     def try_get_xml_attribute(element, attribute_name, default=None):

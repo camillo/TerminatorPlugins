@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This is the xsd schema for Layoutmanager's save files. -->
+<xs:schema targetNamespace="http://camillo/layoutmanager"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           attributeFormDefault="unqualified"
+           elementFormDefault="qualified">
+  <xs:element xmlns:lay="http://camillo/layoutmanager" name="root" type="lay:rootType"/>
+  <xs:complexType name="terminalType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="command" use="optional"/>
+        <xs:attribute type="xs:string" name="directory" use="optional"/>
+        <xs:attribute type="xs:string" name="caption" use="optional"/>
+        <xs:attribute type="xs:string" name="group" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="splitType">
+    <xs:sequence maxOccurs="2" minOccurs="2">
+      <xs:element xmlns:lay="http://camillo/layoutmanager" type="lay:childType" name="child"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="orientation" use="optional"/>
+    <xs:attribute type="xs:string" name="position" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="childType" mixed="true">
+    <xs:choice>
+      <xs:element xmlns:lay="http://camillo/layoutmanager" type="lay:terminalType" name="terminal"/>
+      <xs:element xmlns:lay="http://camillo/layoutmanager" type="lay:splitType" name="split"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="rootType">
+    <xs:sequence minOccurs="1" maxOccurs="1">
+      <xs:element xmlns:lay="http://camillo/layoutmanager" type="lay:childType" name="child"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="command"/>
+    <xs:attribute type="xs:string" name="exportTerminalNumber"/>
+    <xs:attribute type="xs:string" name="directory"/>
+    <xs:attribute type="xs:string" name="tab"/>
+    <xs:attribute type="xs:string" name="group"/>
+  </xs:complexType>
+</xs:schema>

@@ -8,6 +8,9 @@ Layouts contains information about the arrangement of terminals and their curren
 
 Saved layouts are written to terminatorConfigPath/LayoutManager (~/.config/terminator/LayoutManager in my case) and can be customized with every text editor. See next section for details about the format of .layout files. Following settings can be configured:
 
+The optional xmlns attribute of root's element:
+If set, value must be "http://camillo/layoutmanager" (this is also the default value). You can use doc/layout.xsd schema file for validation or autocompletion.
+
 The optional tab attribute of root's element:
 Instead of loading the layout into clicked terminal, open a new tab. Attribute's value is ignored and will hopefully used in later versions for setting tab's caption.
 
@@ -50,6 +53,7 @@ This can be changed by setting attribute's value to a comma separated list conta
 
 Layout Format:
 layouts are saved as xml files and must have the extension .layout. File's name is used as name for the layout. The format is hopefully self explaining and can be seen in this example:
+There is also a xsd schema file available (layout.xsd in this folder).
 
 <root command="echo $terminalNumber" exportTerminalNumber="terminalNumber" directory="/home/camillo/" tab="live server" group="MAIN GROUP">
   <child>
