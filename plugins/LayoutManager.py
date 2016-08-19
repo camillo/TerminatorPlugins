@@ -256,6 +256,9 @@ class LayoutManager(plugin.MenuItem):
         caption = terminal.titlebar.get_custom_string()
         if caption:
             terminal_element.attrib[CAPTION_ATTRIBUTE] = caption
+        group = terminal.group
+        if group:
+            terminal_element.attrib[GROUP_ATTRIBUTE] = group
 
     def save_paned_recursive(self, paned, element):
         split_element = self.create_split_element(element, paned)
