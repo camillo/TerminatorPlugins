@@ -1,8 +1,8 @@
 TerminalExporter allows you to save full terminal buffer into file and/or log terminal activities.
 
 Intention
-I found myself often in situations where I wanted to search through my terminal's output. I know that terminator offers a 'search' function, but i was never able to find it usefull. Most of these times I have thousands of lines of debug output and without grep and/or less I am lost. This is where TerminalExporter becomes handy. It exports the full terminal buffer into a file and you can do all the unix magic.
-I included logging features for cases where output runs that fast through the terminal that bufferd line limit becomes an issue.
+I found myself often in situations where I wanted to search through my terminal's output. I know that terminator offers a 'search' function, but i was never able to find it useful. Most of these times I have thousands of lines of debug output and without grep and/or less I am lost. This is where TerminalExporter becomes handy. It exports the full terminal buffer into a file and you can do all the unix magic.
+I included logging features for cases where output runs that fast through the terminal that buffered line limit becomes an issue.
 
 
 Usage
@@ -12,7 +12,7 @@ In terminal's context menu an 'export terminal' item is shown. It provides follo
 Full terminal buffer is exported into a file (into /tmp by default)
 
 - log terminal
-Terminal's session is loggend into a file (info /tmp by default).
+Terminal's session is logged into a file (info /tmp by default). Note, that your prompt is logged twice, because there are two changes to the row (prompt and command). Possible that later versions will fix this problem.
 
 - stop log
 Stops logging of this session.
@@ -24,7 +24,7 @@ Combines export and log :-). First terminal's buffer is exported into a file and
 Export and start log (if not running); split terminal.
 New terminal offers aliases tgrep, tless and ttail; they are
 targeting original terminal's logfile.
-For other unix stuff find current logfile name in enviroment variable <TERMINAL_LOGFILE>.
+For other unix stuff find current logfile name in environment variable <TERMINAL_LOGFILE>.
 
 Configuration
 All configuration is done in terminator's config file (~/.config/terminator/config on my system).
@@ -43,7 +43,7 @@ TerminalExporter generates a random, unique filename per export and log. These f
 
 - exportNameToEnv
 Default is "" (not set).
-Set it to the name of an enviroment variable. If configured, TerminalExporter tries to export path and name of used file after every export and log. This is done by sending the command 'variable=pathPlusName' to the terminal. Of course this does not work, if your terminal does not provide a prompt at this time and is complete useless, if you are inside a ssh session. This is, why it is disabled by default.
+Set it to the name of an environment variable. If configured, TerminalExporter tries to export path and name of used file after every export and log. This is done by sending the command 'variable=pathPlusName' to the terminal. Of course this does not work, if your terminal does not provide a prompt at this time and is complete useless, if you are inside a ssh session. This is, why it is disabled by default.
 
 - mainMenuText
 Default is 'TerminalExporter'.
@@ -67,7 +67,7 @@ Text of the menu item.
 
 - consoleLogfileVariable
 Default is 'TERMINAL_LOGFILE'
-Current logfile's full path is exported to this enviroment variable, when using 'show console'.
+Current logfile's full path is exported to this environment variable, when using 'show console'.
 
 - consoleAlias
 Default is "tgrep='cat %s | grep'", "ttail='tail %s'", "tless='less %s'"

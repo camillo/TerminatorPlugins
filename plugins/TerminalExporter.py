@@ -168,7 +168,7 @@ class TerminalExporter(plugin.MenuItem):
         (start_row, end_row, end_column) = self.get_vte_buffer_range(vte)
         parameter = self.logging_terminals[terminal]
         if end_row > parameter.last_logged_line:
-            content = vte.get_text_range(parameter.last_logged_line + 1, 0, end_row, end_column,
+            content = vte.get_text_range(parameter.last_logged_line, 0, end_row, end_column,
                                          lambda widget, col, row, junk: True)
             with open(parameter.filename, "a") as output_file:
                 output_file.writelines(content)
