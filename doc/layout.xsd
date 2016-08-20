@@ -20,7 +20,7 @@
       <xs:element xmlns:lay="http://camillo/layoutmanager" type="lay:childType" name="child"/>
     </xs:sequence>
     <xs:attribute type="xs:string" name="orientation" use="optional"/>
-    <xs:attribute type="xs:string" name="position" use="optional"/>
+    <xs:attribute type="xs:float" name="ratio" use="optional"/>
   </xs:complexType>
   <xs:complexType name="childType" mixed="true">
     <xs:choice>
@@ -37,5 +37,6 @@
     <xs:attribute type="xs:string" name="directory"/>
     <xs:attribute type="xs:string" name="tab"/>
     <xs:attribute type="xs:string" name="group"/>
+    <xs:attribute type="xs:boolean" name="setSplitRatios"/>
   </xs:complexType>
 </xs:schema>

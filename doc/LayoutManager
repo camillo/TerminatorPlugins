@@ -11,6 +11,9 @@ Saved layouts are written to terminatorConfigPath/LayoutManager (~/.config/termi
 The optional xmlns attribute of root's element:
 If set, value must be "http://camillo/layoutmanager" (this is also the default value). You can use doc/layout.xsd schema file for validation or autocompletion.
 
+The optional setSplitRatios attribute of root's element:
+if set to 'true', Layoutmanager tries to set the ratios for split elements (the positions). This is experimental and only works fine for easy layouts. Im am not sure if I am doing things in wrong order, or this is a terminator related problem/bug.
+
 The optional tab attribute of root's element:
 Instead of loading the layout into clicked terminal, open a new tab. Attribute's value is ignored and will hopefully used in later versions for setting tab's caption.
 
@@ -35,14 +38,8 @@ Set an environment variable holding terminal's number. This is done, before comm
 The optional directory attribute of root's or a terminal element:
 Set the starting directory for a terminal. Terminal's directory attribute overrides root's.
 
-The optional caption attribute of a terminal element:
-Set the caption for the terminal.
-
 The optional group attribute of a root element:
 Set the group of all terminals.
-
-The optional group attribute of a terminal element:
-Set the group of the terminal; this overrides root's attribute.
 
 The optional executionOrder attribute of root's element:
 The default execution order for loading a terminal is:
@@ -51,15 +48,30 @@ The default execution order for loading a terminal is:
 3. execute command
 This can be changed by setting attribute's value to a comma separated list containing following values 'command', 'directory' and 'exportTerminalNumber'. Missing values are appended in default order. If you use the command attribute like in the ssh example (see parameter attribute), you possibly want to set the environment variable inside the new ssh session and not on your host. This can be configured via "command,exportTerminalNumber". In this case, the possible configured start directory would be set inside the new ssh session (it's appended after exportTerminalNumber). To prevent this, configure all three values: "directory,command,exportTerminalNumber"
 
+The optional caption attribute of a terminal element:
+Set the caption for the terminal.
+
+The optional group attribute of a terminal element:
+Set the group of the terminal; this overrides root's attribute.
+
+The optional ratio attribute of a split element:
+If root's element has setSplitRatios set to 'true', set this ratio for the split. As I said, only working for simple layouts.
+
 Layout Format:
 layouts are saved as xml files and must have the extension .layout. File's name is used as name for the layout. The format is hopefully self explaining and can be seen in this example:
 There is also a xsd schema file available (layout.xsd in this folder).
 
-<root command="echo $terminalNumber" exportTerminalNumber="terminalNumber" directory="/home/camillo/" tab="live server" group="MAIN GROUP">
+<root command="echo $terminalNumber"
+      exportTerminalNumber="terminalNumber"
+      directory="/home/camillo/"
+      tab="live server"
+      group="MAIN GROUP"
+      xmlns="http://camillo/layoutmanager"
+      setSplitRatios="false">
   <child>
-    <split orientation="1" position="213">
+    <split orientation="1" ratio="0.543">
       <child>
-        <split orientation="0" position="328">
+        <split orientation="0" ratio="0.328">
           <child>
             <terminal command="" />
           </child>
@@ -74,7 +86,5 @@ There is also a xsd schema file available (layout.xsd in this folder).
     </split>
   </child>
 </root>
-
-The position of the split elements are only written, but not used by the plugin yet.
 
 Layout Manager's code is public domain.

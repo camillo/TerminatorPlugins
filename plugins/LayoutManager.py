@@ -41,6 +41,7 @@ CHILD_ELEMENT = 'child'
 SPLIT_ELEMENT = 'split'
 TERMINAL_ELEMENT = 'terminal'
 NAMESPACE_ATTRIBUTE = 'xmlns'
+SET_SPLIT_RATIOS_ATTRIBUTE = 'setSplitRatios'
 CAPTION_ATTRIBUTE = 'caption'
 COMMAND_ATTRIBUTE = 'command'
 GROUP_ATTRIBUTE = 'group'
@@ -52,7 +53,7 @@ PARAMETER_ATTRIBUTE = 'parameter'
 PARAMETER_PLACEHOLDER_ATTRIBUTE = 'parameterPlaceholder'
 PARAMETER_SEPARATOR_ATTRIBUTE = 'parameterSeparator'
 ORIENTATION_ATTRIBUTE = 'orientation'
-POSITION_ATTRIBUTE = 'position'
+RATIO_ATTRIBUTE = 'ratio'
 ROOT_DEFAULT_COMMAND = ''
 HORIZONTAL_VALUE = '0'
 VERTICAL_VALUE = '1'
@@ -102,6 +103,7 @@ class LayoutManager(plugin.MenuItem):
     capabilities = ['terminal_menu', ]
 
     config_dir = None
+    set_split_ratios = False
     next_terminal_number = 0
     root_command = None
     root_group = None
@@ -235,6 +237,7 @@ class LayoutManager(plugin.MenuItem):
         """
         root_element = ElementTree.Element(name)
         root_element.attrib[NAMESPACE_ATTRIBUTE] = XML_NAMESPACE
+        root_element.attrib[SET_SPLIT_RATIOS_ATTRIBUTE] = 'false'
         root_element.attrib[COMMAND_ATTRIBUTE] = ROOT_DEFAULT_COMMAND
         root_element.attrib[EXPORT_TERMINAL_NUMBER_ATTRIBUTE] = TERMINAL_NUMBER_VARIABLE
 
@@ -265,6 +268,7 @@ class LayoutManager(plugin.MenuItem):
 
     def save_paned_recursive(self, paned, element):
         split_element = self.create_split_element(element, paned)
+        split_element.attrib[RATIO_ATTRIBUTE] = str(paned.ratio)
         children = paned.get_children()
 
         self.save_split_child_recursive(split_element, children[0])
@@ -329,6 +333,8 @@ class LayoutManager(plugin.MenuItem):
         return parse(filename)
 
     def init_root(self, root_element):
+        set_split_ratios = self.try_get_xml_attribute(root_element, SET_SPLIT_RATIOS_ATTRIBUTE, 'false')
+        self.set_split_ratios = set_split_ratios.lower() == 'true'
         self.root_command = self.try_get_xml_attribute(root_element, COMMAND_ATTRIBUTE)
         self.root_directory = self.try_get_xml_attribute(root_element, DIRECTORY_ATTRIBUTE)
         self.export_variable = self.try_get_xml_attribute(root_element, EXPORT_TERMINAL_NUMBER_ATTRIBUTE)
@@ -395,9 +401,8 @@ class LayoutManager(plugin.MenuItem):
     def load_layout(self, terminal, root_element):
         child_element = self.try_get_xml_child(root_element, CHILD_ELEMENT)
         if child_element is not None:
-            self.load_child_recursive(terminal, child_element)
-        else:
-            err('rootElement has no childElement; abort loading')
+            return self.load_child_recursive(terminal, child_element)
+        err('rootElement has no childElement; abort loading')
 
     def load_child_recursive(self, terminal, child_element):
         target_element = self.try_get_xml_child(child_element, SPLIT_ELEMENT)
@@ -417,6 +422,7 @@ class LayoutManager(plugin.MenuItem):
         if len(split_children) == 2:
             orientation = self.try_get_xml_attribute(split_element, ORIENTATION_ATTRIBUTE)
             self.split_and_load_axis_recursive(terminal, orientation, split_children[0], split_children[1])
+            self.set_split_position(terminal.parent, split_element)
         else:
             err('split element needs exactly two child elements. You have: %d' % len(split_children))
         return True
@@ -440,6 +446,14 @@ class LayoutManager(plugin.MenuItem):
             err('unknown orientation [%s]; use default' % orientation)
 
         return True
+
+    def set_split_position(self, split, split_element):
+        if not self.set_split_ratios:
+            return False
+        position = self.try_get_xml_attribute(split_element, RATIO_ATTRIBUTE)
+        if position:
+            split.ratio = float(position)
+            split.set_position_by_ratio()
 
     def try_load_terminal(self, terminal, terminal_element):
         if terminal_element is None:
