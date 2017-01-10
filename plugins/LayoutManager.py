@@ -10,7 +10,7 @@ This is a plugin for terminator, that saves and restores layouts.
 Find updates here: https://github.com/camillo/TerminatorPlugins
 """
 
-import gtk
+from gi.repository import Gtk
 
 import terminatorlib.plugin as plugin
 from terminatorlib.util import dbg, err, get_config_dir
@@ -150,7 +150,7 @@ class LayoutManager(plugin.MenuItem):
         """
         main_item, submenu = self.create_main_items()
         submenu.append(self.create_save_item(terminal))
-        submenu.append(gtk.SeparatorMenuItem())
+        submenu.append(Gtk.SeparatorMenuItem())
         self.add_layout_menu_items(terminal, submenu)
 
         return main_item
@@ -161,8 +161,8 @@ class LayoutManager(plugin.MenuItem):
         Create the 'Layout Manager' menu item, together with the sub menu
         for saved layouts.
         """
-        main_item = gtk.MenuItem(LAYOUTMANAGER_DISPLAY_NAME)
-        submenu = gtk.Menu()
+        main_item = Gtk.MenuItem(LAYOUTMANAGER_DISPLAY_NAME)
+        submenu = Gtk.Menu()
         main_item.set_submenu(submenu)
         return main_item, submenu
 
@@ -171,9 +171,9 @@ class LayoutManager(plugin.MenuItem):
         Create the 'save' menu item, together with bindings for activation.
         @param terminal: The terminal this context menu item belongs to.
         """
-        save_item = gtk.ImageMenuItem(SAVE_COMMAND_CAPTION)
-        image = gtk.Image()
-        image.set_from_icon_name(gtk.STOCK_FLOPPY, gtk.ICON_SIZE_MENU)
+        save_item = Gtk.ImageMenuItem(SAVE_COMMAND_CAPTION)
+        image = Gtk.Image()
+        image.set_from_icon_name(Gtk.STOCK_FLOPPY, Gtk.IconSize.MENU)
         save_item.set_image(image)
         save_item.connect(EVENT_ACTIVATE, self.save_callback, terminal)
         return save_item
@@ -194,7 +194,7 @@ class LayoutManager(plugin.MenuItem):
         """
         is_layout, short_name = self.try_get_layout_short_name(name)
         if is_layout:
-            layout_item = gtk.MenuItem(short_name)
+            layout_item = Gtk.MenuItem(short_name)
             layout_item.connect(EVENT_ACTIVATE, self.load_callback, terminal)
             menu.append(layout_item)
             return True
@@ -422,16 +422,16 @@ class LayoutManager(plugin.MenuItem):
         if len(split_children) == 2:
             orientation = self.try_get_xml_attribute(split_element, ORIENTATION_ATTRIBUTE)
             self.split_and_load_axis_recursive(terminal, orientation, split_children[0], split_children[1])
-            self.set_split_position(terminal.parent, split_element)
+            self.set_split_position(terminal.get_parent(), split_element)
         else:
             err('split element needs exactly two child elements. You have: %d' % len(split_children))
         return True
 
     def split_and_load_axis_recursive(self, terminal, orientation, child1, child2):
         is_vertical = self.is_vertical_orientation(orientation)
-        terminal.parent.split_axis(terminal, is_vertical)
+        terminal.get_parent().split_axis(terminal, is_vertical)
 
-        new_terminal = terminal.parent.get_children()[1]
+        new_terminal = terminal.get_parent().get_children()[1]
 
         self.load_child_recursive(terminal, child1)
         self.load_child_recursive(new_terminal, child2)
@@ -584,46 +584,46 @@ class LayoutManager(plugin.MenuItem):
                 element.tail = indent_space
 
 
-class InputBoxDialog(gtk.Dialog):
+class InputBoxDialog(Gtk.Dialog):
     def __init__(self, message='', default_text='', modal=True):
-        gtk.Dialog.__init__(self)
+        Gtk.Dialog.__init__(self)
         self.connect(DESTROY_EVENT, self.quit)
         self.connect(DELETE_EVENT, self.quit)
         if modal:
             self.set_modal(True)
-        box = gtk.VBox(spacing=10)
+        box = Gtk.VBox(spacing=10)
         box.set_border_width(10)
-        self.vbox.pack_start(box)
+        self.vbox.pack_start(box, True, True, 0)
         box.show()
 
         if message:
-            label = gtk.Label(message)
-            box.pack_start(label)
+            label = Gtk.Label(message)
+            box.pack_start(label, True, True, 0)
             label.show()
 
-        self.entry = gtk.Entry()
+        self.entry = Gtk.Entry()
         self.entry.connect(EVENT_ACTIVATE, self.click)
         self.entry.set_text(default_text)
-        box.pack_start(self.entry)
+        box.pack_start(self.entry, True, True, 0)
         self.entry.show()
         self.entry.grab_focus()
-        button = gtk.Button(BUTTON_OK)
+        button = Gtk.Button(BUTTON_OK)
         button.connect(EVENT_CLICKED, self.click)
-        button.set_flags(gtk.CAN_DEFAULT)
-        self.action_area.pack_start(button)
+        button.set_can_default(True)
+        self.action_area.pack_start(button, True, True, 0)
         button.show()
         button.grab_default()
-        button = gtk.Button(BUTTON_CANCEL)
+        button = Gtk.Button(BUTTON_CANCEL)
         button.connect(EVENT_CLICKED, self.quit)
-        button.set_flags(gtk.CAN_DEFAULT)
-        self.action_area.pack_start(button)
+        button.set_can_default(True)
+        self.action_area.pack_start(button, True, True, 0)
         button.show()
         self.ret = None
 
     def quit(self, *_):
         self.hide()
         self.destroy()
-        gtk.main_quit()
+        Gtk.main_quit()
 
     def click(self, *_):
         self.ret = self.entry.get_text()
@@ -634,6 +634,6 @@ def input_box(title='Input Box', message='', default_text='', modal=True):
     win = InputBoxDialog(message, default_text, modal=modal)
     win.set_title(title)
     win.show()
-    gtk.main()
+    Gtk.main()
 
     return win.ret

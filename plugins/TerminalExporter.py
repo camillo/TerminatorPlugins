@@ -4,7 +4,8 @@ Created on May 6, 2012
 @author: Daniel Marohn
 """
 
-import gtk
+from gi.repository import Gtk
+
 import terminatorlib.plugin as plugin
 from terminatorlib.util import dbg, err
 from terminatorlib.config import Config
@@ -92,23 +93,23 @@ class TerminalExporter(plugin.MenuItem):
 
     def callback(self, menuitems, menu, terminal):
         """called by terminator on context menu open"""
-        item = gtk.MenuItem(self.plugin_config[SETTING_MENU_MAIN])
-        submenu = gtk.Menu()
-        export_item = gtk.MenuItem(self.plugin_config[SETTING_MENU_EXPORT])
+        item = Gtk.MenuItem(self.plugin_config[SETTING_MENU_MAIN])
+        submenu = Gtk.Menu()
+        export_item = Gtk.MenuItem(self.plugin_config[SETTING_MENU_EXPORT])
         export_item.connect('activate', self.do_export, terminal)
         submenu.append(export_item)
         if terminal in self.logging_terminals:
-            log_item = gtk.MenuItem(self.plugin_config[SETTING_MENU_STOP_LOG])
+            log_item = Gtk.MenuItem(self.plugin_config[SETTING_MENU_STOP_LOG])
             log_item.connect('activate', self.do_stop_log, terminal)
             submenu.append(log_item)
         else:
-            log_item = gtk.MenuItem(self.plugin_config[SETTING_MENU_START_LOG])
+            log_item = Gtk.MenuItem(self.plugin_config[SETTING_MENU_START_LOG])
             log_item.connect('activate', self.do_log, terminal)
             submenu.append(log_item)
-            log_item = gtk.MenuItem(self.plugin_config[SETTING_MENU_EXPORT_LOG])
+            log_item = Gtk.MenuItem(self.plugin_config[SETTING_MENU_EXPORT_LOG])
             log_item.connect('activate', self.do_export_log, terminal)
             submenu.append(log_item)
-        console_item = gtk.MenuItem(self.plugin_config[SETTING_MENU_CONSOLE])
+        console_item = Gtk.MenuItem(self.plugin_config[SETTING_MENU_CONSOLE])
         console_item.connect('activate', self.do_console, terminal)
         submenu.append(console_item)
         item.set_submenu(submenu)
@@ -129,7 +130,7 @@ class TerminalExporter(plugin.MenuItem):
                                      lambda widget, col, row, junk: True)
         filename = self.get_filename()
         with open(filename, "w") as output_file:
-            output_file.writelines(content)
+            output_file.writelines(str(content))
             output_file.close()
         dbg('terminal content written to [%s]' % filename)
         if self.plugin_config[SETTING_EXPORT_ENV] != '':
@@ -154,8 +155,8 @@ class TerminalExporter(plugin.MenuItem):
             filename = self.logging_terminals[terminal].filename
         else:
             filename = self.do_export_log(widget, terminal)
-        terminal.parent.split_axis(terminal, True)
-        new_terminal = terminal.parent.get_children()[1]
+        terminal.get_parent().split_axis(terminal, True)
+        new_terminal = terminal.get_parent().get_children()[1]
         new_terminal.titlebar.set_custom_string(EXPORTER_NAME)
         for alias in self.plugin_config[SETTING_CONSOLE_ALIAS]:
             new_terminal.feed('alias %s\n' % alias % filename)
